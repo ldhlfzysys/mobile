@@ -1,5 +1,7 @@
 <?php
 
+//注意：目前网站货到付款关闭了，因此在设置付款方式时会报错。我的计划是，网站打开货到付款，但是pc不显示，mobile端默认就用货到付款，但是支付走自己的paypal流程，只有支付成功才会下单。因此mobile的下单都是支付成功的。(后续发货流程，应该根据paypal上显示的收入来确定一定付款了。理论上网站不会出错)
+
 $client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
   
 $session = $client->login('mobile', 'mobile');
