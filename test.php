@@ -1,93 +1,48 @@
-<?php
+<!DOCTYPE html>
 
-$client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
-  
-$session = $client->login('mobile', 'mobile');
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+</head>
 
-//1、添加商品
-$arrProducts = array(
-	array(
-		"product_id" => "5972",
-		"qty" => 2
-	)
-);
+<body>
+  <div id="paypal-button"></div>
 
-// $result = $client->call($session, 'cart_product.add', array('401',$arrProducts));
+  <script>
+    paypal.Button.render({
+      env: 'production', // Or 'sandbox',
 
-//2、游客信息设置
-$customerAsGuest = array(
-	"firstname" => "testFirstname",
-	"lastname" => "testLastName",
-	"email" => "123@123.com",
-	"website_id" => "base",
-	"store_id" => "china",
-	"mode" => "guest"
-);
-// $result = $client->call($session,'cart_customer.set',array('401',$customerAsGuest));
+      commit: true, // Show a 'Pay Now' button
 
-//2、设置账单地址和配送地址
-$arrAddresses = array(
-	array(
-		"mode" => "shipping",
-		"firstname" => "testFirstname",
-		"lastname" => "testLastname",
-		"company" => "testCompany",
-		"street" => "testStreet",
-		"city" => "testCity",
-		"postcode" => "123",
-		"country_id" => "CA",
-		"region_id" => "74",
-		"telephone" => "0123456789",
-		"fax" => "0123456789",
-		"is_default_shipping" => 0,
-		"is_default_billing" => 0
-	),
-	array(
-		"mode" => "billing",
-		"address_id" => "",
-		"firstname" => "testFirstname",
-		"lastname" => "testLastname",
-		"company" => "testCompany",
-		"street" => "testStreet",
-		"city" => "testCity",
-		"postcode" => "123",
-		"country_id" => "CA",
-		"region_id" => "74",
-		"telephone" => "0123456789",
-		"fax" => "0123456789",
-		"is_default_shipping" => 0,
-		"is_default_billing" => 0
-	)
-);
-// $result = $client->call($session,'cart_customer.addresses',array('401',$arrAddresses));
+      style: {
+        color: 'gold',
+        size: 'small'
+      },
 
-//3、配置支付方式(支付方式是空的，我们走mobile自己的paypal支付，然后成功后直接下单)
-$paymentMethod = array(
-	"method" => "Null"
-);
-// $result = $client->call($session,'cart_payment.list','401');
-// $result = $client->call($session,'cart_payment.method',array('401',$paymentMethod));
+      payment: function(data, actions) {
+        /* 
+         * Set up the payment here 
+         */
+      },
 
+      onAuthorize: function(data, actions) {
+        /* 
+         * Execute the payment here 
+         */
+      },
 
-//4、配置运送方式，满39刀有免费支付，否者是6刀的配送
-// $result = $client->call($session,'cart_shipping.list','401');
-// $result = $client->call($session,'cart_shipping.method',array('401','freeshipping_freeshipping'));
+      onCancel: function(data, actions) {
+        /* 
+         * Buyer cancelled the payment 
+         */
+      },
 
-//5、设置支付方式
-// $result = $client->call($session,'cart_payment.list','401');
-$paymentMethod = array(
-	"method" => "cashondelivery"
-);
-// $result = $client->call($session,'cart_payment.method',array('401',$paymentMethod));
-
-//6、下订单(自己的支付流程通过后)
-$result = $client->call($session,'cart.order',array('401'));
-//return string(10) "1600000089"
-
-//ps1、显示购物车信息
-// $result = $client->call($session,'cart.info','401');
-
-
-var_dump($result);
-
-?>
+      onError: function(err) {
+        /* 
+         * An error occurred during the transaction 
+         */
+      }
+    }, '#paypal-button');
+  </script>
+</body>
