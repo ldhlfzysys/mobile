@@ -1,48 +1,19 @@
-<!DOCTYPE html>
+<?php
 
-<head>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://www.paypalobjects.com/api/checkout.js"></script>
-</head>
+$client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
+  
+$session = $client->login('mobile', 'mobile');
 
-<body>
-  <div id="paypal-button"></div>
+$result = $client->call($session, 'catalog_product.currentStore', 'china');
 
-  <script>
-    paypal.Button.render({
-      env: 'production', // Or 'sandbox',
+$args = array(
+    'productId' => '5974',
+    'storeView' => 'china'
+);
 
-      commit: true, // Show a 'Pay Now' button
+$sku = '5974';
+$res = $client->call($session, 'catalog_product.info',$args);
 
-      style: {
-        color: 'gold',
-        size: 'small'
-      },
+echo json_encode($res);
 
-      payment: function(data, actions) {
-        /* 
-         * Set up the payment here 
-         */
-      },
-
-      onAuthorize: function(data, actions) {
-        /* 
-         * Execute the payment here 
-         */
-      },
-
-      onCancel: function(data, actions) {
-        /* 
-         * Buyer cancelled the payment 
-         */
-      },
-
-      onError: function(err) {
-        /* 
-         * An error occurred during the transaction 
-         */
-      }
-    }, '#paypal-button');
-  </script>
-</body>
+?>

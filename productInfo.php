@@ -10,7 +10,11 @@ $result = array();
 foreach ($lists as $id){ 
 	// print_r($sku);
 	// $sku = '6629452600183';
-	$res = $client->call($session, 'catalog_product.info', $id);
+	$args = array(
+    'productId' => $id,
+    'storeView' => 'china'
+	);
+	$res = $client->call($session, 'catalog_product.info', $args);
 	array_push($result, $res);
 	// array_push($result, $client->call($session, 'catalog_product.info', $sku));
 }
