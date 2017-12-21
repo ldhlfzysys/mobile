@@ -16,7 +16,7 @@
 <body>
 
 	<header class="aui-header-default aui-header-fixed aui-header-bg">
-		<a href="#" class="aui-header-item">
+		<a href="#" class="aui-header-item"  style="display:none">
 			<i class="aui-icon aui-icon-code"></i>
 		</a>
 		<div class="aui-header-center aui-header-center-clear">
@@ -26,8 +26,8 @@
 			</div>
 		</div>
 		<a href="#" class="aui-header-item-icon">
-			<i class="aui-icon aui-icon-packet"></i>
-			<i class="aui-icon aui-icon-member"></i>
+			<i class="aui-icon aui-icon-packet" style="display:none"></i>
+			<i class="aui-icon aui-icon-member" style="display:none"></i>
 		</a>
 	</header>
 	<div class="aui-content-box">
@@ -58,27 +58,18 @@
 		</div>
 		<section class="aui-grid-content">
 			<div class="aui-grid-row" id="category">
-				<!-- <a href="my-sign.html" class="aui-grid-row-item">
-					<i class="aui-icon-large aui-icon-sign">
-					</i>
-					<p class="aui-grid-row-label">每日签到</p>
-				</a>
-				<a href="my-time.html" class="aui-grid-row-item">
-					<i class="aui-icon-large aui-icon-time"></i>
-					<p class="aui-grid-row-label">限时抢购</p>
-				</a>
-				<a href="my-membership.html" class="aui-grid-row-item">
-					<i class="aui-icon-large aui-icon-vip"></i>
-					<p class="aui-grid-row-label">会员专享</p>
-				</a>
-				<a href="my-purchase.html" class="aui-grid-row-item">
-					<i class="aui-icon-large aui-icon-group"></i>
-					<p class="aui-grid-row-label">好货拼团</p>
-				</a>
-				<a href="my-invitation.html" class="aui-grid-row-item">
-					<i class="aui-icon-large aui-icon-share"></i>
-					<p class="aui-grid-row-label">分享领券</p>
-				</a> -->
+				<a href="my-sign.html" class="aui-grid-row-item"><i class="aui-icon-large aui-icon-256"></i><p class="aui-grid-row-label">生鲜水果</p></a>
+				<a href="my-sign.html" class="aui-grid-row-item"><i class="aui-icon-large aui-icon-64"></i><p class="aui-grid-row-label">休闲零食</p></a>
+				<a href="my-sign.html" class="aui-grid-row-item"><i class="aui-icon-large aui-icon-79"></i><p class="aui-grid-row-label">饼干糕点</p></a>
+				<a href="my-sign.html" class="aui-grid-row-item"><i class="aui-icon-large aui-icon-92"></i><p class="aui-grid-row-label">糖果巧克力</p></a>
+				<a href="my-sign.html" class="aui-grid-row-item"><i class="aui-icon-large aui-icon-128"></i><p class="aui-grid-row-label">坚果蜜饯</p></a>
+
+				<a href="my-sign.html" class="aui-grid-row-item"><i class="aui-icon-large aui-icon-141"></i><p class="aui-grid-row-label">粮油调味</p></a>
+				<a href="my-sign.html" class="aui-grid-row-item"><i class="aui-icon-large aui-icon-135"></i><p class="aui-grid-row-label">酒水饮料</p></a>
+				<a href="my-sign.html" class="aui-grid-row-item"><i class="aui-icon-large aui-icon-113"></i><p class="aui-grid-row-label">方便速食</p></a>
+				<a href="my-sign.html" class="aui-grid-row-item"><i class="aui-icon-large aui-icon-122"></i><p class="aui-grid-row-label">个人护理</p></a>
+				<a href="my-sign.html" class="aui-grid-row-item"><i class="aui-icon-large aui-icon-163"></i><p class="aui-grid-row-label">生活日用</p></a>
+
 			</div>
 		</section>
 		<!-- <div class="aui-avd-content clearfix">
@@ -195,9 +186,9 @@
 			</div>
 		</div>
 		<div class="aui-list-item">
-			<div class="aui-list-item-img">
+<!-- 			<div class="aui-list-item-img">
 				<img src="themes/img/pd/cf-5.jpg" alt="">
-			</div>
+			</div> -->
 			<div class="aui-slide-box">
 				<div class="aui-slide-list">
 					<ul class="aui-slide-item-list">
@@ -461,7 +452,7 @@
 				id = level1_item['category_id'];
 				if(id == 256 || id == 64 || id == 92 || id == 141 || id == 79 || id == 128 || id == 135 || id == 113 || id == 122 || id ==163){
 					var str = '<a href="my-sign.html" class="aui-grid-row-item"><i class="aui-icon-large aui-icon-' + id + '"></i><p class="aui-grid-row-label">' + level1_item['name'] + '</p></a>';
-					$('div#category').append(str);
+					// $('div#category').append(str);
 				}
 
 			}
