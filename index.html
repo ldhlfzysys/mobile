@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<meta http-equiv="pragma" content="public" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui"/>
 	<meta name="apple-mobile-web-app-capable" content="yes"/>
 	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
@@ -493,7 +494,8 @@
 						var special_price = res['special_price'];
 						var media = eval("(" + media + ")");
 						var url = media[0]['url'];
-						var str = '<li class="aui-slide-item-item"><a href="ui-product.html" class="v-link"><img class="v-img" src=' + url + '><p class="aui-slide-item-title aui-slide-item-f-els">' + name + '</p><p class="aui-slide-item-info"><span class="aui-slide-item-price">' + special_price + '</span>&nbsp;&nbsp;<span class="aui-slide-item-mrk">' + price + '</span></p></a></li>';
+						var str = '<li class="aui-slide-item-item"><a href="ui-product.html" class="v-link"><img class="v-img" src=' + url + '><p class="aui-slide-item-title aui-slide-item-f-els">' + name + '</p><p class="aui-slide-item-info"><span class="aui-slide-item-price">&nbsp;<em>$</em>' + price.substr(0,price.indexOf(".")+3) + '</span></p></a></li>';
+						//&nbsp;&nbsp;<span class="aui-slide-item-mrk">' + price + '</span>
 						$("#fruit").append(str);
 					}
 				});
@@ -526,7 +528,8 @@
 						var media = eval("(" + media + ")");
 						var url = media[0]['url'];
 						// console.log(url);
-						var str = '<a href="ui-product.html" class="aui-list-product-item"><div class="aui-list-product-item-img"><img src="' + url + '" alt=""></div><div class="aui-list-product-item-text"><h3>' + name + '</h3><div class="aui-list-product-mes-box"><div><span class="aui-list-product-item-price"><em>$</em>' + price + '</span><span class="aui-list-product-item-del-price"><em>$</em>' + special_price + '</span></div></div></div></a>';
+						var str = '<a href="ui-product.html" class="aui-list-product-item"><div class="aui-list-product-item-img"><img src="' + url + '" alt=""></div><div class="aui-list-product-item-text"><h3>' + name + '</h3><div class="aui-list-product-mes-box"><div><span class="aui-list-product-item-price"><em>$</em>' + price.substr(0,price.indexOf(".")+3) + '</span></div></div></div></a>';
+						//<span class="aui-list-product-item-del-price"><em>$</em>' + special_price + '</span>
 						$("#recommend").append(str);
 					}
 				});

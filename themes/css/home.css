@@ -635,7 +635,7 @@ li {
 }
 
 .aui-slide-box .aui-slide-item-list .aui-slide-item-item .aui-slide-item-info {
-	text-align: center;
+	text-align: left;
 	height: 0.373333rem;
 	line-height: 0.373333rem;
 	margin-top: 6px;
