@@ -1,4 +1,10 @@
-<!DOCTYPE html>
+<?php 
+$productId = $_GET["productId"];
+$url='http://bdbbuy.com/mobile/productInfo.php?ids='.$productId;
+$html = file_get_contents($url);
+$products = json_decode($html,true);
+echo var_dump($products);
+?>
 <html lang="en">
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui"/>
@@ -120,6 +126,7 @@
 	</style>
 </head>
 <body>
+
 	<header class="aui-header-default aui-header-fixed aui-header-bg">
 		<a href="javascript:history.back(-1)" class="aui-header-item">
 			<i class="aui-icon aui-icon-back-white"></i>
@@ -127,9 +134,7 @@
 		<div class="aui-header-center aui-header-center-clear">
 			<div class="aui-header-center-logo">
 				<div id="scrollSearchPro">
-					<span class="current">商品</span>
-					<span>评价</span>
-					<span>详情</span>
+					<span class="current">八点半买</span>
 				</div>
 			</div>
 		</div>
@@ -195,21 +200,21 @@
 				纯色简洁大方，宽松时尚舒适，不管是内搭T恤还是衬衫都非常好看
 			</p>
 		</div>
-		<div class="aui-product-boutique clearfix">
+<!-- 		<div class="aui-product-boutique clearfix">
 			<img src="themes/img/icon/icon-usa.png" alt="">
 			<span class="aui-product-tag-text">美国品牌</span>
 			<img src="themes/img/icon/icon-sj.png" alt="">
 			<span class="aui-product-tag-text">精选商家</span>
-		</div>
-		<div class="aui-product-strip">
+		</div> -->
+<!-- 		<div class="aui-product-strip">
 			<img src="themes/img/bg/ssy.jpg" alt="">
-		</div>
+		</div> -->
 		<div class="aui-product-coupon">
-			<a href="#" class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear" data-ydui-actionsheet="{target:'#actionSheet',closeElement:'#cancel'}">
+<!-- 			<a href="#" class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear" data-ydui-actionsheet="{target:'#actionSheet',closeElement:'#cancel'}">
 				<div class="aui-address-cell-bd">选择</div>
 				<div class="aui-address-cell-ft">颜色分类</div>
-			</a>
-			<div class="m-actionsheet" id="actionSheet">
+			</a> -->
+<!-- 			<div class="m-actionsheet" id="actionSheet">
 				<div style="position:relative">
 
 					<div style="height:400px;">
@@ -224,21 +229,21 @@
 					</div>
 
 				</div>
-			</div>
-			<a href="#" class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear">
+			</div> -->
+<!-- 			<a href="#" class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear">
 				<div class="aui-address-cell-bd">领券</div>
 				<div class="aui-address-cell-ft">
 					<span>满159减10券</span>
 					<span>满299减30券</span>
 				</div>
-			</a>
-			<a href="#" class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear">
+			</a> -->
+			<a href="./shippingarea.html" class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear">
 				<div class="aui-address-cell-bd">配送</div>
-				<div class="aui-address-cell-ft">上海 至 北京海淀区</div>
+				<div class="aui-address-cell-ft" >多伦多部分区域(点击查看范围)</div>
 			</a>
 			<a href="#" class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear">
 				<div class="aui-address-cell-bd">运费</div>
-				<div class="aui-address-cell-ft">免运费</div>
+				<div class="aui-address-cell-ft">满CA$39刀免费配送，不满配送费CA$6</div>
 			</a>
 			<a href="#" class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear">
 				<div class="aui-address-cell-bd">说明</div>
@@ -718,32 +723,33 @@
 	<script src="themes/js/aui.js"></script>
 	<script src="themes/js/aui-down.js"></script>
 	<script type="text/javascript">
-        $(function () {
-            //绑定滚动条事件
-            //绑定滚动条事件
-            $(window).bind("scroll", function () {
-                var sTop = $(window).scrollTop();
-                var sTop = parseInt(sTop);
-                if (sTop >= 100) {
-                    if (!$("#scrollSearchPro").is(":visible")) {
-                        try {
-                            $("#scrollSearchPro").slideDown();
-                        } catch (e) {
-                            $("#scrollSearchPro").show();
-                        }
-                    }
-                }
-                else {
-                    if ($("#scrollSearchPro").is(":visible")) {
-                        try {
-                            $("#scrollSearchPro").slideUp();
-                        } catch (e) {
-                            $("#scrollSearchPro").hide();
-                        }
-                    }
-                }
-            });
-        })
+		$("#scrollSearchPro").show();
+        // $(function () {
+        //     //绑定滚动条事件
+        //     //绑定滚动条事件
+        //     $(window).bind("scroll", function () {
+        //         var sTop = $(window).scrollTop();
+        //         var sTop = parseInt(sTop);
+        //         if (sTop >= 100) {
+        //             if (!$("#scrollSearchPro").is(":visible")) {
+        //                 try {
+        //                     $("#scrollSearchPro").slideDown();
+        //                 } catch (e) {
+        //                     $("#scrollSearchPro").show();
+        //                 }
+        //             }
+        //         }
+        //         else {
+        //             if ($("#scrollSearchPro").is(":visible")) {
+        //                 try {
+        //                     $("#scrollSearchPro").slideUp();
+        //                 } catch (e) {
+        //                     $("#scrollSearchPro").hide();
+        //                 }
+        //             }
+        //         }
+        //     });
+        // })
 	</script>
 
 	<script>
