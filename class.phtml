@@ -1,0 +1,292 @@
+<?php
+$url='http://bdbbuy.com/mobile/productList.php';
+$html = file_get_contents($url);
+$vocations = json_decode($html,true);
+echo var_dump($vocations);
+?>
+<html lang="en">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui"/>
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+	<meta name="format-detection" content="telephone=no, email=no"/>
+	<meta charset="UTF-8">
+	<title>八点半买</title>
+	<link rel="stylesheet" href="themes/css/core.css">
+	<link rel="stylesheet" href="themes/css/icon.css">
+	<link rel="stylesheet" href="themes/css/home.css">
+	<link rel="stylesheet" href="themes/css/add.css">
+	<link rel="stylesheet" href="themes/css/amazeui.min.css">
+	<link rel="icon" type="image/x-icon" href="favicon.ico">
+	<link href="iTunesArtwork@2x.png" sizes="114x114" rel="apple-touch-icon-precomposed">
+</head>
+<body>
+
+	<header class="aui-header-default aui-header-fixed aui-header-bg">
+		<a href="#" class="aui-header-item">
+			<i class="aui-icon aui-icon-code"></i>
+		</a>
+		<div class="aui-header-center aui-header-center-clear">
+			<div class="aui-header-search-box">
+				<i class="aui-icon aui-icon-small-search"></i>
+				<input id="" type="text"  placeholder="请输入搜索关键字" class="aui-header-search">
+			</div>
+		</div>
+		<a href="#" class="aui-header-item-icon">
+			<i class="aui-icon aui-icon-packet"></i>
+			<i class="aui-icon aui-icon-member"></i>
+		</a>
+	</header>
+	<section class="aui-scroll-contents">
+		<div class="aui-scroll-box" data-ydui-scrolltab>
+			<div class="aui-scroll-nav">
+<!-- 				<a href="#" class="aui-scroll-item">
+					<div class="aui-scroll-item-icon"></div>
+					<div class="aui-scroll-item-text">热门推荐</div>
+				</a>
+ -->
+				 <a href="#" class="aui-scroll-item">
+				 	<div class="aui-scroll-item-icon">
+				 	</div>
+				 	<div class="aui-scroll-item-text">
+				 		休闲零食
+				 	</div>
+				 </a>
+				 <a href="#" class="aui-scroll-item">
+				 	<div class="aui-scroll-item-icon">
+				 	</div>
+				 	<div class="aui-scroll-item-text">
+				 		饼干糕点
+				 	</div>
+				 </a>
+				 <a href="#" class="aui-scroll-item">
+				 	<div class="aui-scroll-item-icon">
+				 	</div>
+				 	<div class="aui-scroll-item-text">
+				 		糖果巧克力
+				 	</div>
+				 </a>
+				 <a href="#" class="aui-scroll-item">
+				 	<div class="aui-scroll-item-icon">
+				 	</div>
+				 	<div class="aui-scroll-item-text">
+				 		热卖
+				 	</div>
+				 </a>
+				 <a href="#" class="aui-scroll-item">
+				 	<div class="aui-scroll-item-icon">
+				 	</div>
+				 	<div class="aui-scroll-item-text">
+				 		新品
+				 	</div>
+				 </a>
+				 <a href="#" class="aui-scroll-item">
+				 	<div class="aui-scroll-item-icon">
+				 	</div>
+				 	<div class="aui-scroll-item-text">
+				 		折扣
+				 	</div>
+				 </a>
+				 <a href="#" class="aui-scroll-item">
+				 	<div class="aui-scroll-item-icon">
+				 	</div>
+				 	<div class="aui-scroll-item-text">
+				 		冲调饮品
+				 	</div>
+				 </a>
+				 <a href="#" class="aui-scroll-item">
+				 	<div class="aui-scroll-item-icon">
+				 	</div>
+				 	<div class="aui-scroll-item-text">
+				 		方便速食
+				 	</div>
+				 </a>
+				 <a href="#" class="aui-scroll-item">
+				 	<div class="aui-scroll-item-icon">
+				 	</div>
+				 	<div class="aui-scroll-item-text">
+				 		个人护理
+				 	</div>
+				 </a>
+				 <a href="#" class="aui-scroll-item">
+				 	<div class="aui-scroll-item-icon">
+				 	</div>
+				 	<div class="aui-scroll-item-text">
+				 		坚果蜜饯
+				 	</div>
+				 </a>
+				 <a href="#" class="aui-scroll-item">
+				 	<div class="aui-scroll-item-icon">
+				 	</div>
+				 	<div class="aui-scroll-item-text">
+				 		酒水饮料
+				 	</div>
+				 </a>
+				 <a href="#" class="aui-scroll-item">
+				 	<div class="aui-scroll-item-icon">
+				 	</div>
+				 	<div class="aui-scroll-item-text">
+				 		粮油调味
+				 	</div>
+				 </a>
+				 <a href="#" class="aui-scroll-item">
+				 	<div class="aui-scroll-item-icon">
+				 	</div>
+				 	<div class="aui-scroll-item-text">
+				 		生活日用
+				 	</div>
+				 </a>
+				 <a href="#" class="aui-scroll-item">
+				 	<div class="aui-scroll-item-icon">
+				 	</div>
+				 	<div class="aui-scroll-item-text">
+				 		生鲜速冻
+				 	</div>
+				 </a>
+				 <a href="#" class="aui-scroll-item">
+				 	<div class="aui-scroll-item-icon">
+				 	</div>
+				 	<div class="aui-scroll-item-text">
+				 		急冻生鲜
+				 	</div>
+				 </a>
+				 <a href="#" class="aui-scroll-item">
+				 	<div class="aui-scroll-item-icon">
+				 	</div>
+				 	<div class="aui-scroll-item-text">
+				 		日韩零食
+				 	</div>
+				 </a>
+				 <a href="#" class="aui-scroll-item">
+				 	<div class="aui-scroll-item-icon">
+				 	</div>
+				 	<div class="aui-scroll-item-text">
+				 		生鲜水果
+				 	</div>
+				 </a>
+				 <a href="#" class="aui-scroll-item">
+				 	<div class="aui-scroll-item-icon">
+				 	</div>
+				 	<div class="aui-scroll-item-text">
+				 		精选推荐
+				 	</div>
+				 </a>
+				 <a href="#" class="aui-scroll-item">
+				 	<div class="aui-scroll-item-icon">
+				 	</div>
+				 	<div class="aui-scroll-item-text">
+				 		精选生鲜水果
+				 	</div>
+				 </a>
+				 <a href="#" class="aui-scroll-item">
+				 	<div class="aui-scroll-item-icon">
+				 	</div>
+				 	<div class="aui-scroll-item-text">
+				 		精选休闲零食
+				 	</div>
+				 </a>
+				 <a href="#" class="aui-scroll-item">
+				 	<div class="aui-scroll-item-icon">
+				 	</div>
+				 	<div class="aui-scroll-item-text">
+				 		精选糖果巧克力
+				 	</div>
+				 </a>
+				 <a href="#" class="aui-scroll-item">
+				 	<div class="aui-scroll-item-icon">
+				 	</div>
+				 	<div class="aui-scroll-item-text">
+				 		精选饼干糕点
+				 	</div>
+				 </a>
+				 <a href="#" class="aui-scroll-item">
+				 	<div class="aui-scroll-item-icon">
+				 	</div>
+				 	<div class="aui-scroll-item-text">
+				 		精选坚果蜜饯
+				 	</div>
+				 </a>
+				 <a href="#" class="aui-scroll-item">
+				 	<div class="aui-scroll-item-icon">
+				 	</div>
+				 	<div class="aui-scroll-item-text">
+				 		精选方便速食
+				 	</div>
+				 </a>
+				 <a href="#" class="aui-scroll-item">
+				 	<div class="aui-scroll-item-icon">
+				 	</div>
+				 	<div class="aui-scroll-item-text">
+				 		精选个人护理
+				 	</div>
+				 </a>
+
+			</div>
+			<div class="aui-scroll-content">
+				<div class="am-g am-intro-bd">
+		    	<a href="#">
+			        <div class="am-intro-left am-u-sm-3"><img src="themes/img/pd/sf-2.jpg"  /></div>
+			        <div class="am-intro-right am-u-sm-8">
+			        	<h2>芝士威化饼干</h2>
+			        	<p>290gx1盒</p>
+			        	<div class="text">
+			        		<span class="fl">￥10.8</span>
+			        		<span class="fr"><img src="themes/img/icon/icon-kin.png"  /></span>
+			        	</div>
+			        </div>
+		       	</a>
+		    	</div>
+
+				
+
+			</div>
+		</div>
+	</section>
+
+
+	<footer class="aui-footer-default aui-footer-fixed">
+		<a href="index.html" class="aui-footer-item ">
+			<span class="aui-footer-item-icon aui-icon aui-footer-icon-home"></span>
+			<span class="aui-footer-item-text">首页</span>
+		</a>
+		<a href="class.phtml" class="aui-footer-item aui-footer-active">
+			<span class="aui-footer-item-icon aui-icon aui-footer-icon-class"></span>
+			<span class="aui-footer-item-text">分类</span>
+		</a>
+<!-- 		<a href="find.html" class="aui-footer-item">
+			<span class="aui-footer-item-icon aui-icon aui-footer-icon-find"></span>
+			<span class="aui-footer-item-text">发现</span>
+		</a> -->
+		<a href="car.html" class="aui-footer-item">
+			<span class="aui-footer-item-icon aui-icon aui-footer-icon-car"></span>
+			<span class="aui-footer-item-text">购物车</span>
+		</a>
+		<a href="ui-me.html" class="aui-footer-item">
+			<span class="aui-footer-item-icon aui-icon aui-footer-icon-me"></span>
+			<span class="aui-footer-item-text">我的</span>
+		</a>
+	</footer>
+
+	<script src="themes/js/jquery.min.js"></script>
+	<script src="themes/js/aui.js"></script>
+</body>
+<script type="text/javascript">
+	$(function(){
+		// 请求全部分类
+		// $.get('http://bdbbuy.com/mobile/categoryTree.php', function(data){
+		// 	var res = eval("(" + data + ")");
+		// 	level1 = res['children'][0]['children'];
+		// 	console.log(level1);
+		// 	for(var i = 0; i < level1.length; i ++){
+		// 		level1_item = level1[i];
+		// 		console.log(level1_item['name']);
+		// 		// 插入html
+		// 		var str = '<a href="#" class="aui-scroll-item"><div class="aui-scroll-item-icon"></div><div class="aui-scroll-item-text">'+ level1_item['name'] + "</div></a>";
+		// 		$("div.aui-scroll-nav").append(str);
+		// 		// 插入二级分类
+
+		// 	}
+		// });
+	});
+</script>
+</html>
