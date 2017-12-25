@@ -2,3 +2,9 @@
 .fr{ float: right;}
 .fr img{ width: 30px;height: 30px;}
 .am-intro-left img{min-width: 72px;max-width: 100%; width: auto; height: auto; vertical-align: top; border: 0;}
+.aui-scroll-content .tab_box > div{
+ display: none;
+}
+.aui-scroll-content .tab_box > div:first-child{
+ display: block;
+}
