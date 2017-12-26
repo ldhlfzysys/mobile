@@ -117,10 +117,10 @@ foreach ($productList as $product) {
 				<?php
 				foreach ($categoryArray as $key => $value) {
 					echo '<div>';
-					$list = $newProductList[$categoryArray['key']];
+					$list = $newProductList[$value];
 					foreach ($list as $product) {
 						echo '<div class="am-g am-intro-bd">';
-						echo '<a href="#">';
+						echo '<a href="http://bdbbuy.com/mobile/ui-product.phtml?productId='.$product['product_id'].'">';
 						echo '<div class="am-intro-left am-u-sm-3"><img src="http://bdbbuy.com/media/catalog/product'.$product['image'].'"  /></div>';
 						echo '<div class="am-intro-right am-u-sm-8">';
 						echo '<h2>'.$product['name'].'</h2>';
@@ -183,21 +183,11 @@ foreach ($productList as $product) {
 </body>
 <script type="text/javascript">
 	$(function(){
-		// 请求全部分类
-		// $.get('http://bdbbuy.com/mobile/categoryTree.php', function(data){
-		// 	var res = eval("(" + data + ")");
-		// 	level1 = res['children'][0]['children'];
-		// 	console.log(level1);
-		// 	for(var i = 0; i < level1.length; i ++){
-		// 		level1_item = level1[i];
-		// 		console.log(level1_item['name']);
-		// 		// 插入html
-		// 		var str = '<a href="#" class="aui-scroll-item"><div class="aui-scroll-item-icon"></div><div class="aui-scroll-item-text">'+ level1_item['name'] + "</div></a>";
-		// 		$("div.aui-scroll-nav").append(str);
-		// 		// 插入二级分类
-
-		// 	}
-		// });
+		$(".tab_menu ul li").click(function(){
+			 $(this).addClass("on").siblings().removeClass("on"); //切换选中的按钮高亮状态
+			 var index=$(this).index(); //获取被按下按钮的索引值，需要注意index是从0开始的
+			 $(".tab_box > div").eq(index).show().siblings().hide(); //在按钮选中时在下面显示相应的内容，同时隐藏不需要的框架内容
+		 });
 	});
 </script>
 </html>

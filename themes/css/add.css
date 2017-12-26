@@ -8,3 +8,6 @@
 .aui-scroll-content .tab_box > div:first-child{
  display: block;
 }
+.tab_menu ul li.on{
+ background: #fff;
+}
