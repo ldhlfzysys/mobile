@@ -11,7 +11,11 @@ if ($redis_result) {
 }else{
 	$client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
 	$session = $client->login('mobile', 'mobile');
-	$result = $client->call($session, 'catalog_product.list');
+			$args = array(
+	    'filters' => null,
+	    'storeView' => '16'
+		);
+	$result = $client->call($session, 'catalog_product.list',$args);
 	$client->endSession($session);
 	$json_result = json_encode($result);
 	$redis->set($redis_key,$json_result);
