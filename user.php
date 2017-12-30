@@ -18,7 +18,7 @@ function cartid(){
 	}else{
 		$client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
 		$session = $client->login('mobile', 'mobile');
-		$result = $client->call( $session, 'cart.create');
+		$result = $client->call( $session, 'cart.create', '16');
 		$cartid = $result;
 		setcookie('bdb-ci',$cartid);
 		return $cartid;
