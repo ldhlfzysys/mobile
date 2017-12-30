@@ -14,7 +14,7 @@ $arrProducts = array(
 	)
 );
 
-// $result = $client->call($session, 'cart_product.add', array('401',$arrProducts));
+// $result = $client->call($session, 'cart_product.add', array('401',$arrProducts,'16'));
 
 //2、游客信息设置
 $customerAsGuest = array(
