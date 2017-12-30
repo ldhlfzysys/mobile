@@ -6,7 +6,8 @@ include_once('./user.php');
 include_once('./cart.php');
 $cartid = cartid();
 $carinfo = cart($cartid);
-var_dump($carinfo);
+$carItems = $carinfo['items'];
+
 ?>
 <html>
 <head>
@@ -42,16 +43,16 @@ var_dump($carinfo);
 			<div class="aui-car-box-name">
 				<input type="checkbox" class="check goods-check shopCheck">
 				<h3>
-					<a href="#">优购优品网</a>
+					<a href="#">全选</a>
 				</h3>
 				<div class="aui-car-coupons">
-					<a href="#">领券</a>
-					<a href="#">编辑</a>
+<!-- 					<a href="#">领券</a>
+					<a href="#">编辑</a> -->
 				</div>
 			</div>
 			<div class="aui-car-box-list">
 				<ul>
-					<li>
+<!-- 					<li>
 						<div class="aui-car-box-list-item">
 							<input type="checkbox" class="check goods-check goodsCheck">
 							<div class="aui-car-box-list-img">
@@ -81,18 +82,20 @@ var_dump($carinfo);
 							</div>
 
 						</div>
-					</li>
+					</li> -->
+					<?php foreach ($caritems as $item) {
+					?>
 					<li>
 						<div class="aui-car-box-list-item">
 							<input type="checkbox" class="check goods-check goodsCheck">
 							<div class="aui-car-box-list-img">
 								<a href="ui-product.phtml">
-									<img src="themes/img/pd/sf-2.jpg" alt="">
+									<img src="themes/img/pd/sf-1.jpg" alt="">
 								</a>
 							</div>
 							<div class="aui-car-box-list-text">
 								<h4>
-									<a href="ui-product.phtml">【黑卡96折】Apple 苹果 iPhone 7（A1660）移动联通电信4G手机 国内行货</a>
+									<a href="ui-product.phtml"><?php echo $item['name'];  ?></a>
 								</h4>
 								<div class="aui-car-box-list-text-brief">
 									<span>重量:3.3kg</span>
@@ -101,7 +104,7 @@ var_dump($carinfo);
 								</div>
 								<div class="aui-car-box-list-text-price">
 									<div class="aui-car-box-list-text-pri">
-										￥<b class="aui-price">100.00</b>
+										CA$<b class="price"><?php echo $item['price'] ?></b>
 									</div>
 									<div class="aui-car-box-list-text-arithmetic">
 										<a href="javascript:;" class="minus">-</a>
@@ -113,130 +116,10 @@ var_dump($carinfo);
 
 						</div>
 					</li>
-					<li>
-						<div class="aui-car-box-list-item">
-							<input type="checkbox" class="check goods-check goodsCheck">
-							<div class="aui-car-box-list-img">
-								<a href="ui-product.phtml">
-									<img src="themes/img/pd/sf-3.jpg" alt="">
-								</a>
-							</div>
-							<div class="aui-car-box-list-text">
-								<h4>
-									<a href="ui-product.phtml">【黑卡96折】Apple 苹果 iPhone 7（A1660）移动联通电信4G手机 国内行货</a>
-								</h4>
-								<div class="aui-car-box-list-text-brief">
-									<span>重量:3.3kg</span>
-									<span>颜色:标配版</span>
-									<span>版本:5.7英寸</span>
-								</div>
-								<div class="aui-car-box-list-text-price">
-									<div class="aui-car-box-list-text-pri">
-										￥<b class="price">100.00</b>
-									</div>
-									<div class="aui-car-box-list-text-arithmetic">
-										<a href="javascript:;" class="minus">-</a>
-										<span class="num">1</span>
-										<a href="javascript:;" class="plus">+</a>
-									</div>
-								</div>
-							</div>
 
-						</div>
-					</li>
-					<li>
-						<div class="aui-car-box-list-item">
-							<input type="checkbox" class="check goods-check goodsCheck">
-							<div class="aui-car-box-list-img">
-								<a href="ui-product.phtml">
-									<img src="themes/img/pd/sf-4.jpg" alt="">
-								</a>
-							</div>
-							<div class="aui-car-box-list-text">
-								<h4>
-									<a href="ui-product.phtml">【黑卡96折】Apple 苹果 iPhone 7（A1660）移动联通电信4G手机 国内行货</a>
-								</h4>
-								<div class="aui-car-box-list-text-brief">
-									<span>重量:3.3kg</span>
-									<span>颜色:标配版</span>
-									<span>版本:5.7英寸</span>
-								</div>
-								<div class="aui-car-box-list-text-price">
-									<div class="aui-car-box-list-text-pri">
-										￥<b class="aui-price">100.00</b>
-									</div>
-									<div class="aui-car-box-list-text-arithmetic">
-										<a href="javascript:;" class="minus">-</a>
-										<span class="num">1</span>
-										<a href="javascript:;" class="plus">+</a>
-									</div>
-								</div>
-							</div>
+					<?php } ?>
 
-						</div>
-					</li>
-					<li>
-						<div class="aui-car-box-list-item">
-							<input type="checkbox" class="check goods-check goodsCheck">
-							<div class="aui-car-box-list-img">
-								<a href="ui-product.phtml">
-									<img src="themes/img/pd/sf-5.jpg" alt="">
-								</a>
-							</div>
-							<div class="aui-car-box-list-text">
-								<h4>
-									<a href="ui-product.phtml">【黑卡96折】Apple 苹果 iPhone 7（A1660）移动联通电信4G手机 国内行货</a>
-								</h4>
-								<div class="aui-car-box-list-text-brief">
-									<span>重量:3.3kg</span>
-									<span>颜色:标配版</span>
-									<span>版本:5.7英寸</span>
-								</div>
-								<div class="aui-car-box-list-text-price">
-									<div class="aui-car-box-list-text-pri">
-										￥<b class="price">100.00</b>
-									</div>
-									<div class="aui-car-box-list-text-arithmetic">
-										<a href="javascript:;" class="minus">-</a>
-										<span class="num">1</span>
-										<a href="javascript:;" class="plus">+</a>
-									</div>
-								</div>
-							</div>
 
-						</div>
-					</li>
-					<li>
-						<div class="aui-car-box-list-item">
-							<input type="checkbox" class="check goods-check goodsCheck">
-							<div class="aui-car-box-list-img">
-								<a href="ui-product.phtml">
-									<img src="themes/img/pd/sf-6.jpg" alt="">
-								</a>
-							</div>
-							<div class="aui-car-box-list-text">
-								<h4>
-									<a href="ui-product.phtml">【黑卡96折】Apple 苹果 iPhone 7（A1660）移动联通电信4G手机 国内行货</a>
-								</h4>
-								<div class="aui-car-box-list-text-brief">
-									<span>重量:3.3kg</span>
-									<span>颜色:标配版</span>
-									<span>版本:5.7英寸</span>
-								</div>
-								<div class="aui-car-box-list-text-price">
-									<div class="aui-car-box-list-text-pri">
-										￥<b class="aui-price">100.00</b>
-									</div>
-									<div class="aui-car-box-list-text-arithmetic">
-										<a href="javascript:;" class="minus">-</a>
-										<span class="num">1</span>
-										<a href="javascript:;" class="plus">+</a>
-									</div>
-								</div>
-							</div>
-
-						</div>
-					</li>
 				</ul>
 			</div>
 			<div class="aui-shopPrice">
