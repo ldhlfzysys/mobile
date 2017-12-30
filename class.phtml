@@ -121,7 +121,8 @@ foreach ($productList as $product) {
 					foreach ($list as $product) {
 						echo '<div class="am-g am-intro-bd">';
 						echo '<a href="http://bdbbuy.com/mobile/ui-product.phtml?productId='.$product['product_id'].'">';
-						echo '<div class="am-intro-left am-u-sm-3"><img src="http://bdbbuy.com/media/catalog/product'.$product['image'].'"  /></div>';
+						#<img class="lazy" src="grey.gif" data-original="example.jpg" width="640" heigh="480">min-width: 72px; max-width: 100%; width: auto; height: auto;
+						echo '<div class="am-intro-left am-u-sm-3"><img  class="lazy" src="./images/grey.gif" data-original="http://bdbbuy.com/media/catalog/product'.$product['image'].'" /></div>';
 						echo '<div class="am-intro-right am-u-sm-8">';
 						echo '<h2>'.$product['name'].'</h2>';
 						echo '<p>'.$product['short_description'].'</p>';
@@ -180,6 +181,8 @@ foreach ($productList as $product) {
 
 	<script src="themes/js/jquery.min.js"></script>
 	<script src="themes/js/aui.js"></script>
+	<script src="themes/js/jquery.lazyload.js"></script>
+	<script src="themes/js/jquery.scrollstop.js"></script>
 </body>
 <script type="text/javascript">
 	function GetQueryString(name)
@@ -196,11 +199,22 @@ foreach ($productList as $product) {
 			 $(this).addClass("on").siblings().removeClass("on"); //切换选中的按钮高亮状态
 			 var index=$(this).index(); //获取被按下按钮的索引值，需要注意index是从0开始的
 			 $(".tab_box > div").eq(index).show().siblings().hide(); //在按钮选中时在下面显示相应的内容，同时隐藏不需要的框架内容
+			 $('img').lazyload({
+				event: 'scrollstop'
+			 });
 		 });
 		if (GetQueryString('category_id') != null) {
 			var index = $(".category_" + GetQueryString("category_id")).index();
 			$(".tab_menu ul").find("li:eq("+index+")").click();
 		};
+		$(".aui-scroll-content").scroll(function() {
+			$('img').lazyload({
+				event: 'scrollstop'
+			});
+		});
+		$('img').lazyload({
+			event: 'scrollstop'
+		});
 	});
 
 </script>
