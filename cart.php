@@ -1,7 +1,7 @@
 <?php
 
 #传入商品id和数量，数量为整形，商品id为字符串
-function addToCart($product_id,$qty){
+function addToCart($cartid,$product_id,$qty){
 	$client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
 	$session = $client->login('mobile', 'mobile');
 	$arrProducts = array(
@@ -10,7 +10,7 @@ function addToCart($product_id,$qty){
 			"qty" => $qty
 			)
 	);
- 	$result = $client->call($session, 'cart_product.add', array($cartid,$arrProducts));
+ 	$result = $client->call($session, 'cart_product.add', array($cartid,$arrProducts,'16'));
 }
 
 function cart($cartid){
