@@ -16,7 +16,8 @@ function addToCart($product_id,$qty){
 function cart($cartid){
 	$client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
 	$session = $client->login('mobile', 'mobile');
-	$result = $client->call($session, 'cart.info', $cartid);
+
+	$result = $client->call($session, 'cart.info', $cartid, '16');
 	return $result;
 }
 
