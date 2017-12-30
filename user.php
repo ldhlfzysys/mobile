@@ -4,28 +4,31 @@ header("Content-type:text/html;charset=utf-8");
 #使用方式：
 
 function userid(){
-	$userid = $_COOKIE['bdb-ui'];   //用户id	
-	return $userid;
+	if (isset($_COOKIE['bdb-ui'])) {
+		return $_COOKIE['bdb-ui'];   //用户id	
+	}
+	
+	return null;
 
 }
 
 function cartid(){
-	$cartid = $_COOKIE['bdb-ci'];   //购物车id
-	if ($cartid == null) {
+	if (isset($_COOKIE['bdb-ci'])) {
+		return $_COOKIE['bdb-ci'];
+	}else{
 		$client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
 		$session = $client->login('mobile', 'mobile');
 		$result = $client->call( $session, 'cart.create');
 		$cartid = $result;
 		setcookie('bdb-ci',$cartid);
-	}else{
 		return $cartid;
 	}
 }
 
 function userinfo(){
-	$userinfo = $_COOKIE['bdb-uf']; //用户信息 "customer_id" "confirmation" "email" "firstname" "lastname" "middlename"	
-	$userid = userid();
-	if ($userid == null) {
+	if (isset($_COOKIE['bdb-uf'])) {
+		return $_COOKIE['bdb-uf'];
+	}else if (userid() == null) {
 		return null;
 	}
 	else if($userinfo == null)
@@ -38,17 +41,16 @@ function userinfo(){
 		setcookie('bdb-uf',json_encode($userinfo));
 		return $userinfo;
 	}else{
-		return $userinfo;
+		return null;
 	}
 
 }
 
 function islogin(){
-	$userid = $_COOKIE['bdb-ui'];   //用户id	
-	if ($userid == null) {
-		return false;
-	}else{
+	if (isset($_COOKIE['bdb-ui'])) {
 		return true;
+	}else{
+		return false;
 	}
 }
 
