@@ -8,6 +8,17 @@ $cartid = cartid();
 $carinfo = cart($cartid);
 $carItems = $carinfo['items'];
 
+$products = array();
+foreach ($carItems as $item) {
+	$product_id = $item['product_id'];
+	$url='http://bdbbuy.com/mobile/productInfo.php?ids='.$product_id;
+	$jsonResult = json_decode(file_get_contents($url),true);
+	if (count($jsonResult) > 0) {
+		$product = $jsonResult[0];
+	}
+	array_push($products, $product);
+}
+
 ?>
 <html>
 <head>
@@ -83,14 +94,14 @@ $carItems = $carinfo['items'];
 
 						</div>
 					</li> -->
-					<?php foreach ($carItems as $item) {
+					<?php foreach ($products as $item) {
 					?>
 					<li>
 						<div class="aui-car-box-list-item">
 							<input type="checkbox" class="check goods-check goodsCheck">
 							<div class="aui-car-box-list-img">
 								<a href="ui-product.phtml">
-									<img src="themes/img/pd/sf-1.jpg" alt="">
+									<img src="http://bdbbuy.com/media/catalog/product<?php echo $item['image'] ?>" alt="">
 								</a>
 							</div>
 							<div class="aui-car-box-list-text">
@@ -98,9 +109,7 @@ $carItems = $carinfo['items'];
 									<a href="ui-product.phtml"><?php echo $item['name'];  ?></a>
 								</h4>
 								<div class="aui-car-box-list-text-brief">
-									<span>重量:3.3kg</span>
-									<span>颜色:标配版</span>
-									<span>版本:5.7英寸</span>
+									<span><?php echo $item['short_description']; ?></span>
 								</div>
 								<div class="aui-car-box-list-text-price">
 									<div class="aui-car-box-list-text-pri">
