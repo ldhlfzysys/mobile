@@ -4,16 +4,19 @@ $client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');
   
 $session = $client->login('mobile', 'mobile');
 
-$result = $client->call($session, 'catalog_product.currentStore', 'china');
-
-$args = array(
-    'productId' => '5974',
+$filters = array(
+    'filters' => array(
+        'status' => 1, 
+        'type_id' => 'simple',
+    ),
     'storeView' => 'china'
 );
 
-$sku = '5974';
-$res = $client->call($session, 'catalog_product.info',$args);
+$result = $client->call($session, 'catalog_product.list',$filters);
 
-echo json_encode($res);
+// var_dump($result);
+echo json_encode($result);
 
+// If you don't need the session anymore
+//$client->endSession($session);
 ?>
