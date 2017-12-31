@@ -1,4 +1,6 @@
 <?php
+include_once('./user.php');
+include_once('./cart.php');
 $categoryArray=array();
 					$categoryArray['休闲零食'] = '64';
 					$categoryArray['饼干糕点'] = '79';
@@ -53,6 +55,7 @@ foreach ($productList as $product) {
 	}
 	array_push($newProductList[$id1], $product);
 }
+$cartId = cartid();
 ?>
 <html lang="en">
 <head>
@@ -128,7 +131,7 @@ foreach ($productList as $product) {
 						echo '<p>'.$product['short_description'].'</p>';
 						echo '<div class="text">';
 						echo '<span class="fl">'.$product['price'].'</span>';
-						echo '<span class="fr"><img src="themes/img/icon/icon-kin.png"  /></span>';
+						echo '<span class="fr"><img src="themes/img/icon/icon-kin.png" onclick="addToCart(\''.$cartId.'\',\''.$product['product_id'].'\')"/></span>';
 						echo '</div>';
 						echo '</div>';
 						echo '</a>';
@@ -216,6 +219,35 @@ foreach ($productList as $product) {
 			event: 'scrollstop'
 		});
 	});
+
+	function addToCart(cartId,productId) { 
+
+        // $('#loading').showLoading();
+
+        $.ajax({  
+
+            url:"http://bdbbuy.com/mobile/cart.php?addToCart="+cartId+"&productId="+productId,           
+
+            type: "GET",         
+
+            success:function(result){  
+
+                // $('#loading').hideLoading();
+                alert(result);
+
+                document.location.reload(); 
+
+            },
+
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+
+                // $('#loading').hideLoading();
+
+            }
+
+        });
+
+    }
 
 </script>
 </html>
