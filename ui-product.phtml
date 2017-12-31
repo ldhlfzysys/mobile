@@ -146,7 +146,6 @@ $cartId = cartid();
 <script type="text/javascript">
 
  function addToCart(cartId,productId) { 
-
         // $('#loading').showLoading();
 
         $.ajax({  
@@ -158,14 +157,12 @@ $cartId = cartid();
             success:function(result){  
 
                 // $('#loading').hideLoading();
-                alert(result);
 
                 document.location.reload(); 
 
             },
 
             error:function(XMLHttpRequest, textStatus, errorThrown){
-
                 // $('#loading').hideLoading();
 
             }

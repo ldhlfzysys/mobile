@@ -7,7 +7,6 @@ include_once('./cart.php');
 $cartid = cartid();
 $carinfo = cart($cartid);
 $carItems = $carinfo['items'];
-
 $products = array();
 foreach ($carItems as $item) {
 	$product_id = $item['product_id'];
@@ -42,7 +41,7 @@ foreach ($carItems as $item) {
 		</a>
 		<div class="aui-header-center aui-header-center-clear">
 			<div class="aui-header-center-logo">
-				<div class="aui-car-white-Typeface">购物车(6)</div>
+				<div class="aui-car-white-Typeface">购物车<?php echo $cartid; ?></div>
 			</div>
 		</div>
 		<a href="#" class="aui-header-item-icon"   style="min-width:0">
