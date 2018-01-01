@@ -75,8 +75,8 @@ $(function(){
       var oprice = 0; //店铺总价
       $(this).find(".goodsCheck").each(function() { //循环店铺里面的商品
         if ($(this).is(":checked")) { //如果该商品被选中
-            var num = parseInt($(this).parents("..aui-car-box-list-item").find(".num").text()); //得到商品的数量
-            var price = parseFloat($(this).parents("..aui-car-box-list-item").find(".price").text()); //得到商品的单价
+            var num = parseInt($(this).parents(".aui-car-box-list-item").find(".num").text()); //得到商品的数量
+            var price = parseFloat($(this).parents(".aui-car-box-list-item").find(".price").text()); //得到商品的单价
             var total = price * num; //计算单个商品的总价
           oprice += total; //计算该店铺的总价
         }
