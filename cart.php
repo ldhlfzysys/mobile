@@ -14,6 +14,19 @@ function addToCart($cartid,$product_id,$qty){
  	echo json_encode($result);
 }
 
+function updateCart($cartid,$product_id,$qty){
+	$client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
+	$session = $client->login('mobile', 'mobile');
+	$arrProducts = array(
+		array(
+			"product_id" => $product_id,
+			"qty" => $qty
+			)
+	);
+ 	$result = $client->call($session, 'cart_product.update', array($cartid,$arrProducts,'16'));
+ 	echo json_encode($result);
+}
+
 function cart($cartid){
 	$client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
 	$session = $client->login('mobile', 'mobile');
