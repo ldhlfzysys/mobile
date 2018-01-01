@@ -2,12 +2,51 @@ $(function(){
 	// 数量减
 	$(".minus").click(function() {
 		var t = $(this).parent().find('.num');
+    var qty = parseInt(t.text());
+    var productid = $(this).parent().find('.min_prodcut_id').text();
+    var cartid = $(this).parent().find('.cart_id').text();
 		t.text(parseInt(t.text()) - 1);
-		if (t.text() <= 1) {
-			t.text(1);
-		}
+		if (t.text() <= 0) {
+        var datas = [];
+        var dict = {};
+        dict.product_id = productid;
+        dict.qty = qty;
+        datas.push(dict);
+        var str = JSON.stringify(datas);
+        deleteProduct(cartid,str);
+    }
 		TotalPrice();
 	});
+
+  function deleteProduct(cartid,json_str)
+  {
+    var r=confirm("删除该商品？")
+    if (r==true) {
+
+            $.ajax({  
+
+                url:"http://bdbbuy.com/mobile/cart.php?cartid="+cartid+"&remove="+json_str,           
+
+                type: "GET",         
+
+                success:function(result){  
+
+                    // $('#loading').hideLoading();
+                    // alert(result);
+                    document.location.reload(); 
+
+                },
+
+                error:function(XMLHttpRequest, textStatus, errorThrown){
+                    // $('#loading').hideLoading();
+
+                }
+
+            });
+    }
+  }
+
+
 	// 数量加
 	$(".plus").click(function() {
 		var t = $(this).parent().find('.num');
@@ -87,4 +126,5 @@ $(function(){
     });
     $("#AllTotal").text(allprice.toFixed(2)); //输出全部总价
   }
+  TotalPrice();
 });

@@ -15,6 +15,7 @@ foreach ($carItems as $item) {
 	if (count($jsonResult) > 0) {
 		$product = $jsonResult[0];
 	}
+	$product['qty'] = $item['qty'];
 	array_push($products, $product);
 }
 
@@ -32,7 +33,52 @@ foreach ($carItems as $item) {
 	<link rel="stylesheet" href="themes/css/home.css">
 	<link rel="icon" type="image/x-icon" href="favicon.ico">
 	<link href="iTunesArtwork@2x.png" sizes="114x114" rel="apple-touch-icon-precomposed">
+	<script src="themes/js/jquery.min.js"></script>
+	<script src="themes/js/aui-car.js"></script>
 </head>
+
+<script type="text/javascript">
+
+ function updatecart(cartid) { 
+
+ 		var datas = [];
+	    $(".aui-car-box").each(function() { //循环每个店铺
+	      $(this).find(".goodsCheck").each(function() { //循环店铺里面的商品
+            var num = parseInt($(this).parents(".aui-car-box-list-item").find(".num").text()); //得到商品的数量
+            var productid = parseFloat($(this).parents(".aui-car-box-list-item").find(".prodcut_id").text()); 
+            var dict = {};
+            dict.product_id = productid;
+            dict.qty = num;
+            datas.push(dict);
+	      });
+	    });
+
+	    var str = JSON.stringify(datas);
+
+        $.ajax({  
+
+            url:"http://bdbbuy.com/mobile/cart.php?cartid="+cartid+"&updateCart="+str,           
+
+            type: "GET",         
+
+            success:function(result){  
+
+                // $('#loading').hideLoading();
+                document.location.reload(); 
+
+            },
+
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+                // $('#loading').hideLoading();
+
+            }
+
+        });
+
+    }
+
+
+</script>
 <body>
 
 	<header class="aui-header-default aui-header-fixed aui-header-bg">
@@ -50,16 +96,16 @@ foreach ($carItems as $item) {
 	</header>
 	<section class="aui-car-content">
 		<div class="aui-car-box">
-			<div class="aui-car-box-name">
+<!-- 			<div class="aui-car-box-name">
 				<input type="checkbox" class="check goods-check shopCheck">
 				<h3>
 					<a href="#">全选</a>
 				</h3>
 				<div class="aui-car-coupons">
-<!-- 					<a href="#">领券</a>
-					<a href="#">编辑</a> -->
+					<a href="#">领券</a>
+					<a href="#">编辑</a>
 				</div>
-			</div>
+			</div> -->
 			<div class="aui-car-box-list">
 				<ul>
 <!-- 					<li>
@@ -97,26 +143,29 @@ foreach ($carItems as $item) {
 					?>
 					<li>
 						<div class="aui-car-box-list-item">
-							<input type="checkbox" class="check goods-check goodsCheck">
+							<input style="display:none" type="checkbox" class="check goods-check goodsCheck" checked="checked">
 							<div class="aui-car-box-list-img">
-								<a href="ui-product.phtml">
+								<a href="ui-product.phtml?productId=<?php echo $item['product_id']; ?>">
 									<img src="http://bdbbuy.com/media/catalog/product<?php echo $item['image'] ?>" alt="">
 								</a>
 							</div>
 							<div class="aui-car-box-list-text">
 								<h4>
-									<a href="ui-product.phtml"><?php echo $item['name'];  ?></a>
+									<a href="ui-product.phtml?productId=<?php echo $item['product_id']; ?>"><?php echo $item['name'];  ?></a>
 								</h4>
 								<div class="aui-car-box-list-text-brief">
 									<span><?php echo $item['short_description']; ?></span>
 								</div>
+								<div style="display:none" class="prodcut_id"><?php echo $item['product_id'];  ?></div>
 								<div class="aui-car-box-list-text-price">
 									<div class="aui-car-box-list-text-pri">
-										CA$<b class="price"><?php echo $item['price'] ?></b>
+										CA$<b class="price"><?php echo number_format($item['price'],2); ?></b>
 									</div>
 									<div class="aui-car-box-list-text-arithmetic">
 										<a href="javascript:;" class="minus">-</a>
-										<span class="num">1</span>
+										<span class="num"><?php echo $item['qty']; ?></span>
+										<div style="display:none" class="cart_id"><?php echo $cartid;  ?></div>
+										<div style="display:none" class="min_prodcut_id"><?php echo $item['product_id'];  ?></div>
 										<a href="javascript:;" class="plus">+</a>
 									</div>
 								</div>
@@ -137,14 +186,13 @@ foreach ($carItems as $item) {
 		</div>
 	</section>
 	<div class="aui-payment-bar">
-		<div class="all-checkbox"><input type="checkbox" class="check goods-check" id="AllCheck">全选</div>
+		<!-- <div class="all-checkbox"><input type="checkbox" class="check goods-check" id="AllCheck">全选</div> -->
 		<div class="shop-total">
-			<strong>合计：<i class="total" id="AllTotal">399.00</i></strong>
+			<strong>合计：<i class="total" id="AllTotal">00.00</i></strong>
 		</div>
-		<a href="order.html" class="settlement">结算</a>
+		<?php echo '<a href="" class="settlement" onclick="updatecart(\''.$cartid.'\')">结算</a>'; ?>
 	</div>
-	<script src="themes/js/jquery.min.js"></script>
-	<script src="themes/js/aui-car.js"></script>
+
 
 </body>
 </html>
