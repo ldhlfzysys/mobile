@@ -4,6 +4,11 @@
 *  http://azenui.com/
 *  http://www.a-ui.cn/
 */
+
+.aui-Address-box .input-group {
+	margin-bottom: 5px;
+}
+
 /* 导航信息 */
 .aui-header-default {
 	height: 2.8rem;
@@ -1325,7 +1330,7 @@ li {
 
 input.check {
 	background: url(../img/icon/icon_radio3.png) no-repeat center left;
-	background-size: 20px 20px;
+	background-size: 18px 18px;
 	position: absolute;
 	top: 50%;
 	left: 10px;
@@ -2467,7 +2472,7 @@ input.check:checked {
 
 .cityselect-title {
 	width: 100%;
-	font-size: .3rem;
+	font-size: 1.6rem;
 	text-align: center;
 	height: 45px;
 	line-height: 45px;
@@ -2500,7 +2505,7 @@ input.check:checked {
 }
 
 .cityselect-nav > a {
-	font-size: .26rem;
+	font-size: 1.4rem;
 	color: #222;
 	display: block;
 	height: 40px;
@@ -2579,7 +2584,7 @@ input.check:checked {
 
 .cityselect-item-box > a {
 	color: #333;
-	font-size: .26rem;
+	font-size: 1.4rem;
 	height: 40px;
 	line-height: 40px;
 	overflow: hidden;

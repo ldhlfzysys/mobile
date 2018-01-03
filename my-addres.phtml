@@ -6,24 +6,22 @@
 	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
 	<meta name="format-detection" content="telephone=no, email=no"/>
 	<meta charset="UTF-8">
-	<title>新建地址</title>
+	<title>收货地址</title>
 	<link rel="stylesheet" href="themes/css/core.css">
 	<link rel="stylesheet" href="themes/css/icon.css">
 	<link rel="stylesheet" href="themes/css/home.css">
 	<link rel="icon" type="image/x-icon" href="favicon.ico">
 	<link href="iTunesArtwork@2x.png" sizes="114x114" rel="apple-touch-icon-precomposed">
-	<style>
-		.m-cell {
-			background-color: #FFF;
-			position: relative;
-			z-index: 1;
-			margin-bottom: .35rem;
-			height: 3rem;
-			line-height: 3rem;
-		}
-	</style>
 
 </head>
+
+<?php
+ini_set('display_errors',1);
+include('./user.php');
+include('./address.php');
+$userId = userid();
+$addressList = customer_address($userId);
+?>
 <body style="background:#eee">
 
 	<header class="aui-header-default aui-header-fixed aui-header-bg">
@@ -32,41 +30,52 @@
 		</a>
 		<div class="aui-header-center aui-header-center-clear">
 			<div class="aui-header-center-logo">
-				<div class="aui-car-white-Typeface">新建地址</div>
+				<div class="aui-car-white-Typeface">收货地址</div>
 			</div>
 		</div>
 		<a href="#" class="aui-header-item-icon"   style="min-width:0">
 			<!--<i class="aui-icon aui-icon-search"></i>-->
 		</a>
 	</header>
-
-
+	<?php foreach ($addressList as $add) {
+	?>
 	<section class="aui-myOrder-content">
-		<div class="aui-prompt"><i class="aui-icon aui-prompt-sm"></i>填写您的地址信息</div>
 		<div class="aui-Address-box">
-			<p>
-				<input class="aui-Address-box-input" type="text" placeholder="收货人姓名">
-			</p>
-			<p>
-				<input class="aui-Address-box-input" type="text" placeholder="手机号码">
-			</p>
-			<p>
-				<input class="aui-Address-box-input" type="text" readonly id="J_Address"  placeholder="所在地区">
-			</p>
-			<p>
-				<textarea class="aui-Address-box-text" placeholder="街道， 小区门牌等详细地址" rows="3"></textarea>
-			</p>
-
+			<div class="aui-Address-box-item">
+				<div class="aui-Address-box-item-bd">
+					<p><?php echo $add['lastname'].$add['firstname']; ?></p>
+				</div>
+				<div class="aui-Address-box-item-ft">
+					<p><?php echo $add['telephone']; ?></p>
+				</div>
+			</div>
+			<br>
+			<div class="aui-Address-box-item">
+				<div class="aui-Address-box-item-bd">
+					<p><?php echo $add['street'].'  '.$add['region'].'  '.$add['country_id']; ?></p>
+				</div>
+			</div>
+			<div class="aui-Address-box-item">
+				<div class="aui-Address-box-item-bd">
+					<p><input type="checkbox" class="check goods-check goodsCheck" checked="checked" style="background-size: 17px 17px;"> <em style="padding-left:24px;">默认地址</em></p>
+				</div>
+				<div class="aui-Address-box-item-ft">
+					<p>删除</p>
+				</div>
+			</div>
 		</div>
+
 		<div class="aui-out">
-			<a href="#" class="red-color" style="color:#fff">保存并使用</a>
+			<a href="my-edit-address.phtml">新建收货地址</a>
 		</div>
 	</section>
+	<?php } ?>
+
+
 
 
 	<script type="text/javascript" src="themes/js/jquery.min.js"></script>
 	<script type="text/javascript" src="themes/js/aui.js"></script>
-	<script type="text/javascript" src="themes/js/city.js"></script>
 	<script type="text/javascript" >
         /**
          * Javascript API调用Tab
@@ -90,46 +99,6 @@
                 console.log('索引：%s - [%s]已经打开了', e.index, $(this).text());
             });
         }(jQuery);
-	</script>
-	<script>
-        /**
-         * 默认调用
-         */
-        !function () {
-            var $target = $('#J_Address');
-
-            $target.citySelect();
-
-            $target.on('click', function (event) {
-                event.stopPropagation();
-                $target.citySelect('open');
-            });
-
-            $target.on('done.ydui.cityselect', function (ret) {
-                $(this).val(ret.provance + ' ' + ret.city + ' ' + ret.area);
-            });
-        }();
-        /**
-         * 设置默认值
-         */
-        !function () {
-            var $target = $('#J_Address2');
-
-            $target.citySelect({
-                provance: '新疆',
-                city: '乌鲁木齐市',
-                area: '天山区'
-            });
-
-            $target.on('click', function (event) {
-                event.stopPropagation();
-                $target.citySelect('open');
-            });
-
-            $target.on('done.ydui.cityselect', function (ret) {
-                $(this).val(ret.provance + ' ' + ret.city + ' ' + ret.area);
-            });
-        }();
 	</script>
 
 </body>

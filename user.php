@@ -7,9 +7,7 @@ function userid(){
 	if (isset($_COOKIE['bdb-ui'])) {
 		return $_COOKIE['bdb-ui'];   //用户id	
 	}
-	
 	return null;
-
 }
 
 function cartid(){
@@ -62,10 +60,6 @@ function username(){
 	}else{
 		return $userinfo['lastname'].$userinfo['middlename'].$userinfo['firstname'];
 	}
-}
-
-function login(){
-
 }
 
 ?>
