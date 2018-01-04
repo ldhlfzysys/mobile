@@ -3,28 +3,65 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-<title>登录页面</title>
-<link rel="stylesheet" href="themes/css/login.css" />
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+	<meta name="format-detection" content="telephone=no, email=no"/>
+	<meta charset="UTF-8">
+	<title>登录</title>
+	<link rel="stylesheet" href="themes/css/core.css">
+	<link rel="stylesheet" href="themes/css/icon.css">
+	<link rel="stylesheet" href="themes/css/home.css">
+	<link rel="stylesheet" href="themes/css/bootstrap.min.css">
+	<link rel="stylesheet" href="themes/css/login.css" />
+	<link rel="icon" type="image/x-icon" href="favicon.ico">
+	<link href="iTunesArtwork@2x.png" sizes="114x114" rel="apple-touch-icon-precomposed">
+	<style>
+		.m-cell {
+			background-color: #FFF;
+			position: relative;
+			z-index: 1;
+			margin-bottom: .35rem;
+			height: 3rem;
+			line-height: 3rem;
+		}
+	</style>
 </head>
+<body style="background:#eee">
 
-<body>
+	<header class="aui-header-default aui-header-fixed aui-header-bg">
+		<a href="javascript:history.back(-1)" class="aui-header-item">
+			<i class="aui-icon aui-icon-back-white"></i>
+		</a>
+		<div class="aui-header-center aui-header-center-clear">
+			<div class="aui-header-center-logo">
+				<div class="aui-car-white-Typeface">登录</div>
+			</div>
+		</div>
+		<a href="#" class="aui-header-item-icon"   style="min-width:0">
+			<!--<i class="aui-icon aui-icon-search"></i>-->
+		</a>
+	</header>
 <div class="login">
 	<div class="welcome"><img src="images/welcome.png"></div>
 	<div class="login-form">
-		<div class="login-inp"><label>登录</label><input id="userid" type="text" placeholder=""></div>
-		<div class="login-inp"><label>密码</label><input id="password" type="password" placeholder=""></div>
+		<div class="input-group">
+			<span class="input-group-btn">
+			<button class="btn btn-default" type="button">账号</button>
+			</span>
+			<input id="userid" type="text" class="form-control" placeholder="请输入用户名">
+		</div>
+		<div class="input-group">
+			<span class="input-group-btn">
+			<button class="btn btn-default" type="button">密码</button>
+			</span>
+			<input id="password" class="form-control" type="password" placeholder="清输入密码">
+		</div>
 		<div class="login-inp"><a class ="login-click" onclick="login()">立即登录</a></div>
 	</div>
-	<div class="login-txt"><a href="#">立即注册</a>|<a href="#">忘记密码？</a></div>
 </div>
 <script type="text/javascript" src="themes/js/jquery.min.js"></script>
 </body>
 <script type="text/javascript">
-	// $(function(){
-	// 	$(".login .login-inp .login-click").click(function(){
-
-	// 	});
-	// });
 	function login(){
 		var userID = $("#userid").val();
 		var password =  $("#password").val();
