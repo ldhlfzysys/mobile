@@ -11,7 +11,6 @@
 	<link rel="stylesheet" href="themes/css/core.css">
 	<link rel="stylesheet" href="themes/css/icon.css">
 	<link rel="stylesheet" href="themes/css/home.css">
-	<link rel="stylesheet" href="themes/css/bootstrap.min.css">
 	<link rel="stylesheet" href="themes/css/login.css" />
 	<link rel="icon" type="image/x-icon" href="favicon.ico">
 	<link href="iTunesArtwork@2x.png" sizes="114x114" rel="apple-touch-icon-precomposed">
@@ -41,21 +40,15 @@
 			<!--<i class="aui-icon aui-icon-search"></i>-->
 		</a>
 	</header>
-<div class="login">
+<div>
 	<div class="welcome"><img src="images/welcome.png"></div>
-	<div class="login-form">
-		<div class="input-group">
-			<span class="input-group-btn">
-			<button class="btn btn-default" type="button">账号</button>
-			</span>
-			<input id="userid" type="text" class="form-control" placeholder="请输入用户名">
-		</div>
-		<div class="input-group">
-			<span class="input-group-btn">
-			<button class="btn btn-default" type="button">密码</button>
-			</span>
-			<input id="password" class="form-control" type="password" placeholder="清输入密码">
-		</div>
+	<div class="login-form" style="margin:0 auto;width:70%" >
+			<p>
+				<span class="aui-Address-box-head">帐号</span><input class="aui-Address-box-input" id="userid" type="text" placeholder="请输入您的帐号">
+			</p>
+			<p>
+				<span class="aui-Address-box-head">密码</span><input class="aui-Address-box-input" id="password" type="text" placeholder="请输入您的密码">
+			</p>
 		<div class="aui-out">
 			<a class="red-color" style="color:#fff" onclick="login()">立即登录</a>
 		</div>
