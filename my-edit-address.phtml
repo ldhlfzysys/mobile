@@ -10,7 +10,6 @@
 	<link rel="stylesheet" href="themes/css/core.css">
 	<link rel="stylesheet" href="themes/css/icon.css">
 	<link rel="stylesheet" href="themes/css/home.css">
-	<link rel="stylesheet" href="themes/css/bootstrap.min.css">
 	<link rel="icon" type="image/x-icon" href="favicon.ico">
 	<link href="iTunesArtwork@2x.png" sizes="114x114" rel="apple-touch-icon-precomposed">
 	<style>
@@ -45,88 +44,47 @@
 	<section class="aui-myOrder-content">
 		<div class="aui-prompt"><i class="aui-icon aui-prompt-sm"></i>填写您的收货信息</div>
 		<div class="aui-Address-box billing">
-		    <div class="input-group">
-		      <span class="input-group-btn">
-		        <button class="btn btn-default" type="button" disabled="disabled">名字</button>
-		      </span>
-		      <input type="text" class="form-control" placeholder="请填写名字...">
-		    </div>
-		    <div class="input-group">
-		      <span class="input-group-btn">
-		        <button class="btn btn-default" type="button" disabled="disabled">姓氏</button>
-		      </span>
-		      <input type="text" class="form-control" placeholder="请填写姓氏...">
-		    </div>
-		    <div class="input-group">
-		      <span class="input-group-btn">
-		        <button class="btn btn-default" type="button" disabled="disabled">手机</button>
-		      </span>
-		      <input type="text" class="form-control" placeholder="请填写手机号...">
-		    </div>
-		    <div class="input-group">
-		      <span class="input-group-btn">
-		        <button class="btn btn-default" type="button" disabled="disabled">邮编</button>
-		      </span>
-		      <input type="text" class="form-control" placeholder="请填写邮编...">
-		    </div>
-		    <div class="input-group">
-		      <span class="input-group-btn">
-		        <button class="btn btn-default" type="button" disabled="disabled">地区</button>
-		      </span>
-		      <input type="text" class="form-control" placeholder="" value="安大略，加拿大" disabled="disabled">
-		    </div>
-		    <div class="input-group">
-		      <span class="input-group-btn">
-		        <button class="btn btn-default" type="button" disabled="disabled">街道</button>
-		      </span>
-		      <input type="text" class="form-control" placeholder="请填写详细街道地址...">
-		    </div>
-<!-- 			<p>
-				<input class="aui-Address-box-input" type="text" readonly id="J_Address"  placeholder="所在地区">
-			</p> -->
-<!-- 			<p>
+			<p>
+				<span class="aui-Address-box-head">名</span><input class="aui-Address-box-input" type="text" placeholder="名">
+			</p>
+			<p>
+				<span class="aui-Address-box-head">姓</span><input class="aui-Address-box-input" type="text" placeholder="姓">
+			</p>
+			<p>
+				<span class="aui-Address-box-head">手机号</span><input class="aui-Address-box-input" type="text" placeholder="手机号码">
+			</p>
+			<p>
+				<span class="aui-Address-box-head">邮编</span><input class="aui-Address-box-input" type="text" placeholder="邮编">
+			</p>
+			<p>
+				<!-- <span class="aui-Address-box-head">地区</span><input class="aui-Address-box-input" type="text" readonly id="J_Address"  placeholder="所在地区"> -->
+				<span class="aui-Address-box-head">地区</span><input class="aui-Address-box-input" type="text" value="安大略，加拿大" disabled="disabled">
+			</p>
+			<p>
 				<textarea class="aui-Address-box-text" placeholder="街道， 小区门牌等详细地址" rows="3"></textarea>
-			</p> -->
+			</p>
 
 		</div>
-		<div class="aui-prompt"><i class="aui-icon aui-prompt-sm"></i>填写您的账单信息<div style="display:block;position:relative"><input style="margin-top: -18px" type="checkbox" class="check goods-check goodsCheck" style="background-size: 17px 17px;" onchange="useBillingAddress(this)"> <em style="padding-left:24px;">&nbsp;&nbsp;使用收货地址作为账单地址</em></div></div>
+		<div class="aui-prompt"><i class="aui-icon aui-prompt-sm"></i>填写您的账单信息<div style="display:block;position:relative"><input type="checkbox" class="check goods-check goodsCheck" checked="" style="background-size: 17px 17px;" onchange="useBillingAddress(this)"> <em style="padding-left:24px;">&nbsp;&nbsp;使用收货地址作为账单地址</em></div></div>
 		<div class="aui-Address-box shipping">
-		    <div class="input-group">
-		      <span class="input-group-btn">
-		        <button class="btn btn-default" type="button" disabled="disabled">名字</button>
-		      </span>
-		      <input type="text" class="form-control" placeholder="请填写名字...">
-		    </div>
-		    <div class="input-group">
-		      <span class="input-group-btn">
-		        <button class="btn btn-default" type="button" disabled="disabled">姓氏</button>
-		      </span>
-		      <input type="text" class="form-control" placeholder="请填写姓氏...">
-		    </div>
-		    <div class="input-group">
-		      <span class="input-group-btn">
-		        <button class="btn btn-default" type="button" disabled="disabled">手机</button>
-		      </span>
-		      <input type="text" class="form-control" placeholder="请填写手机号...">
-		    </div>
-		    <div class="input-group">
-		      <span class="input-group-btn">
-		        <button class="btn btn-default" type="button" disabled="disabled">邮编</button>
-		      </span>
-		      <input type="text" class="form-control" placeholder="请填写邮编...">
-		    </div>
-		    <div class="input-group">
-		      <span class="input-group-btn">
-		        <button class="btn btn-default" type="button" disabled="disabled">地区</button>
-		      </span>
-		      <input type="text" class="form-control" placeholder="请填写账单地区" >
-		    </div>
-		    <div class="input-group">
-		      <span class="input-group-btn">
-		        <button class="btn btn-default" type="button" disabled="disabled">街道</button>
-		      </span>
-		      <input type="text" class="form-control" placeholder="请填写详细街道地址...">
-		    </div>
+			<p>
+				<span class="aui-Address-box-head">名</span><input class="aui-Address-box-input" type="text" placeholder="名">
+			</p>
+			<p>
+				<span class="aui-Address-box-head">姓</span><input class="aui-Address-box-input" type="text" placeholder="姓">
+			</p>
+			<p>
+				<span class="aui-Address-box-head">手机号</span><input class="aui-Address-box-input" type="text" placeholder="手机号码">
+			</p>
+			<p>
+				<span class="aui-Address-box-head">邮编</span><input class="aui-Address-box-input" type="text" placeholder="邮编">
+			</p>
+			<p>
+				<span class="aui-Address-box-head">地区</span><input class="aui-Address-box-input" type="text" placeholder="所在地区">
+			</p>
+			<p>
+				<textarea class="aui-Address-box-text" placeholder="街道， 小区门牌等详细地址" rows="3"></textarea>
+			</p>
 
 		</div>
 		<div class="aui-out">

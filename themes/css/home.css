@@ -2376,7 +2376,31 @@ input.check:checked {
 }
 
 .aui-Address-box-input {
-	width: 100%;
+	width: 80%;
+	border: 0;
+	outline: 0;
+	-webkit-appearance: none;
+	background-color: #fff;
+	font-size: inherit;
+	color: inherit;
+	height: 3em;
+	line-height: inherit;
+	padding-left: 10px;
+	border-bottom: 1px solid #eee;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	/*margin-bottom: 8px;*/
+}
+
+.aui-Address-box-input:disabled {
+	background-color: #fff;
+	opacity: 1;
+}
+
+.aui-Address-box-head {
+	float: left;
+	display: block;
+	width: 20%;
 	border: 0;
 	outline: 0;
 	-webkit-appearance: none;
@@ -2387,7 +2411,6 @@ input.check:checked {
 	line-height: 3;
 	padding-left: 10px;
 	border-bottom: 1px solid #eee;
-	margin-bottom: 8px;
 }
 
 .aui-Address-box-text {
