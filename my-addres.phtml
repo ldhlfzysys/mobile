@@ -1,12 +1,29 @@
 <!DOCTYPE html>
 <html>
+<?php
+
+include('./user.php');
+include('./address.php');
+$type = $_GET['type'];
+$userId = userid();
+$addressList = array();
+if ($userId != null) {
+	$addressList = customer_address($userId);
+}
+
+?>
+
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui"/>
 	<meta name="apple-mobile-web-app-capable" content="yes"/>
 	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
 	<meta name="format-detection" content="telephone=no, email=no"/>
 	<meta charset="UTF-8">
-	<title>收货地址</title>
+	<title><?php if ($type == 0) {
+		echo '收货地址';
+	}else{
+		echo '账单地址';
+	} ?></title>
 	<link rel="stylesheet" href="themes/css/core.css">
 	<link rel="stylesheet" href="themes/css/icon.css">
 	<link rel="stylesheet" href="themes/css/home.css">
@@ -15,13 +32,7 @@
 
 </head>
 
-<?php
-ini_set('display_errors',1);
-include('./user.php');
-include('./address.php');
-$userId = userid();
-$addressList = customer_address($userId);
-?>
+
 <body style="background:#eee">
 
 	<header class="aui-header-default aui-header-fixed aui-header-bg">
@@ -30,17 +41,22 @@ $addressList = customer_address($userId);
 		</a>
 		<div class="aui-header-center aui-header-center-clear">
 			<div class="aui-header-center-logo">
-				<div class="aui-car-white-Typeface">收货地址</div>
+				<div class="aui-car-white-Typeface"><?php if ($type == 0) {
+					echo '收货地址';
+				}else{
+					echo '账单地址';
+				} ?></div>
 			</div>
 		</div>
 		<a href="#" class="aui-header-item-icon"   style="min-width:0">
 			<!--<i class="aui-icon aui-icon-search"></i>-->
 		</a>
 	</header>
-	<?php foreach ($addressList as $add) {
-	?>
+
 	<section class="aui-myOrder-content">
-		<div class="aui-Address-box">
+		<?php foreach ($addressList as $add) {
+		?>
+		<div class="aui-Address-box" onclick="selectAddress('<?php echo $add['customer_address_id'] ?>')">
 			<div class="aui-Address-box-item">
 				<div class="aui-Address-box-item-bd">
 					<p><?php echo $add['lastname'].$add['firstname']; ?></p>
@@ -49,7 +65,6 @@ $addressList = customer_address($userId);
 					<p><?php echo $add['telephone']; ?></p>
 				</div>
 			</div>
-			<br>
 			<div class="aui-Address-box-item">
 				<div class="aui-Address-box-item-bd">
 					<p><?php echo $add['street'].'  '.$add['region'].'  '.$add['country_id']; ?></p>
@@ -57,26 +72,89 @@ $addressList = customer_address($userId);
 			</div>
 			<div class="aui-Address-box-item">
 				<div class="aui-Address-box-item-bd">
-					<p><input type="checkbox" class="check goods-check goodsCheck" checked="checked" style="background-size: 17px 17px;"> <em style="padding-left:24px;">默认地址</em></p>
+					<?php
+						if ($add['is_default_billing'] == true && $add['is_default_shipping'] == true) {
+							echo '<p style="color:#999999">当前收货、账单地址</p>';
+						}else if ($add['is_default_billing'] == true) {
+							echo '<p style="color:#999999">当前账单地址</p>';
+						}else if ($add['is_default_shipping'] == true) {
+							echo '<p style="color:#999999">当前收货地址</p>';
+						}
+					 ?>
+					<!-- <p><input type="checkbox" class="check goods-check goodsCheck" checked="checked" style="background-size: 17px 17px;"> <em style="padding-left:24px;">默认地址</em></p> -->
 				</div>
 				<div class="aui-Address-box-item-ft">
-					<p>删除</p>
+					<p onclick="deleteAddress('<?php echo $add['customer_address_id'] ?>')">删除</p>
 				</div>
 			</div>
 		</div>
-
+		<?php } ?>
 		<div class="aui-out">
-			<a href="my-edit-address.phtml">新建收货地址</a>
+			<a href="my-edit-address.phtml?type=<?php echo $type; ?>">新建<?php if ($type == 0) {
+				echo '收货地址';
+			}else{
+				echo '账单地址';
+			} ?></a>
 		</div>
 	</section>
-	<?php } ?>
-
-
-
 
 	<script type="text/javascript" src="themes/js/jquery.min.js"></script>
 	<script type="text/javascript" src="themes/js/aui.js"></script>
 	<script type="text/javascript" >
+		function deleteAddress(address_id){
+			event.cancelBubble=true;
+		    var r=confirm("删除该地址？")
+			    if (r==true) {
+					
+					$.ajax({  
+
+				        url:"http://bdbbuy.com/mobile/address.php",           
+
+				        type: "POST",
+
+				        data:{delete_address:1,address_id:address_id},         
+
+				        success:function(result){  
+				        	if (result == "") {
+				        		window.location.href="http://bdbbuy.com/mobile/my-addres.phtml?type=<?php echo $type; ?>";
+				        	}else{
+				        		alert("删除失败");
+				        	}
+				        },
+
+				        error:function(XMLHttpRequest, textStatus, errorThrown){
+
+				        }
+
+				    });
+			}
+
+		}
+		function selectAddress(address_id){
+			$.ajax({  
+
+		        url:"http://bdbbuy.com/mobile/address.php",           
+
+		        type: "POST",
+
+		        data:{update:<?php echo $type; ?>,address_id:address_id},         
+
+		        success:function(result){  
+		        	if (result == "") {
+		        		window.location.href="http://bdbbuy.com/mobile/order.phtml";
+		        	}else{
+		        		alert("选择失败，请重试");
+		        	}
+		        },
+
+		        error:function(XMLHttpRequest, textStatus, errorThrown){
+
+		            
+
+		        }
+
+		    });
+		}
         /**
          * Javascript API调用Tab
          */

@@ -1,23 +1,12 @@
 <!DOCTYPE html>
 <html>
-<?php 
-//0收货
-//1zhang'dan
-include('./user.php');
-$type=$_GET['type'];
-$userid = userid();
-?>
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui"/>
 	<meta name="apple-mobile-web-app-capable" content="yes"/>
 	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
 	<meta name="format-detection" content="telephone=no, email=no"/>
 	<meta charset="UTF-8">
-	<title><?php if ($type == 0) {
-		echo '收货地址';
-	}else{
-		echo '账单地址';
-	} ?></title>
+	<title>收货地址</title>
 	<link rel="stylesheet" href="themes/css/core.css">
 	<link rel="stylesheet" href="themes/css/icon.css">
 	<link rel="stylesheet" href="themes/css/home.css">
@@ -43,21 +32,31 @@ function save(){
 	var shipping_postcode = $('#shipping-postcode').val();
 	var shipping_area = $('#shipping-area').val();
 	var shipping_street = $('#shipping-street').val();
+	var useShippingAddress = $('#useShippingAddress').checked();
+	var billing_lastname = $('#billing-lastname').val();
+	var billing_firstname = $('#billing-firstname').val();
+	var billing_phone = $('#billing-phone').val();
+	var billing_postcode = $('#billing-postcode').val();
+	var billing_area = $('#billing-area').val();
+	var billing_street = $('#billing-street').val();
 	$.ajax({  
 
         url:"http://bdbbuy.com/mobile/address.php",           
 
         type: "POST",
 
-        data:{uid:<?php echo $userid; ?>,type:<?php echo $type; ?>,slastname:shipping_lastname,sfirstname:shipping_firstname,sphone:shipping_phone,spostcode:shipping_postcode,sarea:shipping_area,sstreet:shipping_street},         
+        data:{slastname:shipping_lastname,sfirstname:shipping_firstname,sphone:shipping_phone,spostcode:shipping_postcode,sarea:shipping_area,sstreet:shipping_street,blastname:billing_lastname,bfirstname:billing_firstname,bphone:billing_phone,bpostcode:billing_postcode,barea:billing_area,bstreet:billing_street},         
 
         success:function(result){  
 
-        	if (result == "") {
-        		window.location.href="http://bdbbuy.com/mobile/order.phtml";
-        	}else{
-        		alert("添加失败");
-        	}
+        	var res = eval("(" + result + ")");
+            if (res['status'] == 'OK') {
+            	window.location.href='http://bdbbuy.com/mobile/ui-me.phtml';
+            	document.cookie="bdb-ui="+res['userData']['customer_id'];
+            }else
+            {
+            	document.location.reload();
+            }
         },
 
         error:function(XMLHttpRequest, textStatus, errorThrown){
@@ -69,7 +68,6 @@ function save(){
     });
 }
 </script>
-
 <body style="background:#eee">
 
 	<header class="aui-header-default aui-header-fixed aui-header-bg">
@@ -78,11 +76,7 @@ function save(){
 		</a>
 		<div class="aui-header-center aui-header-center-clear">
 			<div class="aui-header-center-logo">
-				<div class="aui-car-white-Typeface"><?php if ($type == 0) {
-					echo '收货地址';
-				}else{
-					echo '账单地址';
-				} ?></div>
+				<div class="aui-car-white-Typeface">收货地址</div>
 			</div>
 		</div>
 		<a href="#" class="aui-header-item-icon"   style="min-width:0">
@@ -92,30 +86,23 @@ function save(){
 
 
 	<section class="aui-myOrder-content">
-		<div class="aui-prompt"><i class="aui-icon aui-prompt-sm"></i>填写您的地址信息</div>
+		<div class="aui-prompt"><i class="aui-icon aui-prompt-sm"></i>填写您的收货信息</div>
 		<div class="aui-Address-box shipping">
 			<p>
-				<span class="aui-Address-box-head">名</span><input id="shipping-lastname" class="aui-Address-box-input" type="text" placeholder="名">
+				<span id="shipping-lastname" class="aui-Address-box-head">名</span><input class="aui-Address-box-input" type="text" placeholder="名">
 			</p>
 			<p>
-				<span class="aui-Address-box-head">姓</span><input id="shipping-firstname" class="aui-Address-box-input" type="text" placeholder="姓">
+				<span id="shipping-firstname" class="aui-Address-box-head">姓</span><input class="aui-Address-box-input" type="text" placeholder="姓">
 			</p>
 			<p>
-				<span class="aui-Address-box-head">手机号</span><input id="shipping-phone" class="aui-Address-box-input" type="text" placeholder="手机号码">
+				<span id="shipping-phone" class="aui-Address-box-head">手机号</span><input class="aui-Address-box-input" type="text" placeholder="手机号码">
 			</p>
 			<p>
-				<span class="aui-Address-box-head">邮编</span><input id="shipping-postcode" class="aui-Address-box-input" type="text" placeholder="邮编">
+				<span id="shipping-postcode" class="aui-Address-box-head">邮编</span><input class="aui-Address-box-input" type="text" placeholder="邮编">
 			</p>
 			<p>
 				<!-- <span class="aui-Address-box-head">地区</span><input class="aui-Address-box-input" type="text" readonly id="J_Address"  placeholder="所在地区"> -->
-				<?php
-					if ($type==1) {
-						echo '<span class="aui-Address-box-head">地区</span><input id="shipping-area" class="aui-Address-box-input" type="text" placeholder="所在地区">';
-					}else{
-						echo '<span class="aui-Address-box-head">地区</span><input id="shipping-area" class="aui-Address-box-input" type="text" value="安大略，加拿大" disabled="disabled">';		
-					}
-				 ?>
-				
+				<span id="shipping-area" class="aui-Address-box-head">地区</span><input class="aui-Address-box-input" type="text" value="安大略，加拿大" disabled="disabled">
 			</p>
 			<p>
 				<textarea  id="shipping-street" class="aui-Address-box-text" placeholder="街道， 小区门牌等详细地址" rows="3"></textarea>

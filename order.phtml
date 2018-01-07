@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui"/>
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+	<meta name="format-detection" content="telephone=no, email=no"/>
+	<meta charset="UTF-8">
+	<title>下单</title>
+	<link rel="stylesheet" href="themes/css/core.css">
+	<link rel="stylesheet" href="themes/css/icon.css">
+	<link rel="stylesheet" href="themes/css/home.css">
+	<link rel="icon" type="image/x-icon" href="favicon.ico">
+	<link href="iTunesArtwork@2x.png" sizes="114x114" rel="apple-touch-icon-precomposed">
+</head>
+<?php
+include('./user.php');
+include('./address.php');
+$userId = userid();
+$addressList = array();
+$shippingAddress = null;
+$billingAddress = null;
+if ($userId != null) {
+	$addressList = customer_address($userId);
+	foreach ($addressList as $item) {
+		if ($item['is_default_billing']) {
+			$billingAddress = $item;
+		}
+		if ($item['is_default_shipping']) {
+			$shippingAddress = $item;
+		}
+	}
+}
+
+?>
+<body>
+	<header class="aui-header-default aui-header-fixed aui-header-bg">
+		<a href="javascript:history.back(-1)" class="aui-header-item">
+			<i class="aui-icon aui-icon-back-white"></i>
+		</a>
+		<div class="aui-header-center aui-header-center-clear">
+			<div class="aui-header-center-logo">
+				<div class="aui-car-white-Typeface">确认地址</div>
+			</div>
+		</div>
+		<a href="#" class="aui-header-item-icon"   style="min-width:0">
+			<i class="aui-icon aui-icon-member"></i>
+		</a>
+	</header>
+	<section class="aui-address-content">
+
+		<div class="aui-address-box" onclick="selectShipping()">
+			<div class="aui-address-box-list">
+				<div class="aui-prompt"><i class="aui-icon aui-prompt-sm"></i>请确认收货地址</div>
+				<a href="my-addres.phtml?type=0" class="aui-address-box-default">
+					<ul>
+						<li>
+							<strong><?php echo $shippingAddress['firstname'].$shippingAddress['lastname'].'  '.$shippingAddress['telephone']; ?></strong>
+							<span class="aui-tag" id="aui-home">收货地址</span>
+							<!-- <span class="aui-tag aui-tag-default" id="aui-default">默认</span> -->
+						</li>
+						<li>
+							<i class="aui-icon aui-icon-address"></i>
+							<?php echo $shippingAddress['street'].'  '.$shippingAddress['region'].'  '.$shippingAddress['country_id']; ?>
+						</li>
+					</ul>
+				</a>
+			</div>
+		</div>
+
+		<div class="aui-address-box" onclick="selectBilling()">
+			<div class="aui-address-box-list">
+				<div class="aui-prompt"><i class="aui-icon aui-prompt-sm"></i>账单地址用于支付时的校验，错误可能导致支付失败</div>
+				<a href="my-addres.phtml?type=1" class="aui-address-box-default">
+					<ul>
+						<li>
+							<strong><?php echo $billingAddress['firstname'].$billingAddress['lastname'].'  '.$billingAddress['telephone']; ?></strong>
+							<span class="aui-tag" id="aui-home">账单地址</span>
+							<!-- <span class="aui-tag aui-tag-default" id="aui-default">默认</span> -->
+						</li>
+						<li>
+							<i class="aui-icon aui-icon-address"></i>
+							<?php echo $billingAddress['street'].'  '.$billingAddress['region'].'  '.$billingAddress['country_id']; ?>
+						</li>
+					</ul>
+				</a>
+			</div>
+		</div>
+
+		<div class="aui-payment-bar">
+			<div class="shop-total">
+
+			</div>
+			<a class="settlement" onclick="ordersure()">提交订单</a>
+		</div>
+	</section>
+<script>
+
+	function ordersure(){
+		$.ajax({  
+
+            url:"http://bdbbuy.com/mobile/order.php",           
+
+            type: "POST",
+
+            data:{userid:userId},         
+
+            success:function(result){  
+
+            	alert(result);
+            },
+
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+
+                
+
+            }
+
+	    });
+	}
+
+
+</script>
+
+</body>
+</html>

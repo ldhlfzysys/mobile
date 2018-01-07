@@ -7,12 +7,12 @@ $client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');
 $session = $client->login('mobile', 'mobile');
 
 //1、添加商品
-$arrProducts = array(
-	array(
-		"product_id" => "5972",
-		"qty" => 2
-	)
-);
+// $arrProducts = array(
+// 	array(
+// 		"product_id" => "5972",
+// 		"qty" => 2
+// 	)
+// );
 
 // $result = $client->call($session, 'cart_product.add', array('401',$arrProducts,'16'));
 

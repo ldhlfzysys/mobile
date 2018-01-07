@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui"/>
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+	<meta name="format-detection" content="telephone=no, email=no"/>
+	<meta charset="UTF-8">
+	<title>下单</title>
+	<link rel="stylesheet" href="themes/css/core.css">
+	<link rel="stylesheet" href="themes/css/icon.css">
+	<link rel="stylesheet" href="themes/css/home.css">
+	<link rel="icon" type="image/x-icon" href="favicon.ico">
+	<link href="iTunesArtwork@2x.png" sizes="114x114" rel="apple-touch-icon-precomposed">
+</head>
+<?php
+ini_set('display_errors',1);
+include('./user.php');
+include_once('./cart.php');
+include('./address.php');
+$userId = userid();
+$addressList = array();
+$shippingAddress = null;
+$billingAddress = null;
+if ($userId != null) {
+	$addressList = customer_address($userId);
+	foreach ($addressList as $item) {
+		if ($item['is_default_billing']) {
+			$billingAddress = $item;
+		}
+		if ($item['is_default_shipping']) {
+			$shippingAddress = $item;
+		}
+	}
+}
+
+$cartid = cartid();
+$carinfo = cart($cartid);
+$carItems = $carinfo['items'];
+$products = array();
+foreach ($carItems as $item) {
+	$product_id = $item['product_id'];
+	$url='http://bdbbuy.com/mobile/productInfo.php?ids='.$product_id;
+	$jsonResult = json_decode(file_get_contents($url),true);
+	if (count($jsonResult) > 0) {
+		$product = $jsonResult[0];
+	}
+	$product['qty'] = $item['qty'];
+	$product['discount_price'] = $item['price'];
+	array_push($products, $product);
+}
+var_dump($carinfo);
+
+?>
+<body>
+	<header class="aui-header-default aui-header-fixed aui-header-bg">
+		<a href="javascript:history.back(-1)" class="aui-header-item">
+			<i class="aui-icon aui-icon-back-white"></i>
+		</a>
+		<div class="aui-header-center aui-header-center-clear">
+			<div class="aui-header-center-logo">
+				<div class="aui-car-white-Typeface">填写订单</div>
+			</div>
+		</div>
+		<a href="#" class="aui-header-item-icon"   style="min-width:0">
+			<i class="aui-icon aui-icon-member"></i>
+		</a>
+	</header>
+	<section class="aui-address-content">
+
+		<div class="aui-address-box">
+			<div class="aui-address-box-list">
+				<a href="my-addres.html" class="aui-address-box-default">
+					<ul>
+						<li>
+							<strong><?php echo $shippingAddress['firstname'].$shippingAddress['lastname'].'  '.$shippingAddress['telephone']; ?></strong>
+							<span class="aui-tag" id="aui-home">收货地址</span>
+							<span class="aui-tag aui-tag-default" id="aui-default">默认</span>
+						</li>
+						<li>
+							<i class="aui-icon aui-icon-address"></i>
+							<?php echo $shippingAddress['street'].'  '.$shippingAddress['region'].'  '.$shippingAddress['country_id']; ?>
+						</li>
+					</ul>
+				</a>
+			</div>
+		</div>
+
+		<div class="aui-address-box">
+			<div class="aui-address-box-list">
+				<a href="my-addres.html" class="aui-address-box-default">
+					<ul>
+						<li>
+							<strong><?php echo $billingAddress['firstname'].$billingAddress['lastname'].'  '.$billingAddress['telephone']; ?></strong>
+							<span class="aui-tag" id="aui-home">账单地址</span>
+							<span class="aui-tag aui-tag-default" id="aui-default">默认</span>
+						</li>
+						<li>
+							<i class="aui-icon aui-icon-address"></i>
+							<?php echo $billingAddress['street'].'  '.$billingAddress['region'].'  '.$billingAddress['country_id']; ?>
+						</li>
+					</ul>
+				</a>
+			</div>
+		</div>
+
+		<div class="aui-dri"></div>
+		<div class="aui-list-product-float-item">
+
+					<?php
+						foreach ($products as $product) {
+							echo '<a href="javascript:;" class="aui-list-product-fl-item">';
+							echo '<div class="aui-list-product-fl-img">';
+							echo '<img src="http://bdbbuy.com/media/catalog/product'.$product['image'].'" alt="">';
+							echo '</div>';
+							echo '<div class="aui-list-product-fl-text">';
+							echo '<h3 class="aui-list-product-fl-title">'.$product['name'].$product['short_description'].'</h3>';
+							echo '<div class="aui-list-product-fl-mes">';
+							echo '<div>';
+							echo '<span class="aui-list-product-item-price">';
+							echo '<em>CA$</em>';
+							echo number_format($product['price'],2);
+							echo '</span>';
+							if ($product['discount_price'] != $product['price']) {
+								echo '<span class="aui-list-product-item-del-price">';
+								echo 'CA$'.$product['discount_price'];
+								echo '</span>	';
+
+							}
+
+							echo '</div>';
+							echo '<div class="aui-btn-purchase">';
+							echo '<span>'.$product['qty'].'</span>';
+							echo '</div>';
+							echo '</div>';
+							echo '</div>';
+							echo '</a>';
+						}
+					 ?>
+
+<!-- 					<div class="aui-list-product-fl-bag">
+						<span><img src="themes/img/icon/bag1.png" alt=""></span>
+						<span><img src="themes/img/icon/bag2.png" alt=""></span>
+					</div> -->
+
+		</div>
+		<div class="aui-address-well">
+			<a href="#" class="aui-address-cell aui-fl-arrow">
+				<div class="aui-address-cell-bd">支持配送</div>
+				<div class="aui-address-cell-ft">
+<!-- 					<p>在线支付</p>
+					<p>顺丰快递</p> -->
+					<p class="aui-address-text"><i class="aui-icon aui-prompt-sm"></i>次日15:00-22:00</p>
+				</div>
+			</a>
+			<div class="aui-prompt"><i class="aui-icon aui-prompt-sm"></i>当天21点前下单，可享次日达~</div>
+<!-- 			<a href="#" class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear">
+				<div class="aui-address-cell-bd">发票</div>
+				<div class="aui-address-cell-ft">个人</div>
+			</a> -->
+			<div class="aui-dri"></div>
+<!-- 			<a href="#" class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear">
+				<div class="aui-address-cell-bd">
+					运费险
+					<p style="color:#888">7天内退货，15天内可换货</p>
+				</div>
+				<div class="aui-address-cell-ft">￥0.50&nbsp;&nbsp;<input class="aui-switch" type="checkbox" checked="checked"></div>
+			</a>
+			<div class="aui-dri"></div> -->
+<!-- 			<a href="#" class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear">
+				<div class="aui-address-cell-bd">优惠券</div>
+				<div class="aui-address-cell-ft">不可用</div>
+			</a> -->
+<!-- 			<div class="aui-dri"></div>
+			<a href="#" class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear">
+				<div class="aui-address-cell-bd">礼品卡</div>
+				<div class="aui-address-cell-ft">不可用</div>
+			</a> -->
+<!-- 			<div class="aui-dri"></div>
+			<a href="#" class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear">
+				<div class="aui-address-cell-bd">积分</div>
+				<div class="aui-address-cell-ft">567890</div>
+			</a> -->
+			<div class="aui-dri"></div>
+			<a href="#" class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear">
+				<div class="aui-address-cell-bd">
+					<h3>商品金额</h3>
+					<p>税</p>
+					<p>运费</p>
+				</div>
+				<div class="aui-address-cell-ft">
+					<span class="aui-red">CA$<?php echo number_format($carinfo['subtotal'],2) ?></span><br>
+					<span class="aui-red">+CA$<?php echo number_format($carinfo['shipping_address']['tax_amount'],2); ?></span><br>
+					<span class="aui-red">+CA$<?php echo number_format($carinfo['shipping_address']['shipping_amount'],2); ?></span>
+				</div>
+			</a>
+		</div>
+		<div class="aui-payment-bar">
+			<div class="shop-total">
+				<span class="aui-red aui-size">实付款: <em>CA$<?php echo number_format($carinfo['grand_total'],2) ?></em></span>
+			</div>
+			<a href="Settlement.html" class="settlement">提交订单</a>
+		</div>
+	</section>
+
+</body>
+</html>
