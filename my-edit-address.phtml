@@ -24,6 +24,50 @@
 	</style>
 
 </head>
+<script>
+function save(){
+	var shipping_lastname = $('#shipping-lastname').val();
+	var shipping_firstname = $('#shipping-firstname').val();
+	var shipping_phone = $('#shipping-phone').val();
+	var shipping_postcode = $('#shipping-postcode').val();
+	var shipping_area = $('#shipping-area').val();
+	var shipping_street = $('#shipping-street').val();
+	var useShippingAddress = $('#useShippingAddress').checked();
+	var billing_lastname = $('#billing-lastname').val();
+	var billing_firstname = $('#billing-firstname').val();
+	var billing_phone = $('#billing-phone').val();
+	var billing_postcode = $('#billing-postcode').val();
+	var billing_area = $('#billing-area').val();
+	var billing_street = $('#billing-street').val();
+	$.ajax({  
+
+        url:"http://bdbbuy.com/mobile/address.php",           
+
+        type: "POST",
+
+        data:{slastname:shipping_lastname,sfirstname:shipping_firstname,sphone:shipping_phone,spostcode:shipping_postcode,sarea:shipping_area,sstreet:shipping_street,blastname:billing_lastname,bfirstname:billing_firstname,bphone:billing_phone,bpostcode:billing_postcode,barea:billing_area,bstreet:billing_street},         
+
+        success:function(result){  
+
+        	var res = eval("(" + result + ")");
+            if (res['status'] == 'OK') {
+            	window.location.href='http://bdbbuy.com/mobile/ui-me.phtml';
+            	document.cookie="bdb-ui="+res['userData']['customer_id'];
+            }else
+            {
+            	document.location.reload();
+            }
+        },
+
+        error:function(XMLHttpRequest, textStatus, errorThrown){
+
+            
+
+        }
+
+    });
+}
+</script>
 <body style="background:#eee">
 
 	<header class="aui-header-default aui-header-fixed aui-header-bg">
@@ -43,52 +87,52 @@
 
 	<section class="aui-myOrder-content">
 		<div class="aui-prompt"><i class="aui-icon aui-prompt-sm"></i>填写您的收货信息</div>
-		<div class="aui-Address-box billing">
+		<div class="aui-Address-box shipping">
 			<p>
-				<span class="aui-Address-box-head">名</span><input class="aui-Address-box-input" type="text" placeholder="名">
+				<span id="shipping-lastname" class="aui-Address-box-head">名</span><input class="aui-Address-box-input" type="text" placeholder="名">
 			</p>
 			<p>
-				<span class="aui-Address-box-head">姓</span><input class="aui-Address-box-input" type="text" placeholder="姓">
+				<span id="shipping-firstname" class="aui-Address-box-head">姓</span><input class="aui-Address-box-input" type="text" placeholder="姓">
 			</p>
 			<p>
-				<span class="aui-Address-box-head">手机号</span><input class="aui-Address-box-input" type="text" placeholder="手机号码">
+				<span id="shipping-phone" class="aui-Address-box-head">手机号</span><input class="aui-Address-box-input" type="text" placeholder="手机号码">
 			</p>
 			<p>
-				<span class="aui-Address-box-head">邮编</span><input class="aui-Address-box-input" type="text" placeholder="邮编">
+				<span id="shipping-postcode" class="aui-Address-box-head">邮编</span><input class="aui-Address-box-input" type="text" placeholder="邮编">
 			</p>
 			<p>
 				<!-- <span class="aui-Address-box-head">地区</span><input class="aui-Address-box-input" type="text" readonly id="J_Address"  placeholder="所在地区"> -->
-				<span class="aui-Address-box-head">地区</span><input class="aui-Address-box-input" type="text" value="安大略，加拿大" disabled="disabled">
+				<span id="shipping-area" class="aui-Address-box-head">地区</span><input class="aui-Address-box-input" type="text" value="安大略，加拿大" disabled="disabled">
 			</p>
 			<p>
-				<textarea class="aui-Address-box-text" placeholder="街道， 小区门牌等详细地址" rows="3"></textarea>
+				<textarea  id="shipping-street" class="aui-Address-box-text" placeholder="街道， 小区门牌等详细地址" rows="3"></textarea>
 			</p>
 
 		</div>
-		<div class="aui-prompt"><i class="aui-icon aui-prompt-sm"></i>填写您的账单信息<div style="display:block;position:relative"><input type="checkbox" class="check goods-check goodsCheck" checked="" style="background-size: 17px 17px;" onchange="useBillingAddress(this)"> <em style="padding-left:24px;">&nbsp;&nbsp;使用收货地址作为账单地址</em></div></div>
-		<div class="aui-Address-box shipping">
+		<div class="aui-prompt"><i class="aui-icon aui-prompt-sm"></i>填写您的账单信息<div style="display:block;position:relative"><input type="checkbox" id="useShippingAddress" class="check goods-check goodsCheck" checked="" style="background-size: 17px 17px;" onchange="useShippingAddress(this)"> <em style="padding-left:24px;">&nbsp;&nbsp;使用收货地址作为账单地址</em></div></div>
+		<div class="aui-Address-box billing">
 			<p>
-				<span class="aui-Address-box-head">名</span><input class="aui-Address-box-input" type="text" placeholder="名">
+				<span id="billing-lastname" class="aui-Address-box-head">名</span><input class="aui-Address-box-input" type="text" placeholder="名">
 			</p>
 			<p>
-				<span class="aui-Address-box-head">姓</span><input class="aui-Address-box-input" type="text" placeholder="姓">
+				<span id="billing-firstname" class="aui-Address-box-head">姓</span><input class="aui-Address-box-input" type="text" placeholder="姓">
 			</p>
 			<p>
-				<span class="aui-Address-box-head">手机号</span><input class="aui-Address-box-input" type="text" placeholder="手机号码">
+				<span id="billing-phone" class="aui-Address-box-head">手机号</span><input class="aui-Address-box-input" type="text" placeholder="手机号码">
 			</p>
 			<p>
-				<span class="aui-Address-box-head">邮编</span><input class="aui-Address-box-input" type="text" placeholder="邮编">
+				<span id="billing-postcode" class="aui-Address-box-head">邮编</span><input class="aui-Address-box-input" type="text" placeholder="邮编">
 			</p>
 			<p>
-				<span class="aui-Address-box-head">地区</span><input class="aui-Address-box-input" type="text" placeholder="所在地区">
+				<span id="billing-area" class="aui-Address-box-head">地区</span><input class="aui-Address-box-input" type="text" placeholder="所在地区">
 			</p>
 			<p>
-				<textarea class="aui-Address-box-text" placeholder="街道， 小区门牌等详细地址" rows="3"></textarea>
+				<textarea  id="billing-street" class="aui-Address-box-text" placeholder="街道， 小区门牌等详细地址" rows="3"></textarea>
 			</p>
 
 		</div>
 		<div class="aui-out">
-			<a href="#" class="red-color" style="color:#fff">保存并使用</a>
+			<a onclick="save()" class="red-color" style="color:#fff">保存并使用</a>
 		</div>
 	</section>
 
@@ -97,12 +141,12 @@
 	<script type="text/javascript" src="themes/js/aui.js"></script>
 	<script type="text/javascript" src="themes/js/city.js"></script>
 	<script type="text/javascript" >
-		function useBillingAddress(obj){
+		function useShippingAddress(obj){
 			var ischeck = obj.checked;
-			$(".shipping input[type=text]").each(function () {
+			$(".billing input[type=text]").each(function () {
     			this.disabled = ischeck;
 			})
-			$(".shipping textarea").each(function () {
+			$(".billing textarea").each(function () {
     			this.disabled = ischeck;
 			})
 		}

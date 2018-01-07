@@ -34,6 +34,14 @@ function customer_address_create($userid,$firstname,$lastname,$street,$city,$pos
 }
 
 // var_dump(customer_address('29')); 
-var_dump(customer_address_create('29','vvvv','vvvvv','asdfasdf','wuping','123','1854444',false,true));
+// var_dump(customer_address_create('29','vvvv','vvvvv','asdfasdf','wuping','123','1854444',false,true));
+if (isset($_POST['slastname']) && isset($_POST['sfirstname']) && isset($_POST['sphone']) && isset($_POST['spostcode']) && isset($_POST['sarea']) && isset($_POST['sstreet'])
+	isset($_POST['blastname']) && isset($_POST['bfirstname']) && isset($_POST['bphone']) && isset($_POST['bpostcode']) && isset($_POST['barea']) && isset($_POST['bstreet']) ) {
+	
+	$userid = $_POST['userid'];
+	$password = $_POST['password'];
+	$result = login($userid,$password);
+	echo $result;
+}
 
 ?>
