@@ -14,12 +14,17 @@
 	<link href="iTunesArtwork@2x.png" sizes="114x114" rel="apple-touch-icon-precomposed">
 </head>
 <?php
+ini_set('display_errors',1);
 include('./user.php');
 include('./address.php');
 $userId = userid();
+$display_login = "display:none";
+$display_nologin = "display:none";
+
 $addressList = array();
 $shippingAddress = null;
 $billingAddress = null;
+
 if ($userId != null) {
 	$addressList = customer_address($userId);
 	foreach ($addressList as $item) {
@@ -30,7 +35,12 @@ if ($userId != null) {
 			$shippingAddress = $item;
 		}
 	}
+	$display_login="";
+}else{
+	//游客登录，尝试取出cookie存储的地址、账单地址信息。
+	$display_nologin="";
 }
+
 
 ?>
 <body>
@@ -47,53 +57,117 @@ if ($userId != null) {
 			<i class="aui-icon aui-icon-member"></i>
 		</a>
 	</header>
-	<section class="aui-address-content">
+	<div style="<?php echo $display_login; ?>">
+		<section class="aui-address-content">
+			<div class="aui-address-box" onclick="selectShipping()">
+				<div class="aui-address-box-list">
+					<div class="aui-prompt"><i class="aui-icon aui-prompt-sm"></i>请确认收货地址</div>
+					<a href="my-addres.phtml?type=0" class="aui-address-box-default">
+						<ul>
+							<li>
+								<strong><?php echo $shippingAddress['firstname'].$shippingAddress['lastname'].'  '.$shippingAddress['telephone']; ?></strong>
+								<span class="aui-tag" id="aui-home">收货地址</span>
+								<!-- <span class="aui-tag aui-tag-default" id="aui-default">默认</span> -->
+							</li>
+							<li>
+								<i class="aui-icon aui-icon-address"></i>
+								<?php echo $shippingAddress['street'].'  '.$shippingAddress['region'].'  '.$shippingAddress['country_id']; ?>
+							</li>
+						</ul>
+					</a>
+				</div>
+			</div>
 
-		<div class="aui-address-box" onclick="selectShipping()">
-			<div class="aui-address-box-list">
-				<div class="aui-prompt"><i class="aui-icon aui-prompt-sm"></i>请确认收货地址</div>
-				<a href="my-addres.phtml?type=0" class="aui-address-box-default">
-					<ul>
-						<li>
-							<strong><?php echo $shippingAddress['firstname'].$shippingAddress['lastname'].'  '.$shippingAddress['telephone']; ?></strong>
-							<span class="aui-tag" id="aui-home">收货地址</span>
-							<!-- <span class="aui-tag aui-tag-default" id="aui-default">默认</span> -->
-						</li>
-						<li>
-							<i class="aui-icon aui-icon-address"></i>
-							<?php echo $shippingAddress['street'].'  '.$shippingAddress['region'].'  '.$shippingAddress['country_id']; ?>
-						</li>
-					</ul>
-				</a>
+			<div class="aui-address-box" onclick="selectBilling()">
+				<div class="aui-address-box-list">
+					<div class="aui-prompt"><i class="aui-icon aui-prompt-sm"></i>账单地址用于支付时的校验，错误可能导致支付失败</div>
+					<a href="my-addres.phtml?type=1" class="aui-address-box-default">
+						<ul>
+							<li>
+								<strong><?php echo $billingAddress['firstname'].$billingAddress['lastname'].'  '.$billingAddress['telephone']; ?></strong>
+								<span class="aui-tag" id="aui-home">账单地址</span>
+								<!-- <span class="aui-tag aui-tag-default" id="aui-default">默认</span> -->
+							</li>
+							<li>
+								<i class="aui-icon aui-icon-address"></i>
+								<?php echo $billingAddress['street'].'  '.$billingAddress['region'].'  '.$billingAddress['country_id']; ?>
+							</li>
+						</ul>
+					</a>
+				</div>
+			</div>
+			<div class="aui-payment-bar">
+				<div class="shop-total">
+
+				</div>
+				<a class="settlement" onclick="ordersure()">提交订单</a>
+			</div>
+		</section>
+	</div>
+	
+
+		<div style="<?php echo $display_nologin; ?>">
+
+			<section class="aui-myOrder-content">
+				<div class="aui-prompt"><i class="aui-icon aui-prompt-sm"></i>填写您的地址信息</div>
+				<div class="aui-Address-box shipping">
+					<p>
+						<span class="aui-Address-box-head">名</span><input id="shipping-lastname" class="aui-Address-box-input" type="text" placeholder="名">
+					</p>
+					<p>
+						<span class="aui-Address-box-head">姓</span><input id="shipping-firstname" class="aui-Address-box-input" type="text" placeholder="姓">
+					</p>
+					<p>
+						<span class="aui-Address-box-head">手机号</span><input id="shipping-phone" class="aui-Address-box-input" type="text" placeholder="手机号码">
+					</p>
+					<p>
+						<span class="aui-Address-box-head">邮编</span><input id="shipping-postcode" class="aui-Address-box-input" type="text" placeholder="邮编">
+					</p>
+					<p>
+						<span class="aui-Address-box-head">地区</span><input id="shipping-area" class="aui-Address-box-input" type="text" value="安大略，加拿大" disabled="disabled">
+					</p>
+					<p>
+						<textarea  id="shipping-street" class="aui-Address-box-text" placeholder="街道， 小区门牌等详细地址" rows="3"></textarea>
+					</p>
+
+				</div>
+			</section>
+
+			<section class="aui-myOrder-content">
+				<div class="aui-prompt"><i class="aui-icon aui-prompt-sm"></i>填写您的账单信息(不填写默认使用收货地址)</div>
+				<div class="aui-Address-box shipping">
+					<p>
+						<span class="aui-Address-box-head">名</span><input id="billing-lastname" class="aui-Address-box-input" type="text" placeholder="名">
+					</p>
+					<p>
+						<span class="aui-Address-box-head">姓</span><input id="billing-firstname" class="aui-Address-box-input" type="text" placeholder="姓">
+					</p>
+					<p>
+						<span class="aui-Address-box-head">手机号</span><input id="billing-phone" class="aui-Address-box-input" type="text" placeholder="手机号码">
+					</p>
+					<p>
+						<span class="aui-Address-box-head">邮编</span><input id="billing-postcode" class="aui-Address-box-input" type="text" placeholder="邮编">
+					</p>
+					<p>
+						<span class="aui-Address-box-head">地区</span><input id="billing-area" class="aui-Address-box-input" type="text">
+					</p>
+					<p>
+						<textarea  id="billing-street" class="aui-Address-box-text" placeholder="街道， 小区门牌等详细地址" rows="3"></textarea>
+					</p>
+
+				</div>
+			</section>
+
+			<div class="aui-payment-bar">
+				<div class="shop-total">
+
+				</div>
+				<a class="settlement" onclick="ordersure_nologin()">提交订单</a>
 			</div>
 		</div>
+		
 
-		<div class="aui-address-box" onclick="selectBilling()">
-			<div class="aui-address-box-list">
-				<div class="aui-prompt"><i class="aui-icon aui-prompt-sm"></i>账单地址用于支付时的校验，错误可能导致支付失败</div>
-				<a href="my-addres.phtml?type=1" class="aui-address-box-default">
-					<ul>
-						<li>
-							<strong><?php echo $billingAddress['firstname'].$billingAddress['lastname'].'  '.$billingAddress['telephone']; ?></strong>
-							<span class="aui-tag" id="aui-home">账单地址</span>
-							<!-- <span class="aui-tag aui-tag-default" id="aui-default">默认</span> -->
-						</li>
-						<li>
-							<i class="aui-icon aui-icon-address"></i>
-							<?php echo $billingAddress['street'].'  '.$billingAddress['region'].'  '.$billingAddress['country_id']; ?>
-						</li>
-					</ul>
-				</a>
-			</div>
-		</div>
 
-		<div class="aui-payment-bar">
-			<div class="shop-total">
-
-			</div>
-			<a class="settlement" onclick="ordersure()">提交订单</a>
-		</div>
-	</section>
 <script>
 
 	function ordersure(){
@@ -117,6 +191,24 @@ if ($userId != null) {
             }
 
 	    });
+	}
+
+	function ordersure_nologin(){
+		var shipping_lastname = $('#shipping-lastname').val();
+		var shipping_firstname = $('#shipping-firstname').val();
+		var shipping_phone = $('#shipping-phone').val();
+		var shipping_postcode = $('#shipping-postcode').val();
+		var shipping_area = $('#shipping-area').val();
+		var shipping_street = $('#shipping-street').val();
+
+		var billing_lastname = $('#billing-lastname').val();
+		var billing_firstname = $('#billing-firstname').val();
+		var billing_phone = $('#billing-phone').val();
+		var billing_postcode = $('#billing-postcode').val();
+		var billing_area = $('#billing-area').val();
+		var billing_street = $('#billing-street').val();
+
+
 	}
 
 

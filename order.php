@@ -48,10 +48,13 @@ function order(){
 		);
 	}
 
+	//到目前，如果关键数据缺失，返回错误
+	if (empty($)) {
+		# code...
+	}
+
 	//设置用户信息到购物车
 	$result = $client->call($session,'cart_customer.set',array($cartid,$userinfo));
-
-
 }
 
 
