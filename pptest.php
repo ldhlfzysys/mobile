@@ -21,7 +21,22 @@ if (isset($_POST['items']) && isset($_POST['billing_address']) && isset($_POST['
     $payerinfo->setLastName();
     $payerinfo->setPhone();
     $payerinfo->setCountryCode();
-    $payerinfo->setBillingAddress();
+
+    #账单地址
+    $billing_json_str = $_POST['billing_address'];
+    $billing_info = json_decode($billing_json_str,true);
+    $billing_address = new \PayPal\Api\Address();
+    $billing_address->
+    $billing_address->
+    $billing_address->
+    $billing_address->
+    $billing_address->
+    $billing_address->
+    $billing_address->
+
+    $payerinfo->setBillingAddress($billing_address);
+
+    #收货地址
     $payerinfo->setShippingAddress();
 
     $payer->setPayerInfo($payerinfo);
@@ -38,12 +53,14 @@ if (isset($_POST['items']) && isset($_POST['billing_address']) && isset($_POST['
     $items = json_decode($items_json_str,true);
     foreach ($items as $product) {
         $item = new \PayPal\Api\Item();
-        $item->setSku("123");
-        $item->setName("苹果");
+        $item->setSku($product["sku"]);
+        $item->setName($product["name"]);
         $item->setCurrency("CAD");
-        $item->setPrice("1.2");
-        $item->setTax("0.01");
-        $item->setQuantity("2");
+        $item->setPrice($product["price"]);
+        $item->setTax($product["tax"]);
+        $item->setQuantity($product["qty"]);
+        $item->setDescription($product["description"]);
+        $item->setUrl($product["url"]);
         $itemList->addItem($item);
     }
 
