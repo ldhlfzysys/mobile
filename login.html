@@ -73,8 +73,10 @@
 
             	var res = eval("(" + result + ")");
                 if (res['status'] == 'OK') {
-                	window.location.href='http://bdbbuy.com/mobile/ui-me.phtml';
+                	var nickname = res['userData']['firstname']+' '+res['userData']['lastname'];
                 	document.cookie="bdb-ui="+res['userData']['customer_id'];
+                	document.cookie="bdb-nn="+nickname;
+                	window.location.href='http://bdbbuy.com/mobile/ui-me.phtml';
                 }else
                 {
                 	document.location.reload();
