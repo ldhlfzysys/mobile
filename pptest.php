@@ -1,8 +1,6 @@
 <?php
 
-
-
-if (isset($_POST['items']) && isset($_POST['billing_address']) && isset($_POST['shipping_address']) && isset($_POST['amount'])) {
+if (isset($_GET['cartid'])) {
     require __DIR__  . '/PayPal-PHP-SDK/autoload.php';
     $apiContext = new \PayPal\Rest\ApiContext(
         new \PayPal\Auth\OAuthTokenCredential(
@@ -11,6 +9,17 @@ if (isset($_POST['items']) && isset($_POST['billing_address']) && isset($_POST['
         )
     );
 
+    #取购物车内容
+    $cartid = $_GET['cartid'];
+    $client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
+    $session = $client->login('mobile', 'mobile');
+    $args = array(
+        'store' => '16'
+    );
+    $cartInfo = $client->call($session, 'cart.info',$cartid, $args);
+
+    var_dump($cartInfo);
+    return;
     #user
     $payer = new \PayPal\Api\Payer();
     $payer->setPaymentMethod('paypal');

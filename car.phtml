@@ -64,13 +64,20 @@ foreach ($carItems as $item) {
 
             success:function(result){  
 
+            	if (result == "true") {
+            		window.location.href='http://bdbbuy.com/mobile/order-sure.phtml';
+            	}else{
+            		alert('网络错误，请重试');
+            	};
+            	
                 // $('#loading').hideLoading();
-                document.location.reload(); 
+                // document.location.reload(); 
 
             },
 
             error:function(XMLHttpRequest, textStatus, errorThrown){
                 // $('#loading').hideLoading();
+                alert('网络错误，请重试');
 
             }
 
@@ -190,7 +197,7 @@ foreach ($carItems as $item) {
 		<div class="shop-total">
 			<strong>合计：<i class="total" id="AllTotal">00.00</i></strong>
 		</div>
-		<?php echo '<a href="" class="settlement" onclick="updatecart(\''.$cartid.'\')">结算</a>'; ?>
+		<?php echo '<a href="javascript:void(0);" class="settlement" onclick="updatecart(\''.$cartid.'\')">结算</a>'; ?>
 	</div>
 
 
