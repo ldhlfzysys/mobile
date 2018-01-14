@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<?php
+$orderid = $_GET['orderid'];
+$orderInfoUrl='http://bdbbuy.com/mobile/orderinfo.php?orderid='.$orderid;
+$html = file_get_contents($orderInfoUrl);
+$orderInfo = json_decode($html,true);
+$shippingAddress = $orderInfo['shipping_address'];
+$billingAddress = $orderInfo['billing_address'];
+$items = $orderInfo['items'];
+$currency_code = $order['order_currency_code'];
+?>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui"/>
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+	<meta name="format-detection" content="telephone=no, email=no"/>
+	<meta charset="UTF-8">
+	<title>订单详情</title>
+	<link rel="stylesheet" href="themes/css/core.css">
+	<link rel="stylesheet" href="themes/css/icon.css">
+	<link rel="stylesheet" href="themes/css/home.css">
+	<link rel="icon" type="image/x-icon" href="favicon.ico">
+	<link href="iTunesArtwork@2x.png" sizes="114x114" rel="apple-touch-icon-precomposed">
+
+</head>
+<body>
+
+	<header class="aui-header-default aui-header-fixed aui-header-bg">
+		<a href="javascript:history.back(-1)" class="aui-header-item">
+			<i class="aui-icon aui-icon-back-white"></i>
+		</a>
+		<div class="aui-header-center aui-header-center-clear">
+			<div class="aui-header-center-logo">
+				<div class="aui-car-white-Typeface">订单详情</div>
+			</div>
+		</div>
+		<a href="#" class="aui-header-item-icon"   style="min-width:0">
+			<i class="aui-icon aui-icon-search"></i>
+		</a>
+	</header>
+
+	<section class="aui-myOrder-content">
+		<div class="m-tab demo-small-pitch" data-ydui-tab>
+			<div class="aui-myOrder-fix">
+				<!-- <ul class="tab-nav">
+					<li class="tab-nav-item tab-active"><a href="javascript:;">全部</a></li>
+					<li class="tab-nav-item"><a href="javascript:;">待付款</a></li>
+					<li class="tab-nav-item"><a href="javascript:;">待发货</a></li>
+					<li class="tab-nav-item"><a href="javascript:;">待收货</a></li>
+					<li class="tab-nav-item"><a href="javascript:;">评价</a></li>
+				</ul> -->
+			</div>
+			<!-- <div class="aui-prompt"><i class="aui-icon aui-prompt-sm"></i>双十一期间发货及物流时效公告</div> -->
+			<div class="tab-panel">
+				<div class="tab-panel-item tab-active">
+					<ul>
+						<?php
+							$date = $orderInfo['created_at'];
+							$status = $orderInfo['status'];
+							echo '<li>';
+							echo '<div class="aui-list-title-info">';
+							echo '<a href="#" class="aui-well ">';
+							echo '<div class="aui-well-bd">'.$date.'</div>';
+							echo '<div class="aui-well-ft">'.$status.'</div>';
+							echo '</a>';
+							foreach ($items as $key => $item) {
+								$name = $item['name'];
+								$price = $item['price_incl_tax'];
+								$qty = $item['qty_ordered'];
+								echo '<a href="javascript:;" class="aui-list-product-fl-item">';
+								echo '<div class="aui-list-product-fl-img">';
+								echo '<img src="themes/img/pd/sf-1.jpg" alt="">';
+								echo '</div>';
+								echo '<div class="aui-list-product-fl-text">';
+								echo '<h3 class="aui-list-product-fl-title">'.$name.'</h3>';
+								echo '<div class="aui-list-product-fl-mes">';
+								echo '<div>';
+								echo '<span class="aui-list-product-item-price"><em>'.$currency_code.'</em>'.round($price, 2).'</span>';
+								echo '</div>';
+								echo '<div class="aui-btn-purchase">x'.round($qty).'</div>';
+								echo '</div>';
+								echo '</div>';
+								echo '</a>';
+							}
+							echo '</div>';
+							echo '<div class="aui-dri"></div>';
+							echo '</li>';
+					
+						?>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="aui-address-content">
+		<div class="aui-address-box">
+			<div class="aui-address-box-list">
+				<a href="my-addres.html" class="aui-address-box-default">
+					<ul>
+						<li>
+							<strong><?php echo $shippingAddress['firstname'].$shippingAddress['lastname'].'  '.$shippingAddress['telephone']; ?></strong>
+							<span class="aui-tag" id="aui-home">收货地址</span>
+							<span class="aui-tag aui-tag-default" id="aui-default">默认</span>
+						</li>
+						<li>
+							<i class="aui-icon aui-icon-address"></i>
+							<?php echo $shippingAddress['street'].'  '.$shippingAddress['region'].'  '.$shippingAddress['country_id']; ?>
+						</li>
+					</ul>
+				</a>
+			</div>
+		</div>
+
+		<div class="aui-address-box">
+			<div class="aui-address-box-list">
+				<a href="my-addres.html" class="aui-address-box-default">
+					<ul>
+						<li>
+							<strong><?php echo $billingAddress['firstname'].$billingAddress['lastname'].'  '.$billingAddress['telephone']; ?></strong>
+							<span class="aui-tag" id="aui-home">账单地址</span>
+							<span class="aui-tag aui-tag-default" id="aui-default">默认</span>
+						</li>
+						<li>
+							<i class="aui-icon aui-icon-address"></i>
+							<?php echo $billingAddress['street'].'  '.$billingAddress['region'].'  '.$billingAddress['country_id']; ?>
+						</li>
+					</ul>
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<a href="#" class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear">
+		<div class="aui-address-cell-bd">
+			<h3>商品金额</h3>
+			<p>税</p>
+			<p>运费</p>
+		</div>
+		<div class="aui-address-cell-ft">
+			<span class="aui-red">CA$<?php echo number_format($orderInfo['subtotal'],2) ?></span><br>
+			<span class="aui-red">+CA$<?php echo number_format($orderInfo['tax_amount'],2); ?></span><br>
+			<span class="aui-red">+CA$<?php echo number_format($orderInfo['shipping_amount'],2); ?></span>
+		</div>
+	</a>
+	<div class="aui-payment-bar">
+		<div class="shop-total">
+			<span class="aui-red aui-size">实付款: <em>CA$<?php echo number_format($orderInfo['grand_total'],2) ?></em></span>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="themes/js/jquery.min.js"></script>
+	<script type="text/javascript" src="themes/js/aui.js"></script>
+	<script type="text/javascript" >
+	</script>
+
+</body>
+</html>

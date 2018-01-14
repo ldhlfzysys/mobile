@@ -59,7 +59,7 @@ $orderList = json_decode($html,true);
 							$item_count = $order['total_item_count'];
 							$currency_code = $order['order_currency_code'];
 							$price = $order['grand_total'];
-							echo '<li>';
+							echo '<li onclick=window.location="orderinfo.phtml?orderid='.$order['increment_id'].'">';
 							echo '<div class="aui-list-title-info">';
 							echo '<a href="#" class="aui-well ">';
 							echo '<div class="aui-well-bd">'.$date.'</div>';
