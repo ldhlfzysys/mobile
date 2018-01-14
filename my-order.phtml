@@ -88,7 +88,7 @@ $orderList = json_decode($html,true);
 					</ul>
 				</div>
 
-				<div class="tab-panel-item tab-active">
+				<div class="tab-panel-item">
 					<ul>
 						<?php
 						foreach ($orderList as $key => $order) {
@@ -128,7 +128,7 @@ $orderList = json_decode($html,true);
 					</ul>
 				</div>
 
-				<div class="tab-panel-item tab-active">
+				<div class="tab-panel-item">
 					<ul>
 						<?php
 						foreach ($orderList as $key => $order) {
@@ -168,7 +168,7 @@ $orderList = json_decode($html,true);
 					</ul>
 				</div>
 
-				<div class="tab-panel-item tab-active">
+				<div class="tab-panel-item">
 					<ul>
 						<?php
 						foreach ($orderList as $key => $order) {
@@ -203,44 +203,6 @@ $orderList = json_decode($html,true);
 								echo '<div class="aui-dri"></div>';
 								echo '</li>';
 							}
-						}
-						?>
-					</ul>
-				</div>
-
-				<div class="tab-panel-item tab-active">
-					<ul>
-						<?php
-						foreach ($orderList as $key => $order) {
-							$date = $order['created_at'];
-							$status = $order['status'];
-							$item_count = $order['total_item_count'];
-							$currency_code = $order['order_currency_code'];
-							$price = $order['grand_total'];
-							echo '<li onclick=window.location="orderinfo.phtml?orderid='.$order['increment_id'].'">';
-							echo '<div class="aui-list-title-info">';
-							echo '<a href="#" class="aui-well ">';
-							echo '<div class="aui-well-bd">'.$date.'</div>';
-							echo '<div class="aui-well-ft">'.$status.'</div>';
-							echo '</a>';
-							echo '<a href="javascript:;" class="aui-list-product-fl-item">';
-							echo '<div class="aui-list-product-fl-text">';
-							echo '<h3 class="aui-list-product-fl-title">共'.$item_count.'种商品</h3>';
-							echo '<div class="aui-list-product-fl-mes">';
-							echo '<div>';
-							echo '<span class="aui-list-product-item-price"><em>'.$currency_code.'</em>'.round($price, 2).'</span>';
-							echo '</div>';
-							echo '</div>';
-							echo '</div>';
-							echo '</a>';
-							echo '</div>';
-							// echo '<div class="aui-list-title-btn">';
-							// echo '<a href="#">催物流</a>';
-							// echo '<a href="#">查看物流</a>';
-							// echo '<a href="#" class="red-color">联系卖家</a>';
-							// echo '</div>';
-							echo '<div class="aui-dri"></div>';
-							echo '</li>';
 						}
 						?>
 					</ul>
