@@ -1560,7 +1560,7 @@ input.check:checked {
 .aui-me-content-box {
 	background: #ff2171;
 	width: 100%;
-	height: 180px;
+	height: 80px;
 	position: relative;
 	background: -moz-linear-gradient(left,#ff5e3e 0,#ff1679 100%);
 	background: -webkit-gradient(linear,left,right,color-stop(0,#ff5e3e),color-stop(100%,#ff1679));
@@ -1593,7 +1593,7 @@ input.check:checked {
 
 .aui-me-content-item {
 	width: 92%;
-	height: 110px;
+	height: 50px;
 	background: #fff;
 	border-radius: 10px;
 	padding: 20px;
