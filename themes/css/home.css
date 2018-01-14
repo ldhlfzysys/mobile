@@ -1642,6 +1642,10 @@ input.check:checked {
 	text-align: center;
 }
 
+.aui-me-content-item-text .aui-me-content-item-a{
+	width: 33%;
+}
+
 .aui-me-content-item-text a span {
 	color: #666666;
 	font-weight: 700;
