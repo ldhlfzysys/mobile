@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
 <?php
-$orderListUrl='http://bdbbuy.com/mobile/myorder.php';
+include('./user.php');
+$userid = userid();
+$orderListUrl='http://bdbbuy.com/mobile/myorder.php?userid='.$userid;
 $html = file_get_contents($orderListUrl);
 $orderList = json_decode($html,true);
-var_dump($orderList);
 ?>
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui"/>
@@ -51,43 +52,39 @@ var_dump($orderList);
 			<div class="tab-panel">
 				<div class="tab-panel-item tab-active">
 					<ul>
-						<li>
-							<div class="aui-list-title-info">
-								<a href="#" class="aui-well ">
-									<div class="aui-well-bd">2017-11-14</div>
-									<div class="aui-well-ft">已发货</div>
-								</a>
-								<a href="javascript:;" class="aui-list-product-fl-item">
-									<div class="aui-list-product-fl-img">
-										<img src="themes/img/pd/sf-4.jpg" alt="">
-									</div>
-									<div class="aui-list-product-fl-text">
-										<h3 class="aui-list-product-fl-title">2016夏天新款男士短袖t恤青少年韩版修身印花圆领半袖男装衣服潮领半袖男装衣服潮领半袖男装衣服潮</h3>
-										<div class="aui-list-product-fl-mes">
-											<div>
-									<span class="aui-list-product-item-price">
-										<em>¥</em>
-										399.99
-									</span>
-												<span class="aui-list-product-item-del-price">
-										¥495.65
-									</span>
-											</div>
-											<div class="aui-btn-purchase">
-												x1
-											</div>
-										</div>
-									</div>
-
-								</a>
-							</div>
-							<div class="aui-list-title-btn">
-								<a href="#">催物流</a>
-								<a href="#">查看物流</a>
-								<a href="#" class="red-color">确认收货</a>
-							</div>
-							<div class="aui-dri"></div>
-						</li>
+						<?php
+						foreach ($orderList as $key => $order) {
+							$date = $order['created_at'];
+							$status = $order['status'];
+							$item_count = $order['total_item_count'];
+							$currency_code = $order['order_currency_code'];
+							$price = $order['grand_total'];
+							echo '<li>';
+							echo '<div class="aui-list-title-info">';
+							echo '<a href="#" class="aui-well ">';
+							echo '<div class="aui-well-bd">'.$date.'</div>';
+							echo '<div class="aui-well-ft">'.$status.'</div>';
+							echo '</a>';
+							echo '<a href="javascript:;" class="aui-list-product-fl-item">';
+							echo '<div class="aui-list-product-fl-text">';
+							echo '<h3 class="aui-list-product-fl-title">共'.$item_count.'种商品</h3>';
+							echo '<div class="aui-list-product-fl-mes">';
+							echo '<div>';
+							echo '<span class="aui-list-product-item-price"><em>'.$currency_code.'</em>'.round($price, 2).'</span>';
+							echo '</div>';
+							echo '</div>';
+							echo '</div>';
+							echo '</a>';
+							echo '</div>';
+							echo '<div class="aui-list-title-btn">';
+							echo '<a href="#">催物流</a>';
+							echo '<a href="#">查看物流</a>';
+							echo '<a href="#" class="red-color">确认收货</a>';
+							echo '</div>';
+							echo '<div class="aui-dri"></div>';
+							echo '</li>';
+						}
+						?>
 						<li>
 							<div class="aui-list-title-info">
 								<a href="#" class="aui-well ">
