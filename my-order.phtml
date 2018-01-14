@@ -39,15 +39,15 @@ $orderList = json_decode($html,true);
 
 	<section class="aui-myOrder-content">
 		<div class="m-tab demo-small-pitch" data-ydui-tab>
-			<!-- <div class="aui-myOrder-fix">
+			<div class="aui-myOrder-fix">
 				<ul class="tab-nav">
 					<li class="tab-nav-item tab-active"><a href="javascript:;">全部</a></li>
-					<li class="tab-nav-item"><a href="javascript:;">待付款</a></li>
+					<!-- <li class="tab-nav-item"><a href="javascript:;">待付款</a></li> -->
 					<li class="tab-nav-item"><a href="javascript:;">待发货</a></li>
 					<li class="tab-nav-item"><a href="javascript:;">待收货</a></li>
-					<li class="tab-nav-item"><a href="javascript:;">评价</a></li>
+					<li class="tab-nav-item"><a href="javascript:;">待评价</a></li>
 				</ul>
-			</div> -->
+			</div>
 			<!-- <div class="aui-prompt"><i class="aui-icon aui-prompt-sm"></i>双十一期间发货及物流时效公告</div> -->
 			<div class="tab-panel">
 				<div class="tab-panel-item tab-active">
@@ -87,8 +87,166 @@ $orderList = json_decode($html,true);
 						?>
 					</ul>
 				</div>
+
+				<div class="tab-panel-item tab-active">
+					<ul>
+						<?php
+						foreach ($orderList as $key => $order) {
+							$date = $order['created_at'];
+							$status = $order['status'];
+							$item_count = $order['total_item_count'];
+							$currency_code = $order['order_currency_code'];
+							$price = $order['grand_total'];
+							if ($status == 'processing') {
+								echo '<li onclick=window.location="orderinfo.phtml?orderid='.$order['increment_id'].'">';
+								echo '<div class="aui-list-title-info">';
+								echo '<a href="#" class="aui-well ">';
+								echo '<div class="aui-well-bd">'.$date.'</div>';
+								echo '<div class="aui-well-ft">'.$status.'</div>';
+								echo '</a>';
+								echo '<a href="javascript:;" class="aui-list-product-fl-item">';
+								echo '<div class="aui-list-product-fl-text">';
+								echo '<h3 class="aui-list-product-fl-title">共'.$item_count.'种商品</h3>';
+								echo '<div class="aui-list-product-fl-mes">';
+								echo '<div>';
+								echo '<span class="aui-list-product-item-price"><em>'.$currency_code.'</em>'.round($price, 2).'</span>';
+								echo '</div>';
+								echo '</div>';
+								echo '</div>';
+								echo '</a>';
+								echo '</div>';
+								// echo '<div class="aui-list-title-btn">';
+								// echo '<a href="#">催物流</a>';
+								// echo '<a href="#">查看物流</a>';
+								// echo '<a href="#" class="red-color">联系卖家</a>';
+								// echo '</div>';
+								echo '<div class="aui-dri"></div>';
+								echo '</li>';
+							}
+						}
+						?>
+					</ul>
+				</div>
+
+				<div class="tab-panel-item tab-active">
+					<ul>
+						<?php
+						foreach ($orderList as $key => $order) {
+							$date = $order['created_at'];
+							$status = $order['status'];
+							$item_count = $order['total_item_count'];
+							$currency_code = $order['order_currency_code'];
+							$price = $order['grand_total'];
+							if ($status == 'shipping') {
+								echo '<li onclick=window.location="orderinfo.phtml?orderid='.$order['increment_id'].'">';
+								echo '<div class="aui-list-title-info">';
+								echo '<a href="#" class="aui-well ">';
+								echo '<div class="aui-well-bd">'.$date.'</div>';
+								echo '<div class="aui-well-ft">'.$status.'</div>';
+								echo '</a>';
+								echo '<a href="javascript:;" class="aui-list-product-fl-item">';
+								echo '<div class="aui-list-product-fl-text">';
+								echo '<h3 class="aui-list-product-fl-title">共'.$item_count.'种商品</h3>';
+								echo '<div class="aui-list-product-fl-mes">';
+								echo '<div>';
+								echo '<span class="aui-list-product-item-price"><em>'.$currency_code.'</em>'.round($price, 2).'</span>';
+								echo '</div>';
+								echo '</div>';
+								echo '</div>';
+								echo '</a>';
+								echo '</div>';
+								// echo '<div class="aui-list-title-btn">';
+								// echo '<a href="#">催物流</a>';
+								// echo '<a href="#">查看物流</a>';
+								// echo '<a href="#" class="red-color">联系卖家</a>';
+								// echo '</div>';
+								echo '<div class="aui-dri"></div>';
+								echo '</li>';
+							}
+						}
+						?>
+					</ul>
+				</div>
+
+				<div class="tab-panel-item tab-active">
+					<ul>
+						<?php
+						foreach ($orderList as $key => $order) {
+							$date = $order['created_at'];
+							$status = $order['status'];
+							$item_count = $order['total_item_count'];
+							$currency_code = $order['order_currency_code'];
+							$price = $order['grand_total'];
+							if ($status == 'complete') {
+								echo '<li onclick=window.location="orderinfo.phtml?orderid='.$order['increment_id'].'">';
+								echo '<div class="aui-list-title-info">';
+								echo '<a href="#" class="aui-well ">';
+								echo '<div class="aui-well-bd">'.$date.'</div>';
+								echo '<div class="aui-well-ft">'.$status.'</div>';
+								echo '</a>';
+								echo '<a href="javascript:;" class="aui-list-product-fl-item">';
+								echo '<div class="aui-list-product-fl-text">';
+								echo '<h3 class="aui-list-product-fl-title">共'.$item_count.'种商品</h3>';
+								echo '<div class="aui-list-product-fl-mes">';
+								echo '<div>';
+								echo '<span class="aui-list-product-item-price"><em>'.$currency_code.'</em>'.round($price, 2).'</span>';
+								echo '</div>';
+								echo '</div>';
+								echo '</div>';
+								echo '</a>';
+								echo '</div>';
+								// echo '<div class="aui-list-title-btn">';
+								// echo '<a href="#">催物流</a>';
+								// echo '<a href="#">查看物流</a>';
+								// echo '<a href="#" class="red-color">联系卖家</a>';
+								// echo '</div>';
+								echo '<div class="aui-dri"></div>';
+								echo '</li>';
+							}
+						}
+						?>
+					</ul>
+				</div>
+
+				<div class="tab-panel-item tab-active">
+					<ul>
+						<?php
+						foreach ($orderList as $key => $order) {
+							$date = $order['created_at'];
+							$status = $order['status'];
+							$item_count = $order['total_item_count'];
+							$currency_code = $order['order_currency_code'];
+							$price = $order['grand_total'];
+							echo '<li onclick=window.location="orderinfo.phtml?orderid='.$order['increment_id'].'">';
+							echo '<div class="aui-list-title-info">';
+							echo '<a href="#" class="aui-well ">';
+							echo '<div class="aui-well-bd">'.$date.'</div>';
+							echo '<div class="aui-well-ft">'.$status.'</div>';
+							echo '</a>';
+							echo '<a href="javascript:;" class="aui-list-product-fl-item">';
+							echo '<div class="aui-list-product-fl-text">';
+							echo '<h3 class="aui-list-product-fl-title">共'.$item_count.'种商品</h3>';
+							echo '<div class="aui-list-product-fl-mes">';
+							echo '<div>';
+							echo '<span class="aui-list-product-item-price"><em>'.$currency_code.'</em>'.round($price, 2).'</span>';
+							echo '</div>';
+							echo '</div>';
+							echo '</div>';
+							echo '</a>';
+							echo '</div>';
+							// echo '<div class="aui-list-title-btn">';
+							// echo '<a href="#">催物流</a>';
+							// echo '<a href="#">查看物流</a>';
+							// echo '<a href="#" class="red-color">联系卖家</a>';
+							// echo '</div>';
+							echo '<div class="aui-dri"></div>';
+							echo '</li>';
+						}
+						?>
+					</ul>
+				</div>
 				
-				<div class="tab-panel-item">
+			<!--<div class="tab-panel-item">
 					<ul>
 						<li>
 							<div class="aui-list-title-info">
@@ -101,23 +259,15 @@ $orderList = json_decode($html,true);
 										<img src="themes/img/pd/sf-9.jpg" alt="">
 									</div>
 									<div class="aui-list-product-fl-text">
-										<h3 class="aui-list-product-fl-title">2016夏天新款男士短袖t恤青少年韩版修身印花圆领半袖男装衣服潮领半袖男装衣服潮领半袖男装衣服潮</h3>
+										<h3 class="aui-list-product-fl-title">2016夏天</h3>
 										<div class="aui-list-product-fl-mes">
 											<div>
-									<span class="aui-list-product-item-price">
-										<em>¥</em>
-										399.99
-									</span>
-												<span class="aui-list-product-item-del-price">
-										¥495.65
-									</span>
+												<span class="aui-list-product-item-price"><em>¥</em>399.99</span>
+												<span class="aui-list-product-item-del-price">¥495.65</span>
 											</div>
-											<div class="aui-btn-purchase">
-												x1
-											</div>
+											<div class="aui-btn-purchase">x1</div>
 										</div>
 									</div>
-
 								</a>
 							</div>
 							<div class="aui-list-title-btn">
@@ -127,7 +277,7 @@ $orderList = json_decode($html,true);
 							<div class="aui-dri"></div>
 						</li>
 					</ul>
-				</div>
+				</div>-->
 			</div>
 		</div>
 	</section>

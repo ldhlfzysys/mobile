@@ -1,7 +1,4 @@
 <!DOCTYPE html>
-<?php
-
-?>
 <html>
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui"/>
@@ -29,7 +26,7 @@
 
 			</div>
 		</div>
-		<a href="my-set.html" class="aui-header-item-icon">
+		<a href="my-set.phtml" class="aui-header-item-icon">
 			<i class="aui-icon aui-icon-Set"></i>
 		</a>
 	</header>
@@ -74,10 +71,10 @@
 		</div>
 		<section class="aui-grid-content">
 			<div class="aui-grid-row">
-				<a href="my-order.phtml" class="aui-grid-row-item">
+				<!-- <a href="my-order.phtml" class="aui-grid-row-item">
 					<i class="aui-icon-large aui-icon-large-sm aui-icon-wallet"></i>
 					<p class="aui-grid-row-label">待付款</p>
-				</a>
+				</a> -->
 				<a href="my-order.phtml" class="aui-grid-row-item">
 					<i class="aui-icon-large aui-icon-large-sm aui-icon-goods"></i>
 					<p class="aui-grid-row-label">待发货</p>
@@ -90,10 +87,10 @@
 					<i class="aui-icon-large aui-icon-large-sm aui-icon-evaluate"></i>
 					<p class="aui-grid-row-label">待评价</p>
 				</a>
-				<a href="my-order.phtml" class="aui-grid-row-item">
+				<!-- <a href="my-order.phtml" class="aui-grid-row-item">
 					<i class="aui-icon-large aui-icon-large-sm aui-icon-refund"></i>
 					<p class="aui-grid-row-label">退货退款</p>
-				</a>
+				</a> -->
 			</div>
 			<div class="aui-dri"></div>
 			<div class="aui-me-content-order">
@@ -177,19 +174,6 @@
 				</div>
 			</section>
 		</section>
-	<?php
-	include_once('./user.php');
-	if (islogin()) {
-		echo '<div class="aui-out">';
-		echo '<a class="red-color" style="color:#fff" onclick="logout()">退出登录</a>';
-		echo '</div>';
-	}else
-	{
-		echo '<script type="text/javascript">';
-		echo 'window.location.href="http://bdbbuy.com/mobile/index.phtml";';
-		echo '</script>';
-	}
-	?>
 	</section>
 
 
@@ -264,33 +248,6 @@
 
 			document.getElementById("username").innerHTML=getCookie('bdb-nn');
         });
-		//读取cookies 
-		function getCookie(name) 
-		{ 
-			var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
-
-			if(arr=document.cookie.match(reg))
-
-			    return unescape(arr[2]); 
-			else 
-			    return null; 
-		} 
-
-		//删除cookies 
-		function delCookie(name) 
-		{ 
-			var exp = new Date(); 
-			exp.setTime(exp.getTime() - 1); 
-			var cval=getCookie(name); 
-			if(cval!=null) 
-			    document.cookie= name + "="+cval+";expires="+exp.toGMTString(); 
-		}
-
-		function logout(){
-       		window.location.href='http://bdbbuy.com/mobile/index.phtml';
-       		delCookie('bdb-ui');
-       		delCookie('bdb-nn');
-		}
 	</script>
 </body>
 </html>

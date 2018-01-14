@@ -33,19 +33,19 @@
 	<section class="aui-myOrder-content">
 		<div class="aui-product-set">
 
-			<a href="#" class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear" data-ydui-actionsheet="{target:'#actionSheet',closeElement:'#cancel'}">
+			<!-- <a href="#" class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear" data-ydui-actionsheet="{target:'#actionSheet',closeElement:'#cancel'}">
 				<div class="aui-address-cell-bd">个人信息</div>
 				<div class="aui-address-cell-ft"></div>
 			</a>
 			<a href="my-address.html" class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear" data-ydui-actionsheet="{target:'#actionSheet',closeElement:'#cancel'}">
 				<div class="aui-address-cell-bd">我的实名认证</div>
 				<div class="aui-address-cell-ft"></div>
-			</a>
+			</a> -->
 			<a href="my-address.html" class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear" data-ydui-actionsheet="{target:'#actionSheet',closeElement:'#cancel'}">
 				<div class="aui-address-cell-bd">我的收货地址</div>
 				<div class="aui-address-cell-ft"></div>
 			</a>
-			<a href="#" class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear" data-ydui-actionsheet="{target:'#actionSheet',closeElement:'#cancel'}">
+			<!-- <a href="#" class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear" data-ydui-actionsheet="{target:'#actionSheet',closeElement:'#cancel'}">
 				<div class="aui-address-cell-bd">消息推送设置</div>
 				<div class="aui-address-cell-ft"></div>
 			</a>
@@ -61,17 +61,54 @@
 			<a href="#" class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear" data-ydui-actionsheet="{target:'#actionSheet',closeElement:'#cancel'}">
 				<div class="aui-address-cell-bd">关于我们</div>
 				<div class="aui-address-cell-ft">v5.0</div>
-			</a>
+			</a> -->
 		</div>
-		<div class="aui-out">
-			<a href="#">退出当前账号</a>
-		</div>
+		<?php
+		include_once('./user.php');
+		if (islogin()) {
+			echo '<div class="aui-out">';
+			echo '<a class="red-color" style="color:#fff" onclick="logout()">退出当前账号</a>';
+			echo '</div>';
+		}else
+		{
+			echo '<script type="text/javascript">';
+			echo 'window.location.href="http://bdbbuy.com/mobile/index.phtml";';
+			echo '</script>';
+		}
+		?>
 	</section>
 
 
 	<script type="text/javascript" src="themes/js/jquery.min.js"></script>
 	<script type="text/javascript" src="themes/js/aui.js"></script>
+	<script type="text/javascript">
+		//读取cookies 
+		function getCookie(name) 
+		{ 
+			var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
 
+			if(arr=document.cookie.match(reg))
 
+			    return unescape(arr[2]); 
+			else 
+			    return null; 
+		} 
+
+		//删除cookies 
+		function delCookie(name) 
+		{ 
+			var exp = new Date(); 
+			exp.setTime(exp.getTime() - 1); 
+			var cval=getCookie(name); 
+			if(cval!=null) 
+			    document.cookie= name + "="+cval+";expires="+exp.toGMTString(); 
+		}
+
+		function logout(){
+       		window.location.href='http://bdbbuy.com/mobile/index.phtml';
+       		delCookie('bdb-ui');
+       		delCookie('bdb-nn');
+		}
+		</script>
 </body>
 </html>
