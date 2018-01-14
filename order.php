@@ -1,60 +1,93 @@
 <?php 
 
-#完整的下单流程，到这一步，所有信息都已经有了，否则就要报错
-function order(){
+function set_cart_user($cartid,$userinfo,$mode)
+{
 	$client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
 	$session = $client->login('mobile', 'mobile');
-
-	$userid = null;
-	$cartid = null;
-	$userinfo = null;
-	//判断是游客还是用户
-	if (isset($_COOKIE['bdb-ui'])) {
-		$userid = $_COOKIE['bdb-ui'];
+	$customerAsGuest = array(
+		"firstname" => $userinfo['firstname'],
+		"lastname" => $userinfo['lastname'],
+		"email" => $userinfo['email'],
+		"website_id" => "base",
+		"store_id" => "china",
+		"mode" => $mode
+	);
+	if ($mode == "customer") {
+		$customerAsGuest['customer_id'] = $userinfo['customer_id'];
 	}
+	$result = $client->call($session,'cart_customer.set',array($cartid,$customerAsGuest));
+	return $result;
+}
 
-	//用户信息
-	if (isset($_COOKIE['bdb-uf'])) {
-		$userinfo = $_COOKIE['bdb-uf'];
-	}else if ($userid == null) {
-		$userinfo = null;
-	}
-	else if($userinfo == null)
-	{
-		$client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
-		$session = $client->login('mobile', 'mobile');
-		// $result = $client->call($session, 'customer.list');
-		$result = $client->call($session, 'customer.info', $userid);
-		$userinfo = $result;
-		setcookie('bdb-uf',json_encode($userinfo));
-	}else{
-		return null;
-	}
+function set_shipping($cartid){
+	$client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
+	$session = $client->login('mobile', 'mobile');
+	$shipping_list = $client->call($session,'cart_shipping.list',$cartid);
+	$cheap = null;
+	foreach ($shipping_list as $shippingMethod) {
+		if ($cheap == null) {
+			$cheap = $shippingMethod;
 
-	//购物车
-	if (isset($_COOKIE['bdb-ci'])) {
-		$cartid = $_COOKIE['bdb-ci'];
+		}
+		if (floatval($shippingMethod['price']) < floatval($cheap['price'])) {
+			$cheap = $shippingMethod;
+		}
 	}
+	$result = $client->call($session,'cart_shipping.method',array($cartid,$cheap['code']));
 
-	//如果没有用户信息，构造一个游客信息并添加到购物车
-	if ($userinfo == null) {
-		$userinfo = array(
-			"firstname" => "游",
-			"lastname" => "客",
-			"email" => "service@bdbbuy.com",
-			"website_id" => "base",
-			"store_id" => "china",
-			"mode" => "guest"
-		);
-	}
+	return $result;
+}
 
-	//到目前，如果关键数据缺失，返回错误
-	if (empty($)) {
-		# code...
-	}
+function set_payment($cartid)
+{
+	$client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
+	$session = $client->login('mobile', 'mobile');
+	$paymentMethod = array(
+		"method" => "cashondelivery"
+	);
+	$result = $client->call($session,'cart_payment.method',array($cartid,$paymentMethod));
+	return $result;
+}
 
-	//设置用户信息到购物车
-	$result = $client->call($session,'cart_customer.set',array($cartid,$userinfo));
+#用于没有地址的用户
+function set_cart_address($cartid,$billingAddress,$shippingAddress)
+{
+	$client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
+	$session = $client->login('mobile', 'mobile');
+	$arrAddresses = array(
+		array(
+			"mode" => "shipping",
+			"firstname" => $billingAddress['firstname'],
+			"lastname" => $billingAddress['lastname'],
+			"company" => "testCompany",
+			"street" => $billingAddress['street'],
+			"city" => $billingAddress['region'],
+			"postcode" => $billingAddress['postcode'],
+			"country_id" => "CA",
+			"region_id" => "74",
+			"telephone" => $billingAddress['telephone'],
+			"fax" => "",
+			"is_default_shipping" => 1,
+			"is_default_billing" => 0
+		),
+		array(
+			"mode" => "billing",
+			"firstname" => $shippingAddress['firstname'],
+			"lastname" => $shippingAddress['lastname'],
+			"company" => "testCompany",
+			"street" => $shippingAddress['street'],
+			"city" => $shippingAddress['region'],
+			"postcode" => $shippingAddress['postcode'],
+			"country_id" => "CA",
+			"region_id" => "74",
+			"telephone" => $shippingAddress['telephone'],
+			"fax" => "",
+			"is_default_shipping" => 0,
+			"is_default_billing" => 1
+		)
+	);
+	$result = $client->call($session,'cart_customer.addresses',array($cartid,$arrAddresses));
+	return $result;
 }
 
 

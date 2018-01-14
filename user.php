@@ -25,12 +25,13 @@ function cartid(){
 
 function userinfo(){
 	if (isset($_COOKIE['bdb-uf'])) {
-		return $_COOKIE['bdb-uf'];
+		return json_decode($_COOKIE['bdb-uf'],true);
 	}else if (userid() == null) {
 		return null;
 	}
-	else if($userinfo == null)
+	else
 	{
+		$userid = userid();
 		$client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
 		$session = $client->login('mobile', 'mobile');
 		// $result = $client->call($session, 'customer.list');
@@ -38,8 +39,6 @@ function userinfo(){
 		$userinfo = $result;
 		setcookie('bdb-uf',json_encode($userinfo));
 		return $userinfo;
-	}else{
-		return null;
 	}
 
 }

@@ -1,6 +1,6 @@
 <?php
-
-if (isset($_GET['cartid'])) {
+ini_set('display_errors',1); 
+if (isset($_POST['cartid'])) {
     require __DIR__  . '/PayPal-PHP-SDK/autoload.php';
     $apiContext = new \PayPal\Rest\ApiContext(
         new \PayPal\Auth\OAuthTokenCredential(
@@ -10,74 +10,84 @@ if (isset($_GET['cartid'])) {
     );
 
     #取购物车内容
-    $cartid = $_GET['cartid'];
+    $cartid = $_POST['cartid'];
     $client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
     $session = $client->login('mobile', 'mobile');
     $args = array(
         'store' => '16'
     );
     $cartInfo = $client->call($session, 'cart.info',$cartid, $args);
+    $billing_info = $cartInfo['billing_address'];
+    $shipping_info = $cartInfo['shipping_address'];
 
-    var_dump($cartInfo);
-    return;
+    #必要数据
+    $mail = $cartInfo['customer_email'];
+    $firstname = $cartInfo['customer_firstname'];
+    $lastname = $cartInfo['customer_lastname'];
+
     #user
     $payer = new \PayPal\Api\Payer();
     $payer->setPaymentMethod('paypal');
 
     $payerinfo = new \PayPal\Api\PayerInfo();
-    $payerinfo->setEmail();
-    $payerinfo->setFirstName();
-    $payerinfo->setLastName();
-    $payerinfo->setPhone();
-    $payerinfo->setCountryCode();
+    $payerinfo->setEmail($mail);
+    $payerinfo->setFirstName($firstname);
+    $payerinfo->setLastName($lastname);
+    $payerinfo->setCountryCode('CA');
+    $payerinfo->setPhone($billing_info['telephone']);
 
     #账单地址
-    $billing_json_str = $_POST['billing_address'];
-    $billing_info = json_decode($billing_json_str,true);
     $billing_address = new \PayPal\Api\Address();
-    $billing_address->
-    $billing_address->
-    $billing_address->
-    $billing_address->
-    $billing_address->
-    $billing_address->
-    $billing_address->
-
+    $billing_address->setLine1($billing_info['street']);//street
+    $billing_address->setCity($billing_info['city']);
+    $billing_address->setCountryCode('CA');
+    $billing_address->setPostalCode($billing_info['postcode']);
     $payerinfo->setBillingAddress($billing_address);
 
     #收货地址
-    $payerinfo->setShippingAddress();
+    $shipping_address = new \PayPal\Api\ShippingAddress();
+    $shipping_address->setLine1($shipping_info['street']);//street
+    $shipping_address->setCity($shipping_info['city']);
+    $shipping_address->setCountryCode('CA');
+    $shipping_address->setPostalCode($shipping_info['postcode']);
+    $payerinfo->setShippingAddress($shipping_address);
 
-    $payer->setPayerInfo($payerinfo);
-
-
-    $amount = new \PayPal\Api\Amount();
-    $amount->setTotal('2.4');
-    $amount->setCurrency('CAD');
-
+    #设置用户
+    // $payer->setPayerInfo($payerinfo);
 
     #添加商品
     $itemList = new \PayPal\Api\ItemList();
-    $items_json_str = $_POST['items'];
-    $items = json_decode($items_json_str,true);
+
+    $items = $cartInfo['items'];
     foreach ($items as $product) {
         $item = new \PayPal\Api\Item();
         $item->setSku($product["sku"]);
         $item->setName($product["name"]);
         $item->setCurrency("CAD");
         $item->setPrice($product["price"]);
-        $item->setTax($product["tax"]);
+        $item->setTax($product["tax_amount"]);
         $item->setQuantity($product["qty"]);
-        $item->setDescription($product["description"]);
-        $item->setUrl($product["url"]);
         $itemList->addItem($item);
     }
+
+    $detail = new \PayPal\Api\Details();
+    $detail->setSubtotal($cartInfo['subtotal']);
+    $detail->setTax($shipping_info['tax_amount']);
+    $detail->setShipping($shipping_info['shipping_amount']);
+
+
+    $amount = new \PayPal\Api\Amount();
+    $amount->setDetails($detail);
+    $amount->setTotal($cartInfo['grand_total']);
+    $amount->setCurrency('CAD');
 
 
     #paypal传输的类
     $transaction = new \PayPal\Api\Transaction();
     $transaction->setAmount($amount);
     $transaction->setItemList($itemList);
+    $transaction->setInvoiceNumber($cartid);
+    $transaction->setReferenceId($cartid);
 
     #回调地址
     $redirectUrls = new \PayPal\Api\RedirectUrls();
@@ -91,12 +101,13 @@ if (isset($_GET['cartid'])) {
         ->setTransactions(array($transaction))
         ->setRedirectUrls($redirectUrls);
 
+    // var_dump($payment);
+
     // 4. Make a Create Call and print the values
     try {
         $payment->create($apiContext);
-        echo $payment;
-
-        echo "\n\nRedirect user to approval_url: " . $payment->getApprovalLink() . "\n";
+        // echo $payment;
+        echo $payment->getApprovalLink();
     }
     catch (\PayPal\Exception\PayPalConnectionException $ex) {
         // This will print the detailed information on the exception.

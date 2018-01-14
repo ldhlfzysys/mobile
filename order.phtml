@@ -6,7 +6,7 @@
 	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
 	<meta name="format-detection" content="telephone=no, email=no"/>
 	<meta charset="UTF-8">
-	<title>下单</title>
+	<title>游客信息</title>
 	<link rel="stylesheet" href="themes/css/core.css">
 	<link rel="stylesheet" href="themes/css/icon.css">
 	<link rel="stylesheet" href="themes/css/home.css">
@@ -34,7 +34,7 @@ if (isset($_COOKIE['bdb-billing'])) {
 		</a>
 		<div class="aui-header-center aui-header-center-clear">
 			<div class="aui-header-center-logo">
-				<div class="aui-car-white-Typeface">确认地址</div>
+				<div class="aui-car-white-Typeface">游客信息</div>
 			</div>
 		</div>
 		<a href="#" class="aui-header-item-icon"   style="min-width:0">
@@ -56,6 +56,11 @@ if (isset($_COOKIE['bdb-billing'])) {
 					<p>
 						<span class="aui-Address-box-head">手机号</span><input id="shipping-phone" class="aui-Address-box-input" type="text" placeholder="手机号码" value="<?php echo json_decode('"'.str_replace('%', '\\', $shipping['phone']).'"'); ?>">
 					</p>
+
+					<p>
+						<span class="aui-Address-box-head">邮箱</span><input id="shipping-email" class="aui-Address-box-input" type="text" placeholder="邮箱" value="<?php echo json_decode('"'.str_replace('%', '\\', $shipping['email']).'"'); ?>">
+					</p>
+
 					<p>
 						<span class="aui-Address-box-head">邮编</span><input id="shipping-postcode" class="aui-Address-box-input" type="text" placeholder="邮编" value="<?php echo json_decode('"'.str_replace('%', '\\', $shipping['postcode']).'"'); ?>">
 					</p>
@@ -120,6 +125,7 @@ if (isset($_COOKIE['bdb-billing'])) {
 		var shipping_lastname = $('#shipping-lastname').val();
 		var shipping_firstname = $('#shipping-firstname').val();
 		var shipping_phone = $('#shipping-phone').val();
+		var shipping_email = $('#shipping-email').val();
 		var shipping_postcode = $('#shipping-postcode').val();
 		var shipping_area = $('#shipping-area').val();
 		var shipping_street = $('#shipping-street').val();
@@ -155,10 +161,12 @@ if (isset($_COOKIE['bdb-billing'])) {
 			billing_street = shipping_street;
 		};
 
+
 		var shipping = {};
 		shipping.lastname = shipping_lastname;
 		shipping.firstname = shipping_firstname;
 		shipping.phone    = shipping_phone;
+		shipping.email = shipping_email;
 		shipping.postcode = shipping_postcode;
 		shipping.area     = shipping_area;
 		shipping.street   = shipping_street;

@@ -10,31 +10,109 @@
 	<link rel="stylesheet" href="themes/css/core.css">
 	<link rel="stylesheet" href="themes/css/icon.css">
 	<link rel="stylesheet" href="themes/css/home.css">
+	<script type="text/javascript" src="themes/js/jquery.min.js"></script>
 	<link rel="icon" type="image/x-icon" href="favicon.ico">
 	<link href="iTunesArtwork@2x.png" sizes="114x114" rel="apple-touch-icon-precomposed">
 </head>
 <?php
-ini_set('display_errors',1);
+ini_set('display_errors',1); 
 include('./user.php');
 include_once('./cart.php');
 include('./address.php');
+
+#用户or游客
 $userId = userid();
-$addressList = array();
-$shippingAddress = null;
-$billingAddress = null;
+$isLogin = false;
 if ($userId != null) {
-	$addressList = customer_address($userId);
-	foreach ($addressList as $item) {
-		if ($item['is_default_billing']) {
-			$billingAddress = $item;
+	$isLogin = true;
+}
+
+#用户
+#需要设置个人、地址、账单信息。
+#信息完整才能展示价格等数据。
+if ($isLogin) {
+	$userinfo = userinfo();
+	
+	$addressList = array();
+	$shippingAddress = null;
+	$billingAddress = null;
+	if ($userId != null) {
+		$addressList = customer_address($userId);
+		foreach ($addressList as $item) {
+			if ($item['is_default_billing']) {
+				$billingAddress = $item;
+			}
+			if ($item['is_default_shipping']) {
+				$shippingAddress = $item;
+			}
 		}
-		if ($item['is_default_shipping']) {
-			$shippingAddress = $item;
-		}
+	}
+	$userinfo['phone'] = $shippingAddress['telephone'];
+	if ($shippingAddress == null || $billingAddress == null) {
+		echo '<script>url="http://bdbbuy.com/mobile/my-edit-address.phtml";window.location.href=url;</script> ';
+	}
+}else{
+	#未登录&&没有缓存的配送信息
+	$shipping=null;
+	$billing=null;
+	if (isset($_COOKIE['bdb-shipping'])) {
+		$shipping = json_decode($_COOKIE['bdb-shipping'],true);
+	}
+
+	if (isset($_COOKIE['bdb-billing'])) {
+		$billing = json_decode($_COOKIE['bdb-billing'],true);
+	}
+	if ($shipping == null || $billing == null) {
+		echo '<script>url="http://bdbbuy.com/mobile/order.phtml";window.location.href=url;</script> ';
+	}else{
+		$userinfo = array(
+				'email' => json_decode('"'.str_replace('%', '\\', $shipping['email'])),
+				'firstname' => json_decode('"'.str_replace('%', '\\', $shipping['firstname'])),
+				'lastname' => json_decode('"'.str_replace('%', '\\', $shipping['lastname'])),
+				'phone' => json_decode('"'.str_replace('%', '\\', $shipping['phone']))
+
+			);
+		$shippingAddress = array(
+				'firstname' => json_decode('"'.str_replace('%', '\\', $shipping['firstname'])),
+				'lastname' => json_decode('"'.str_replace('%', '\\', $shipping['lastname'])),
+				'telephone' => json_decode('"'.str_replace('%', '\\', $shipping['phone'])),
+				'street' => json_decode('"'.str_replace('%', '\\', $shipping['streat'])),
+				'region' => json_decode('"'.str_replace('%', '\\', $shipping['area'])),
+				'postcode' => json_decode('"'.str_replace('%', '\\', $shipping['postcode'])),
+				'email' => json_decode('"'.str_replace('%', '\\', $shipping['email']))
+			);
+		$billingAddress = array(
+				'firstname' => json_decode('"'.str_replace('%', '\\', $billing['firstname'])),
+				'lastname' => json_decode('"'.str_replace('%', '\\', $billing['lastname'])),
+				'telephone' => json_decode('"'.str_replace('%', '\\', $billing['phone'])),
+				'street' => json_decode('"'.str_replace('%', '\\', $billing['streat'])),
+				'region' => json_decode('"'.str_replace('%', '\\', $billing['area'])),
+				'postcode' => json_decode('"'.str_replace('%', '\\', $billing['postcode']))
+			);
 	}
 }
 
+#开始下单
+include('./order.php');
 $cartid = cartid();
+$userinfo_complete = false;
+$address_complete = false;
+$payment_complete = false;
+#设置用户信息
+if ($isLogin) {
+	$userinfo_complete = set_cart_user($cartid,$userinfo,"customer");
+}else{
+	$userinfo_complete = set_cart_user($cartid,$userinfo,"guest");
+}
+#设置购物车地址信息
+$address_complete = set_cart_address($cartid,$billingAddress,$shippingAddress);
+#设置支付信息
+$payment_complete = set_payment($cartid);
+#设置配送方式
+$shipping_complete = set_shipping($cartid);
+
+#购物车信息
+
 $carinfo = cart($cartid);
 $carItems = $carinfo['items'];
 $products = array();
@@ -49,7 +127,7 @@ foreach ($carItems as $item) {
 	$product['discount_price'] = $item['price'];
 	array_push($products, $product);
 }
-var_dump($carinfo);
+
 
 ?>
 <body>
@@ -148,60 +226,61 @@ var_dump($carinfo);
 			<a href="#" class="aui-address-cell aui-fl-arrow">
 				<div class="aui-address-cell-bd">支持配送</div>
 				<div class="aui-address-cell-ft">
-<!-- 					<p>在线支付</p>
-					<p>顺丰快递</p> -->
 					<p class="aui-address-text"><i class="aui-icon aui-prompt-sm"></i>次日15:00-22:00</p>
 				</div>
 			</a>
 			<div class="aui-prompt"><i class="aui-icon aui-prompt-sm"></i>当天21点前下单，可享次日达~</div>
-<!-- 			<a href="#" class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear">
-				<div class="aui-address-cell-bd">发票</div>
-				<div class="aui-address-cell-ft">个人</div>
-			</a> -->
+
 			<div class="aui-dri"></div>
-<!-- 			<a href="#" class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear">
-				<div class="aui-address-cell-bd">
-					运费险
-					<p style="color:#888">7天内退货，15天内可换货</p>
-				</div>
-				<div class="aui-address-cell-ft">￥0.50&nbsp;&nbsp;<input class="aui-switch" type="checkbox" checked="checked"></div>
-			</a>
-			<div class="aui-dri"></div> -->
-<!-- 			<a href="#" class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear">
-				<div class="aui-address-cell-bd">优惠券</div>
-				<div class="aui-address-cell-ft">不可用</div>
-			</a> -->
-<!-- 			<div class="aui-dri"></div>
-			<a href="#" class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear">
-				<div class="aui-address-cell-bd">礼品卡</div>
-				<div class="aui-address-cell-ft">不可用</div>
-			</a> -->
-<!-- 			<div class="aui-dri"></div>
-			<a href="#" class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear">
-				<div class="aui-address-cell-bd">积分</div>
-				<div class="aui-address-cell-ft">567890</div>
-			</a> -->
+
 			<div class="aui-dri"></div>
-			<a href="#" class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear">
-				<div class="aui-address-cell-bd">
-					<h3>商品金额</h3>
-					<p>税</p>
-					<p>运费</p>
-				</div>
-				<div class="aui-address-cell-ft">
-					<span class="aui-red">CA$<?php echo number_format($carinfo['subtotal'],2) ?></span><br>
-					<span class="aui-red">+CA$<?php echo number_format($carinfo['shipping_address']['tax_amount'],2); ?></span><br>
-					<span class="aui-red">+CA$<?php echo number_format($carinfo['shipping_address']['shipping_amount'],2); ?></span>
-				</div>
-			</a>
+			<div>
+				<a href="#" class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear">
+					<div class="aui-address-cell-bd">
+						<h3>商品金额</h3>
+						<p>税</p>
+						<p>运费</p>
+					</div>
+					<div class="aui-address-cell-ft">
+						<span class="aui-red">CA$<?php echo number_format($carinfo['subtotal'],2) ?></span><br>
+						<span class="aui-red">+CA$<?php echo number_format($carinfo['shipping_address']['tax_amount'],2); ?></span><br>
+						<span class="aui-red">+CA$<?php echo number_format($carinfo['shipping_address']['shipping_amount'],2); ?></span>
+					</div>
+				</a>
+			</div>
 		</div>
 		<div class="aui-payment-bar">
 			<div class="shop-total">
 				<span class="aui-red aui-size">实付款: <em>CA$<?php echo number_format($carinfo['grand_total'],2) ?></em></span>
 			</div>
-			<a href="Settlement.html" class="settlement">提交订单</a>
+			<?php echo '<a href="javascript:void(0);" class="settlement" onclick="gopay(\''.$cartid.'\')">去支付</a>'; ?>
 		</div>
 	</section>
+<script type="text/javascript">
 
+ function gopay(mCartId) { 
+		$.ajax({  
+
+            url:"http://bdbbuy.com/mobile/pptest.php",           
+
+            type: "POST",
+
+            data:{cartid:mCartId},         
+
+            success:function(result){  
+
+            	window.location.href=result;
+            },
+
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+
+                
+
+            }
+
+	    });
+
+ }
+ </script>
 </body>
 </html>
