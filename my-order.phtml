@@ -1,5 +1,11 @@
 <!DOCTYPE html>
 <html>
+<?php
+$orderListUrl='http://bdbbuy.com/mobile/myorder.php';
+$html = file_get_contents($orderListUrl);
+$orderList = json_decode($html,true);
+var_dump($orderList);
+?>
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui"/>
 	<meta name="apple-mobile-web-app-capable" content="yes"/>
@@ -41,10 +47,47 @@
 					<li class="tab-nav-item"><a href="javascript:;">评价</a></li>
 				</ul>
 			</div>
-			<div class="aui-prompt"><i class="aui-icon aui-prompt-sm"></i>双十一期间发货及物流时效公告</div>
+			<!-- <div class="aui-prompt"><i class="aui-icon aui-prompt-sm"></i>双十一期间发货及物流时效公告</div> -->
 			<div class="tab-panel">
 				<div class="tab-panel-item tab-active">
 					<ul>
+						<li>
+							<div class="aui-list-title-info">
+								<a href="#" class="aui-well ">
+									<div class="aui-well-bd">2017-11-14</div>
+									<div class="aui-well-ft">已发货</div>
+								</a>
+								<a href="javascript:;" class="aui-list-product-fl-item">
+									<div class="aui-list-product-fl-img">
+										<img src="themes/img/pd/sf-4.jpg" alt="">
+									</div>
+									<div class="aui-list-product-fl-text">
+										<h3 class="aui-list-product-fl-title">2016夏天新款男士短袖t恤青少年韩版修身印花圆领半袖男装衣服潮领半袖男装衣服潮领半袖男装衣服潮</h3>
+										<div class="aui-list-product-fl-mes">
+											<div>
+									<span class="aui-list-product-item-price">
+										<em>¥</em>
+										399.99
+									</span>
+												<span class="aui-list-product-item-del-price">
+										¥495.65
+									</span>
+											</div>
+											<div class="aui-btn-purchase">
+												x1
+											</div>
+										</div>
+									</div>
+
+								</a>
+							</div>
+							<div class="aui-list-title-btn">
+								<a href="#">催物流</a>
+								<a href="#">查看物流</a>
+								<a href="#" class="red-color">确认收货</a>
+							</div>
+							<div class="aui-dri"></div>
+						</li>
 						<li>
 							<div class="aui-list-title-info">
 								<a href="#" class="aui-well ">
