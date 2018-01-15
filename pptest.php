@@ -69,6 +69,9 @@ if (isset($_POST['cartid'])) {
         $item->setQuantity($product["qty"]);
         $itemList->addItem($item);
     }
+    $itemList->setShippingAddress($shipping_address);
+    $itemList->setShippingPhoneNumber($shipping_info['telephone']);
+
 
     $detail = new \PayPal\Api\Details();
     $detail->setSubtotal($cartInfo['subtotal']);
