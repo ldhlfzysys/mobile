@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html>
+<?php
+$nickname = $_COOKIE['bdb-nn'];
+?>
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui"/>
 	<meta name="apple-mobile-web-app-capable" content="yes"/>
@@ -40,7 +43,9 @@
 						<div class="aui-me-content-item-img">
 							<img src="images/logo.png" alt="">
 						</div>
-						<div class="aui-me-content-item-title" id="username"></div>
+						<?php
+							echo '<div class="aui-me-content-item-title">'.$nickname.'</div>';
+						?>
 					</div>
 					<!-- <div class="aui-me-content-item-text">
 						<a class ="aui-me-content-item-a" href="my-orders.html">
@@ -245,8 +250,6 @@
 					$("#recommend").append(str);
 				}
 			});
-
-			document.getElementById("username").innerHTML=getCookie('bdb-nn');
         });
 	</script>
 </body>
