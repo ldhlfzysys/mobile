@@ -80,7 +80,8 @@ if ($isLogin) {
 				'street' => json_decode('"'.str_replace('%', '\\', $shipping['street']).'"'),
 				'city' => json_decode('"'.str_replace('%', '\\', $shipping['area']).'"'),
 				'postcode' => json_decode('"'.str_replace('%', '\\', $shipping['postcode']).'"'),
-				'email' => json_decode('"'.str_replace('%', '\\', $shipping['email']).'"')
+				'email' => json_decode('"'.str_replace('%', '\\', $shipping['email']).'"'),
+				'country_id' => "CA"
 			);
 		$billingAddress = array(
 				'firstname' => json_decode('"'.str_replace('%', '\\', $billing['firstname']).'"'),
@@ -88,7 +89,8 @@ if ($isLogin) {
 				'telephone' => json_decode('"'.str_replace('%', '\\', $billing['phone']).'"'),
 				'street' => json_decode('"'.str_replace('%', '\\', $billing['street']).'"'),
 				'city' => json_decode('"'.str_replace('%', '\\', $billing['area']).'"'),
-				'postcode' => json_decode('"'.str_replace('%', '\\', $billing['postcode']).'"')
+				'postcode' => json_decode('"'.str_replace('%', '\\', $billing['postcode']).'"'),
+				'country_id' => "CA"
 			);
 	}
 }
