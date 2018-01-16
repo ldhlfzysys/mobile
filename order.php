@@ -45,8 +45,13 @@ function set_payment($cartid)
 	$paymentMethod = array(
 		"method" => "cashondelivery"
 	);
-	$result = $client->call($session,'cart_payment.method',array($cartid,$paymentMethod));
-	return $result;
+	try{
+		$result = $client->call($session,'cart_payment.method',array($cartid,$paymentMethod));	
+		return $result;
+	}catch(SoapFault $e)
+	{
+		return null;
+	}
 }
 
 #用于没有地址的用户
