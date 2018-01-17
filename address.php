@@ -65,8 +65,10 @@ if (isset($_POST['delete_address']) && isset($_POST['address_id'])) {
 if (isset($_POST['uid']) && isset($_POST['type']) && isset($_POST['slastname']) && isset($_POST['sfirstname']) && isset($_POST['sphone']) && isset($_POST['spostcode']) && isset($_POST['sarea']) && isset($_POST['sstreet'])) {
 	if ($_POST['type'] == 0) {
 		return customer_address_create($_POST['uid'],$_POST['sfirstname'],$_POST['slastname'],$_POST['sphone'],$_POST['spostcode'],$_POST['sarea'],$_POST['sstreet'],false,true);	
-	}else{
+	}else if($_POST['type'] == 1){
 		return customer_address_create($_POST['uid'],$_POST['sfirstname'],$_POST['slastname'],$_POST['sphone'],$_POST['spostcode'],$_POST['sarea'],$_POST['sstreet'],true,false);	
+	}else{
+		return customer_address_create($_POST['uid'],$_POST['sfirstname'],$_POST['slastname'],$_POST['sphone'],$_POST['spostcode'],$_POST['sarea'],$_POST['sstreet'],true,true);	
 	}
 	
 }
