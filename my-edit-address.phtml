@@ -44,6 +44,12 @@ function save(){
 	var shipping_postcode = $('#shipping-postcode').val();
 	var shipping_area = $('#shipping-area').val();
 	var shipping_street = $('#shipping-street').val();
+
+	if (shipping_lastname == "" || shipping_firstname=="" || shipping_phone=="" || shipping_postcode=="" || shipping_area=="" || shipping_street=="") {
+		alert('收货地址每一项都是必填项');
+		return;
+	};
+		
 	$.ajax({  
 
         url:"http://bdbbuy.com/mobile/address.php",           
