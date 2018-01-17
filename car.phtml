@@ -53,7 +53,10 @@ foreach ($carItems as $item) {
             datas.push(dict);
 	      });
 	    });
-
+	    if (datas.length == 0) {
+	    	alert('购物车空空，去添加商品吧~');
+	    	return;
+	    };
 	    var str = JSON.stringify(datas);
 
         $.ajax({  

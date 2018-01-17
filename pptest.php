@@ -24,7 +24,7 @@ if (isset($_POST['cartid'])) {
     $mail = $cartInfo['customer_email'];
     $firstname = $cartInfo['customer_firstname'];
     $lastname = $cartInfo['customer_lastname'];
-
+    $shippingname = $lastname.$firstname;
     #user
     $payer = new \PayPal\Api\Payer();
     $payer->setPaymentMethod('paypal');
@@ -46,11 +46,15 @@ if (isset($_POST['cartid'])) {
 
     #收货地址
     $shipping_address = new \PayPal\Api\ShippingAddress();
+    $shipping_address->setRecipientName($shippingname);
     $shipping_address->setLine1($shipping_info['street']);//street
     $shipping_address->setCity($shipping_info['city']);
     $shipping_address->setCountryCode('CA');
+    $shipping_address->setState('CA');
+    $shipping_address->setPhone($shipping_info['telephone']);
     $shipping_address->setPostalCode($shipping_info['postcode']);
     $payerinfo->setShippingAddress($shipping_address);
+    // var_dump($shipping_address);
 
     #设置用户
     // $payer->setPayerInfo($payerinfo);
@@ -69,6 +73,8 @@ if (isset($_POST['cartid'])) {
         $item->setQuantity($product["qty"]);
         $itemList->addItem($item);
     }
+    // $itemList->setShippingAddress($shipping_address);
+
 
     $detail = new \PayPal\Api\Details();
     $detail->setSubtotal($cartInfo['subtotal']);

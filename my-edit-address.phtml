@@ -2,7 +2,8 @@
 <html>
 <?php 
 //0收货
-//1zhang'dan
+//1账单
+//2都是
 include('./user.php');
 $type=$_GET['type'];
 $userid = userid();
@@ -15,9 +16,12 @@ $userid = userid();
 	<meta charset="UTF-8">
 	<title><?php if ($type == 0) {
 		echo '收货地址';
-	}else{
+	}else if($type == 1){
 		echo '账单地址';
-	} ?></title>
+	}else{
+		echo '收货/账单地址';
+	}
+	 ?></title>
 	<link rel="stylesheet" href="themes/css/core.css">
 	<link rel="stylesheet" href="themes/css/icon.css">
 	<link rel="stylesheet" href="themes/css/home.css">
@@ -43,6 +47,12 @@ function save(){
 	var shipping_postcode = $('#shipping-postcode').val();
 	var shipping_area = $('#shipping-area').val();
 	var shipping_street = $('#shipping-street').val();
+
+	if (shipping_lastname == "" || shipping_firstname=="" || shipping_phone=="" || shipping_postcode=="" || shipping_area=="" || shipping_street=="") {
+		alert('收货地址每一项都是必填项');
+		return;
+	};
+
 	$.ajax({  
 
         url:"http://bdbbuy.com/mobile/address.php",           

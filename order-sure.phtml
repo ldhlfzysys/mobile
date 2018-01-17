@@ -49,7 +49,7 @@ if ($isLogin) {
 	}
 	$userinfo['phone'] = $shippingAddress['telephone'];
 	if ($shippingAddress == null || $billingAddress == null) {
-		echo '<script>url="http://bdbbuy.com/mobile/my-edit-address.phtml";window.location.href=url;</script> ';
+		echo '<script>url="http://bdbbuy.com/mobile/my-edit-address.phtml?type=2";window.location.href=url;</script> ';
 	}
 }else{
 	#未登录&&没有缓存的配送信息
@@ -66,28 +66,30 @@ if ($isLogin) {
 		echo '<script>url="http://bdbbuy.com/mobile/order.phtml";window.location.href=url;</script> ';
 	}else{
 		$userinfo = array(
-				'email' => json_decode('"'.str_replace('%', '\\', $shipping['email'])),
-				'firstname' => json_decode('"'.str_replace('%', '\\', $shipping['firstname'])),
-				'lastname' => json_decode('"'.str_replace('%', '\\', $shipping['lastname'])),
-				'phone' => json_decode('"'.str_replace('%', '\\', $shipping['phone']))
+				'email' => json_decode('"'.str_replace('%', '\\', $shipping['email']).'"'),
+				'firstname' => json_decode('"'.str_replace('%', '\\', $shipping['firstname']).'"'),
+				'lastname' => json_decode('"'.str_replace('%', '\\', $shipping['lastname']).'"'),
+				'phone' => json_decode('"'.str_replace('%', '\\', $shipping['phone']).'"')
 
 			);
 		$shippingAddress = array(
-				'firstname' => json_decode('"'.str_replace('%', '\\', $shipping['firstname'])),
-				'lastname' => json_decode('"'.str_replace('%', '\\', $shipping['lastname'])),
-				'telephone' => json_decode('"'.str_replace('%', '\\', $shipping['phone'])),
-				'street' => json_decode('"'.str_replace('%', '\\', $shipping['streat'])),
-				'region' => json_decode('"'.str_replace('%', '\\', $shipping['area'])),
-				'postcode' => json_decode('"'.str_replace('%', '\\', $shipping['postcode'])),
-				'email' => json_decode('"'.str_replace('%', '\\', $shipping['email']))
+				'firstname' => json_decode('"'.str_replace('%', '\\', $shipping['firstname']).'"'),
+				'lastname' => json_decode('"'.str_replace('%', '\\', $shipping['lastname']).'"'),
+				'telephone' => json_decode('"'.str_replace('%', '\\', $shipping['phone']).'"'),
+				'street' => json_decode('"'.str_replace('%', '\\', $shipping['street']).'"'),
+				'city' => json_decode('"'.str_replace('%', '\\', $shipping['area']).'"'),
+				'postcode' => json_decode('"'.str_replace('%', '\\', $shipping['postcode']).'"'),
+				'email' => json_decode('"'.str_replace('%', '\\', $shipping['email']).'"'),
+				'country_id' => "CA"
 			);
 		$billingAddress = array(
-				'firstname' => json_decode('"'.str_replace('%', '\\', $billing['firstname'])),
-				'lastname' => json_decode('"'.str_replace('%', '\\', $billing['lastname'])),
-				'telephone' => json_decode('"'.str_replace('%', '\\', $billing['phone'])),
-				'street' => json_decode('"'.str_replace('%', '\\', $billing['streat'])),
-				'region' => json_decode('"'.str_replace('%', '\\', $billing['area'])),
-				'postcode' => json_decode('"'.str_replace('%', '\\', $billing['postcode']))
+				'firstname' => json_decode('"'.str_replace('%', '\\', $billing['firstname']).'"'),
+				'lastname' => json_decode('"'.str_replace('%', '\\', $billing['lastname']).'"'),
+				'telephone' => json_decode('"'.str_replace('%', '\\', $billing['phone']).'"'),
+				'street' => json_decode('"'.str_replace('%', '\\', $billing['street']).'"'),
+				'city' => json_decode('"'.str_replace('%', '\\', $billing['area']).'"'),
+				'postcode' => json_decode('"'.str_replace('%', '\\', $billing['postcode']).'"'),
+				'country_id' => "CA"
 			);
 	}
 }
@@ -95,6 +97,8 @@ if ($isLogin) {
 #开始下单
 include('./order.php');
 $cartid = cartid();
+// var_dump($cartid);
+// var_dump(cart($cartid));
 $userinfo_complete = false;
 $address_complete = false;
 $payment_complete = false;
@@ -106,8 +110,12 @@ if ($isLogin) {
 }
 #设置购物车地址信息
 $address_complete = set_cart_address($cartid,$billingAddress,$shippingAddress);
+
 #设置支付信息
 $payment_complete = set_payment($cartid);
+if ($payment_complete == null) {
+	echo '<script>alert("购物车商品卖光啦~请重新添加");url="http://bdbbuy.com/mobile/index.phtml";window.location.href=url;</script> ';
+}
 #设置配送方式
 $shipping_complete = set_shipping($cartid);
 
@@ -148,7 +156,14 @@ foreach ($carItems as $item) {
 
 		<div class="aui-address-box">
 			<div class="aui-address-box-list">
-				<a href="my-addres.html" class="aui-address-box-default">
+				<?php 
+					if ($isLogin) {
+						echo '<a href="my-addres.phtml?type=0" class="aui-address-box-default">';
+					}else{
+						echo '<a href="order.phtml" class="aui-address-box-default">';
+					}
+				?>
+				
 					<ul>
 						<li>
 							<strong><?php echo $shippingAddress['firstname'].$shippingAddress['lastname'].'  '.$shippingAddress['telephone']; ?></strong>
@@ -157,7 +172,7 @@ foreach ($carItems as $item) {
 						</li>
 						<li>
 							<i class="aui-icon aui-icon-address"></i>
-							<?php echo $shippingAddress['street'].'  '.$shippingAddress['region'].'  '.$shippingAddress['country_id']; ?>
+							<?php echo $shippingAddress['street'].'  '.$shippingAddress['city'].'  '.$shippingAddress['country_id']; ?>
 						</li>
 					</ul>
 				</a>
@@ -166,7 +181,13 @@ foreach ($carItems as $item) {
 
 		<div class="aui-address-box">
 			<div class="aui-address-box-list">
-				<a href="my-addres.html" class="aui-address-box-default">
+				<?php 
+					if ($isLogin) {
+						echo '<a href="my-addres.phtml?type=1" class="aui-address-box-default">';
+					}else{
+						echo '<a href="order.phtml" class="aui-address-box-default">';
+					}
+				?>
 					<ul>
 						<li>
 							<strong><?php echo $billingAddress['firstname'].$billingAddress['lastname'].'  '.$billingAddress['telephone']; ?></strong>
@@ -175,7 +196,7 @@ foreach ($carItems as $item) {
 						</li>
 						<li>
 							<i class="aui-icon aui-icon-address"></i>
-							<?php echo $billingAddress['street'].'  '.$billingAddress['region'].'  '.$billingAddress['country_id']; ?>
+							<?php echo $billingAddress['street'].'  '.$billingAddress['city'].'  '.$billingAddress['country_id']; ?>
 						</li>
 					</ul>
 				</a>

@@ -45,8 +45,13 @@ function set_payment($cartid)
 	$paymentMethod = array(
 		"method" => "cashondelivery"
 	);
-	$result = $client->call($session,'cart_payment.method',array($cartid,$paymentMethod));
-	return $result;
+	try{
+		$result = $client->call($session,'cart_payment.method',array($cartid,$paymentMethod));	
+		return $result;
+	}catch(SoapFault $e)
+	{
+		return null;
+	}
 }
 
 #用于没有地址的用户
@@ -61,7 +66,7 @@ function set_cart_address($cartid,$billingAddress,$shippingAddress)
 			"lastname" => $billingAddress['lastname'],
 			"company" => "testCompany",
 			"street" => $billingAddress['street'],
-			"city" => $billingAddress['region'],
+			"city" => $billingAddress['city'],
 			"postcode" => $billingAddress['postcode'],
 			"country_id" => "CA",
 			"region_id" => "74",
@@ -76,7 +81,7 @@ function set_cart_address($cartid,$billingAddress,$shippingAddress)
 			"lastname" => $shippingAddress['lastname'],
 			"company" => "testCompany",
 			"street" => $shippingAddress['street'],
-			"city" => $shippingAddress['region'],
+			"city" => $shippingAddress['city'],
 			"postcode" => $shippingAddress['postcode'],
 			"country_id" => "CA",
 			"region_id" => "74",
