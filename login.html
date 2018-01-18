@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<meta charset="utf-8">
+	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
 	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
 	<meta name="format-detection" content="telephone=no, email=no"/>
 	<meta charset="UTF-8">
@@ -42,55 +42,23 @@
 	</header>
 <div>
 	<div class="welcome"><img src="images/welcome.png"></div>
-	<div class="login-form" style="margin:0 auto;width:70%" >
+	<div class="login-form" style="margin:0 auto;width:80%" >
 			<p>
-				<span class="aui-Address-box-head">帐号</span><input class="aui-Address-box-input" id="userid" type="text" placeholder="请输入您的帐号">
+				<span class="aui-Address-box-head">帐号</span>
+				<input class="aui-Address-box-input" id="userid" type="text" placeholder="请输入您的帐号">
 			</p>
 			<p>
-				<span class="aui-Address-box-head">密码</span><input class="aui-Address-box-input" id="password" type="text" placeholder="请输入您的密码">
+				<span class="aui-Address-box-head">密码</span>
+				<input class="aui-Address-box-input" id="password" type="password" placeholder="请输入您的密码">
 			</p>
 		<div class="aui-out">
-			<a class="red-color" style="color:#fff" onclick="login()">立即登录</a>
+			<a class="red-color" style="color:#fff;" onclick="login()">立即登录</a>
 		</div>
 	</div>
 </div>
 <script type="text/javascript" src="themes/js/jquery.min.js"></script>
+<script type="text/javascript" src="res/js/check.js"></script>
+<script type="text/javascript" src="res/js/login.js"></script>
 </body>
-<script type="text/javascript">
-	function login(){
-		var userID = $("#userid").val();
-		var password =  $("#password").val();
-			
-		$.ajax({  
-
-            url:"http://bdbbuy.com/mobile/login.php",           
-
-            type: "POST",
-
-            data:{userid:userID,password:password},         
-
-            success:function(result){  
-
-            	var res = eval("(" + result + ")");
-                if (res['status'] == 'OK') {
-                	var nickname = res['userData']['firstname']+' '+res['userData']['lastname'];
-                	document.cookie="bdb-ui="+res['userData']['customer_id'];
-                	document.cookie="bdb-nn="+nickname;
-                	window.location.href='http://bdbbuy.com/mobile/ui-me.phtml';
-                }else
-                {
-                	document.location.reload();
-                }
-            },
-
-            error:function(XMLHttpRequest, textStatus, errorThrown){
-
-                
-
-            }
-
-	    });
-	}
-</script>
 </html>
 

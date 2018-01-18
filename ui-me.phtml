@@ -21,7 +21,7 @@ $nickname = $_COOKIE['bdb-nn'];
 		<a href="#" class="aui-header-item">
 			<!--<i class="aui-icon aui-icon-back-white" id="scrollSearchI" style="display:block"></i>-->
 			<div id="scrollSearchDiv">
-				<img src="themes/img/user/head-3.jpg" alt="">
+				<img src="images/logo.png" alt="">
 			</div>
 		</a>
 		<div class="aui-header-center aui-header-center-clear">
@@ -38,7 +38,7 @@ $nickname = $_COOKIE['bdb-nn'];
 		<div class="aui-me-content-box">
 			<div class="aui-me-content-info"></div>
 			<div class="aui-me-content-list">
-				<div class="aui-me-content-item">
+				<div class="aui-me-content-item" style="background-color: #e0dede">
 					<div class="aui-me-content-item-head">
 						<div class="aui-me-content-item-img">
 							<img src="images/logo.png" alt="">
@@ -75,45 +75,49 @@ $nickname = $_COOKIE['bdb-nn'];
 			</a>
 		</div>
 		<section class="aui-grid-content">
-			<!-- <div class="aui-grid-row">
-				<a href="my-order.phtml" class="aui-grid-row-item">
+			<div class="aui-grid-row">
+				<!-- <a href="my-order.phtml" class="aui-grid-row-item">
 					<i class="aui-icon-large aui-icon-large-sm aui-icon-wallet"></i>
 					<p class="aui-grid-row-label">待付款</p>
-				</a>
-				<a href="my-order.phtml" class="aui-grid-row-item">
+				</a> -->
+				<a href="my-order.phtml?status=2" class="aui-grid-row-item">
 					<i class="aui-icon-large aui-icon-large-sm aui-icon-goods"></i>
 					<p class="aui-grid-row-label">待发货</p>
 				</a>
-				<a href="my-order.phtml" class="aui-grid-row-item">
+				<a href="my-order.phtml?status=3" class="aui-grid-row-item">
 					<i class="aui-icon-large aui-icon-large-sm aui-icon-receipt"></i>
 					<p class="aui-grid-row-label">待收货</p>
 				</a>
-				<a href="my-order.phtml" class="aui-grid-row-item">
+				<a href="my-order.phtml?status=4" class="aui-grid-row-item">
+					<i class="aui-icon-large aui-icon-large-sm aui-icon-evaluate"></i>
+					<p class="aui-grid-row-label">已完成</p>
+				</a>
+				<!-- <a href="my-order.phtml" class="aui-grid-row-item">
 					<i class="aui-icon-large aui-icon-large-sm aui-icon-evaluate"></i>
 					<p class="aui-grid-row-label">待评价</p>
 				</a>
 				<a href="my-order.phtml" class="aui-grid-row-item">
 					<i class="aui-icon-large aui-icon-large-sm aui-icon-refund"></i>
 					<p class="aui-grid-row-label">退货退款</p>
-				</a>
-			</div> -->
+				</a> -->
+			</div>
 			<div class="aui-dri"></div>
-			<div class="aui-me-content-order">
+			<!-- <div class="aui-me-content-order">
 				<a href="#" class="aui-well ">
 					<div class="aui-well-bd">我的服务</div>
-					<!--<div class="aui-well-ft">查看全部</div>-->
+					<div class="aui-well-ft">查看全部</div>
 				</a>
-			</div>
-			<div class="aui-grid-row">
+			</div> -->
+			<!-- <div class="aui-grid-row">
 				<a href="shippingarea.html" class="aui-grid-row-item">
-					<i class="aui-icon-large aui-icon-large-sm aui-icon-help"></i>
+					<i class="aui-icon-large aui-icon-large-sm aui-icon-help" style="background-image: url('images/peisong.png');"></i>
 					<p class="aui-grid-row-label">配送规则</p>
 				</a>
-				<!-- <a href="#" class="aui-grid-row-item">
+				<a href="#" class="aui-grid-row-item">
 					<i class="aui-icon-large aui-icon-large-sm aui-icon-help"></i>
 					<p class="aui-grid-row-label">帮助中心</p>
-				</a> -->
-				<!-- <a href="my-invitation.html" class="aui-grid-row-item">
+				</a>
+				<a href="my-invitation.html" class="aui-grid-row-item">
 					<i class="aui-icon-large aui-icon-large-sm aui-icon-invitation"></i>
 					<p class="aui-grid-row-label">邀请好友</p>
 				</a>
@@ -148,8 +152,8 @@ $nickname = $_COOKIE['bdb-nn'];
 				<a href="#" class="aui-grid-row-item">
 					<i class="aui-icon-large aui-icon-large-sm aui-icon-shares"></i>
 					<p class="aui-grid-row-label">我的分享</p>
-				</a> -->
-			</div>
+				</a>
+			</div> -->
 			<div class="aui-recommend">
 				<img src="themes/img/bg/icon-tj3.jpg" alt="">
 				<!--<h2>为你推荐</h2>-->
@@ -207,50 +211,6 @@ $nickname = $_COOKIE['bdb-nn'];
 	</footer>
 
 	<script type="text/javascript" src="themes/js/jquery.min.js"></script>
-	<script type="text/javascript">
-        $(function () {
-            //绑定滚动条事件
-            $(window).bind("scroll", function () {
-                var sTop = $(window).scrollTop();
-                var sTop = parseInt(sTop);
-                if (sTop >= 44) {
-                    if (!$("#scrollSearchDiv").is(":visible")) {
-                        try {
-                            $("#scrollSearchDiv").slideDown();
-                        } catch (e) {
-                            $("#scrollSearchDiv").show();
-                        }
-                    }
-                }
-                else {
-                    if ($("#scrollSearchDiv").is(":visible")) {
-                        try {
-                            $("#scrollSearchDiv").slideUp();
-                        } catch (e) {
-                            $("#scrollSearchDiv").hide();
-                        }
-                    }
-                }
-            });
-
-            // 请求精选推荐商品信息
-			recommend_lists = ['5686', '5689', '5692', '5790', '5826', '5838', '5856', '5862', '5880', '5884', '5886', '5892'];
-			ids = recommend_lists.join('-');
-			$.get('http://bdbbuy.com/mobile/productInfo.php?ids=' + ids, function(data){
-				var results = eval("(" + data + ")");
-				// console.log(results);
-				for(var i = 0; i < results.length; i ++){
-					var res = results[i];
-					var id = res['product_id'];
-					var name = res['name'];
-					var price = res['price'];
-					var url = 'http://bdbbuy.com/media/catalog/product' + res['image'];
-					var str = '<a href="ui-product.phtml?productId='+id+'" class="aui-list-product-item"><div class="aui-list-product-item-img"><img src="' + url + '" alt=""></div><div class="aui-list-product-item-text"><h3>' + name + '</h3><div class="aui-list-product-mes-box"><div><span class="aui-list-product-item-price"><em>CA$</em>' + price.substr(0,price.indexOf(".")+3) + '</span></div></div></div></a>';
-					//<span class="aui-list-product-item-del-price"><em>$</em>' + special_price + '</span>
-					$("#recommend").append(str);
-				}
-			});
-        });
-	</script>
+	<script type="text/javascript" src = "res/js/ui-me.js"></script>
 </body>
 </html>
