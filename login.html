@@ -52,58 +52,13 @@
 				<input class="aui-Address-box-input" id="password" type="password" placeholder="请输入您的密码">
 			</p>
 		<div class="aui-out">
-			<a class="red-color" style="color:#fff;width: 100px" onclick="login()">立即登录</a>
+			<a class="red-color" style="color:#fff;" onclick="login()">立即登录</a>
 		</div>
 	</div>
 </div>
 <script type="text/javascript" src="themes/js/jquery.min.js"></script>
-<script type="text/javascript" src="themes/js/aui-toast.js"></script>
+<script type="text/javascript" src="res/js/check.js"></script>
+<script type="text/javascript" src="res/js/login.js"></script>
 </body>
-<script type="text/javascript">
-	function login(){
-		var userID = $("#userid").val();
-		var password =  $("#password").val();
-			
-		$.ajax({  
-
-            // url:"http://bdbbuy.com/mobile/login.php",  
-            url:"login.php",           
-
-            type: "POST",
-
-            data:{userid:userID,password:password},         
-
-            success:function(result){  
-
-            	var res = eval("(" + result + ")");
-            	// console.log(res);
-    //         	var toast = new auiToast();
-    //         	toast.custom({
-				//     title:res,
-				//     html:'<i class="aui-iconfont aui-icon-laud"></i>',
-				//     duration:60000
-				// });
-
-                if (res['status'] == 'OK') {
-                	var nickname = res['userData']['firstname']+' '+res['userData']['lastname'];
-                	document.cookie="bdb-ui="+res['userData']['customer_id'];
-                	document.cookie="bdb-nn="+nickname;
-                	window.location.href='http://bdbbuy.com/mobile/ui-me.phtml';
-                	// window.location.href='/mobile/ui-me.phtml';
-                }else
-                {
-                	document.location.reload();
-                }
-            },
-
-            error:function(XMLHttpRequest, textStatus, errorThrown){
-
-                
-
-            }
-
-	    });
-	}
-</script>
 </html>
 

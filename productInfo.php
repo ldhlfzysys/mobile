@@ -27,7 +27,4 @@ if ($redis_result) {
 	echo json_encode($result);
 }
 
-
-
-
 ?>

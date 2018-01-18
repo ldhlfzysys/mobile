@@ -6,6 +6,9 @@ $userid = userid();
 $orderListUrl='http://bdbbuy.com/mobile/myorder.php?userid='.$userid;
 $html = file_get_contents($orderListUrl);
 $orderList = json_decode($html,true);
+
+$orderStatus = $_GET["status"];
+// echo "status = " . $orderStatus ;
 ?>
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui"/>
@@ -22,9 +25,9 @@ $orderList = json_decode($html,true);
 
 </head>
 <body>
-
+	<input type="hidden" id = "orderStatus" value="<?php echo $orderStatus ?>">
 	<header class="aui-header-default aui-header-fixed aui-header-bg">
-		<a href="javascript:history.back(-1)" class="aui-header-item">
+		<a href="ui-me.phtml" class="aui-header-item">
 			<i class="aui-icon aui-icon-back-white"></i>
 		</a>
 		<div class="aui-header-center aui-header-center-clear">
@@ -41,16 +44,16 @@ $orderList = json_decode($html,true);
 		<div class="m-tab demo-small-pitch" data-ydui-tab>
 			<div class="aui-myOrder-fix">
 				<ul class="tab-nav">
-					<li class="tab-nav-item tab-active"><a href="javascript:;">全部</a></li>
+					<li class="tab-nav-item tab-active" id = "tab1"><a href="javascript:;" onclick="tabClick(1)">全部</a></li>
 					<!-- <li class="tab-nav-item"><a href="javascript:;">待付款</a></li> -->
-					<li class="tab-nav-item"><a href="javascript:;">待发货</a></li>
-					<li class="tab-nav-item"><a href="javascript:;">待收货</a></li>
-					<li class="tab-nav-item"><a href="javascript:;">待评价</a></li>
+					<li class="tab-nav-item" id = "tab2"><a href="javascript:;" onclick="tabClick(2)">待发货</a></li>
+					<li class="tab-nav-item" id = "tab3"><a href="javascript:;" onclick="tabClick(3)">待收货</a></li>
+					<li class="tab-nav-item" id = "tab4"><a href="javascript:;" onclick="tabClick(4)">待评价</a></li>
 				</ul>
 			</div>
 			<!-- <div class="aui-prompt"><i class="aui-icon aui-prompt-sm"></i>双十一期间发货及物流时效公告</div> -->
 			<div class="tab-panel">
-				<div class="tab-panel-item tab-active">
+				<div class="tab-panel-item tab-active" id = "order1">
 					<ul>
 						<?php
 						foreach ($orderList as $key => $order) {
@@ -88,7 +91,7 @@ $orderList = json_decode($html,true);
 					</ul>
 				</div>
 
-				<div class="tab-panel-item">
+				<div class="tab-panel-item" id = "order2">
 					<ul>
 						<?php
 						foreach ($orderList as $key => $order) {
@@ -128,7 +131,7 @@ $orderList = json_decode($html,true);
 					</ul>
 				</div>
 
-				<div class="tab-panel-item">
+				<div class="tab-panel-item" id = "order3">
 					<ul>
 						<?php
 						foreach ($orderList as $key => $order) {
@@ -168,7 +171,7 @@ $orderList = json_decode($html,true);
 					</ul>
 				</div>
 
-				<div class="tab-panel-item">
+				<div class="tab-panel-item" id = "order4">
 					<ul>
 						<?php
 						foreach ($orderList as $key => $order) {
@@ -247,30 +250,6 @@ $orderList = json_decode($html,true);
 
 	<script type="text/javascript" src="themes/js/jquery.min.js"></script>
 	<script type="text/javascript" src="themes/js/aui.js"></script>
-	<script type="text/javascript" >
-        /**
-         * Javascript API调用Tab
-         */
-        !function ($) {
-            var $tab = $('#J_Tab');
-
-            $tab.tab({
-                nav: '.tab-nav-item',
-                panel: '.tab-panel-item',
-                activeClass: 'tab-active'
-            });
-
-			/*
-			 $tab.find('.tab-nav-item').on('open.ydui.tab', function (e) {
-			 console.log('索引：%s - [%s]正在打开', e.index, $(this).text());
-			 });
-			 */
-
-            $tab.find('.tab-nav-item').on('opened.ydui.tab', function (e) {
-                console.log('索引：%s - [%s]已经打开了', e.index, $(this).text());
-            });
-        }(jQuery);
-	</script>
-
+	<script type="text/javascript" src="res/js/myOrder.js"></script>
 </body>
 </html>
