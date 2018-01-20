@@ -1,14 +1,26 @@
 <?php
+ini_set('display_errors',1); 
+ini_set('display_startup_errors',1);
 
-$cartid=$_GET['c'];
+$searchword=$_GET['s'];
+
 $client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
   
 $session = $client->login('mobile', 'mobile');
 
-$result = $client->call($session,'cart_payment.list',$cartid);
+$complexFilter = array(
+            'name' => array('like' => '%'.$searchword.'%')
+);
 
-echo json_encode($result);
+$args = array(
+	'filters' => $complexFilter,
+	'storeView' => '16'
+);
 
-$result2 = $client->call($session,'cart.info',$cartid);
-echo json_encode($result2);
+$result = $client->call($session,'catalog_product.list',$args);
+
+var_dump($result);
+
+
+
 ?>
