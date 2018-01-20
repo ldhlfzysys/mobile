@@ -10,4 +10,6 @@
 }
 .tab_menu ul li.on{
  background: #fff;
+ border-left: 0.2rem solid;
+ border-left-color: #eb4e4c;
 }
