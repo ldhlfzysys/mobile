@@ -443,7 +443,9 @@
 }
 
 .aui-banner-wrapper-item img {
-	width: 100%;
+	/*width: 100%;*/
+	height: 30rem;
+	margin: 0 auto;
 	background: url(../img/bg/log.png) no-repeat center center;
 	background-size: cover;
 }
