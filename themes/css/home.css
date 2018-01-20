@@ -5,6 +5,19 @@
 *  http://www.a-ui.cn/
 */
 
+/*自定义新增*/
+/*class.phtml页*/
+
+.am-intro-right .am-u-sm-8 h2 p {
+	color: #333
+}
+
+.am-intro-right .am-u-sm-8 span {
+	color: #ea3340
+}
+
+/*class.phtml页*/
+
 .aui-Address-box .input-group {
 	margin-bottom: 5px;
 }
