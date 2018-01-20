@@ -448,6 +448,11 @@
 	background-size: cover;
 }
 
+.index-banner img{
+	width: 100%;
+	height:auto;
+}
+
 .aui-header-item-icon {
 	height: 2.8rem;
 	min-width: 19%;
