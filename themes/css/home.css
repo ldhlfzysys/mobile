@@ -8,11 +8,13 @@
 /*自定义新增*/
 /*class.phtml页*/
 
-.am-intro-right .am-u-sm-8 h2 p {
+.am-u-sm-8 h2 {
 	color: #333
 }
-
-.am-intro-right .am-u-sm-8 span {
+.am-u-sm-8 p {
+	color: #333	
+}
+.am-u-sm-8 span {
 	color: #ea3340
 }
 
