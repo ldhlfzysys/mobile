@@ -171,6 +171,30 @@ $cartId = cartid();
 
     }
 
+function buyNow(cartId,productId) {
+        $.ajax({  
+
+            url:"http://bdbbuy.com/mobile/cart.php?addToCart="+cartId+"&productId="+productId,           
+
+            type: "GET",         
+
+            success:function(result){  
+
+                // $('#loading').hideLoading();
+
+                // document.location.reload(); 
+                window.location.href='http://bdbbuy.com/mobile/order-sure.phtml';
+
+            },
+
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+                // $('#loading').hideLoading();
+
+            }
+
+        });
+}
+
 
 </script>
 <body id="loading">
@@ -393,8 +417,8 @@ $cartId = cartid();
 			<div class="aui-footer-product-action-list">
 				<?php
 				echo '<a href="" class="yellow-color" onclick="addToCart(\''.$cartId.'\',\''.$productId.'\')">加入购物车</a>';
+				echo '<a href="" class="red-color" onclick="buyNow(\''.$cartId.'\',\''.$productId.'\')">立即购买</a>';
 				?>
-				<a href="order.html" class="red-color">立即购买</a>
 			</div>
 		</div>
 	</footer>
