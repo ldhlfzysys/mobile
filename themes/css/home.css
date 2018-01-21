@@ -1655,6 +1655,7 @@ input.check:checked {
 	display: block;
 	border: none;
 	border-radius: 50%;
+	box-shadow: 4px 4px 4px #888888;
 }
 
 .aui-me-content-item-text {
