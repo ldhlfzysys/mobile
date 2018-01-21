@@ -19,3 +19,10 @@
  border-left: 0.2rem solid;
  border-left-color: #eb4e4c;
 }
+
+.class_img_box{
+	height: 6rem;
+	display: flex;
+	justify-content:center;
+	aligh-items:center;
+}
