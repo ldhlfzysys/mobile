@@ -2,10 +2,11 @@
 .fr{ float: right;}
 .fr img{ width: 30px;height: 30px;}
 .am-intro-left img{
-	height: 6rem; 
+	max-height: 6rem; 
+	max-width: 6rem;
 	margin: 0 auto;
-	vertical-align: 
-	top; border: 0;
+	/*vertical-align: top;*/
+	border: 0;
 }
 .aui-scroll-content .tab_box > div{
  display: none;
