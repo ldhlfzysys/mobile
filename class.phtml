@@ -142,7 +142,14 @@ $cartId = cartid();
 						echo '<div class="am-intro-left am-u-sm-3"><div class="class_img_box"><img  class="lazy" src="./images/grey.gif" data-original="http://bdbbuy.com/media/catalog/product'.$product['image'].'" /></div></div>';
 						echo '<div class="am-intro-right am-u-sm-8">';
 						echo '<h2>'.$product['name'].'</h2>';
-						echo '<p>'.$product['short_description'].'</p>';
+						echo '<p>'.$product['short_description'];
+						if (count($product['tier_price']) > 0) {
+							$special_price = $product['tier_price'][0];
+							echo '(';
+							echo '购买'.round($special_price['price_qty'],0).'件低至$'.round($special_price['price'],2);
+							echo ')';
+						}
+						echo '</p>';
 						echo '<div class="text">';
 						echo '<span class="fl">CA$&nbsp;&nbsp;'.round($product['price'], 2).'</span>';
 						echo '<span class="fr"><img src="themes/img/icon/icon-kin.png" onclick="addToCart(\''.$cartId.'\',\''.$product['product_id'].'\')"/></span>';

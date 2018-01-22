@@ -11,6 +11,12 @@ if (count($products) > 0) {
 	$price = number_format($product['price'],2);
 	$name = $product['name'];
 	$desc = $product['short_description'];
+
+	if (count($product['tier_price'])>0) {
+		$key = array_keys($product['tier_price'])[0];
+		$test = $product['tier_price'];
+		$special_price = $test[$key];
+	}
 }
 
 include_once('./user.php');
@@ -254,6 +260,11 @@ function buyNow(cartId,productId) {
 			</h2>
 			<p>
 				<?php echo $desc; ?>
+				<?php if (isset($special_price)) {
+					echo '(';
+					echo '购买'.round($special_price['price_qty'],0).'件低至$'.round($special_price['price'],2);
+					echo ')';
+				} ?>
 			</p>
 		</div>
 <!-- 		<div class="aui-product-boutique clearfix">
