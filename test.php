@@ -1,15 +1,30 @@
 <?php
-ini_set('display_errors',1); 
-ini_set('display_startup_errors',1);
-
 $searchword=$_GET['s'];
+$arr = mb_str_split($searchword);
+$arr_str = join("%",$arr);
+$regx = "%".$arr_str."%";
 
 $client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
   
 $session = $client->login('mobile', 'mobile');
 
-$result = $client->call($session, 'catalog_product_attribute_tier_price.info', $searchword);
-var_dump($result);
+$complexFilter = array(
+			'name' => array('like' => $regx),
+            'meta_keyword' => array('like' => $regx)
+);
 
+$args = array(
+	'filters' => $complexFilter,
+	'storeView' => '16'
+);
+
+$result = $client->call($session,'catalog_product.list',$args);
+
+echo json_encode($result);
+
+
+function mb_str_split($str){  
+    return preg_split('/(?<!^)(?!$)/u', $str );  
+} 
 
 ?>
