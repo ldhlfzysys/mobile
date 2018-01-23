@@ -40,6 +40,7 @@ $cartId = cartid();
 	<link rel="stylesheet" href="themes/css/loading.css">
 	<script src="themes/js/jquery.min.js"></script>
 	<script src="themes/js/loading.js"></script>
+	<script src="themes/js/sweetalert.js"></script>
 	<link rel="icon" type="image/x-icon" href="favicon.ico">
 	<link href="iTunesArtwork@2x.png" sizes="114x114" rel="apple-touch-icon-precomposed">
 	<style>
@@ -163,8 +164,14 @@ $cartId = cartid();
             success:function(result){  
 
                 // $('#loading').hideLoading();
-
-                document.location.reload(); 
+				swal({
+				  title: "",
+				  text: "加入成功",
+				  icon: "success",
+				  button: false,
+				  timer: 1300,
+				});
+                // document.location.reload(); 
 
             },
 
