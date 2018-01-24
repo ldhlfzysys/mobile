@@ -54,7 +54,7 @@ $products = json_decode(file_get_contents($url),true);
 							echo '<a href="http://bdbbuy.com/mobile/ui-product.phtml?productId='.$product['product_id'].'">';
 							#<img class="lazy" src="grey.gif" data-original="example.jpg" width="640" heigh="480">min-width: 72px; max-width: 100%; width: auto; height: auto;
 								echo '<div class="am-intro-left am-u-sm-3">';
-								echo '<div class="class_img_box"><img  class="lazy" src="./images/grey.gif" data-original="http://bdbbuy.com/media/catalog/product'.$product['image'].'" /></div>';
+								echo '<div class="class_img_box"><img  class="lazy" src="./images/grey.gif" data-original="http://bdbbuy-mobile.oss-cn-hongkong.aliyuncs.com/'.basename($product['image']).'?x-oss-process=style/center" /></div>';
 								echo '</div>';
 
 								echo '<div class="am-intro-right am-u-sm-8">';

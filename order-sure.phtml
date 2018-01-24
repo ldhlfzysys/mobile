@@ -210,7 +210,7 @@ foreach ($carItems as $item) {
 						foreach ($products as $product) {
 							echo '<a href="javascript:;" class="aui-list-product-fl-item">';
 							echo '<div class="aui-list-product-fl-img">';
-							echo '<img src="http://bdbbuy.com/media/catalog/product'.$product['image'].'" alt="">';
+							echo '<img src="http://bdbbuy-mobile.oss-cn-hongkong.aliyuncs.com/'.basename($product['image']).'?x-oss-process=style/center" alt="">';
 							echo '</div>';
 							echo '<div class="aui-list-product-fl-text">';
 							echo '<h3 class="aui-list-product-fl-title">'.$product['name'].$product['short_description'].'</h3>';

@@ -243,7 +243,7 @@ function buyNow(cartId,productId) {
 				foreach ($imgs as $imgdata) {
 					echo '<div class="aui-banner-wrapper-item">';
 					echo '<a href="#">';
-					echo '<img src="'.$imgdata['url'].'">';
+					echo '<img src="http://bdbbuy-mobile.oss-cn-hongkong.aliyuncs.com/'.basename($imgdata['url']).'?x-oss-process=style/center">';
 					echo '</a></div>';
 				}
 			?>
