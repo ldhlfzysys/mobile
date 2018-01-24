@@ -16,6 +16,11 @@ $nickname = $_COOKIE['bdb-nn'];
 	<link rel="icon" type="image/x-icon" href="favicon.ico">
 	<link href="iTunesArtwork@2x.png" sizes="114x114" rel="apple-touch-icon-precomposed">
 </head>
+<?php
+include_once('./imagePathFix.php');
+$url5='http://bdbbuy.com/mobile/productInfo.php?ids=5686-5689-5692-5790-5826-5838-5856-5880-5884-5886-5892';
+$tjsp = json_decode(file_get_contents($url5),true);
+?>
 <body style="background:#fc0f42">
 	<header class="aui-header-default aui-header-fixed aui-header-bg">
 		<a href="#" class="aui-header-item">
@@ -160,26 +165,18 @@ $nickname = $_COOKIE['bdb-nn'];
 			</div>
 			<section class="aui-list-product">
 				<div class="aui-list-product-box"  id = "recommend">
-					<!-- <a href="ui-product.phtml" class="aui-list-product-item">
-						<div class="aui-list-product-item-img">
-							<img src="themes/img/pd/sf-15.jpg" alt="">
-						</div>
-						<div class="aui-list-product-item-text">
-							<h3>KOBE LETTUCE 秋冬新款 女士日系甜美纯色半高领宽松套头毛衣针织衫</h3>
-							<div class="aui-list-product-mes-box">
-								<div>
-							<span class="aui-list-product-item-price">
-								<em>¥</em>
-								399.99
-							</span>
-									<span class="aui-list-product-item-del-price">
-								¥495.65
-							</span>
-								</div>
-								<div class="aui-comment">986评论</div>
-							</div>
-						</div>
-					</a> -->
+						<?php 
+							foreach ($tjsp as $product) {
+								echo '<a href="ui-product.phtml?productId='.$product['product_id'].'" class="aui-list-product-item">';
+								echo '<div class="aui-list-product-item-img">';
+								echo '<img class="v-img" src="'.smallImage($product['image']).'">';
+								echo '</div>';
+								echo '<div class="aui-list-product-item-text">';
+									echo '<h3>'.$product['name'].'</h3>';
+									echo '<div class="aui-list-product-mes-box"><div><span class="aui-list-product-item-price"><em>CA$</em>'.round($product['price'],2).'</span></div></div>';
+								echo '</div></a>';
+							}
+						?>
 				</div>
 			</section>
 		</section>
