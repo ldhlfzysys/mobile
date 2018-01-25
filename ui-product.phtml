@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php 
-ini_set('display_errors',1);
+include_once('./imagePathFix.php');
 $productId = $_GET["productId"];
 $url='http://bdbbuy.com/mobile/productInfo.php?ids='.$productId;
 $products = json_decode(file_get_contents($url),true);
@@ -243,7 +243,7 @@ function buyNow(cartId,productId) {
 				foreach ($imgs as $imgdata) {
 					echo '<div class="aui-banner-wrapper-item">';
 					echo '<a href="#">';
-					echo '<img src="'.$imgdata['url'].'">';
+					echo '<img src="'.originImage($imgdata['url']).'">';
 					echo '</a></div>';
 				}
 			?>

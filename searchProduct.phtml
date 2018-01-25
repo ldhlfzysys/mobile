@@ -18,6 +18,7 @@
 	<link href="iTunesArtwork@2x.png" sizes="114x114" rel="apple-touch-icon-precomposed">
 </head>
 <?php 
+include_once('./imagePathFix.php');
 $keyword=$_GET['s'];
 $url='http://bdbbuy.com/mobile/searchProduct.php?s='.$keyword;
 $products = json_decode(file_get_contents($url),true);
@@ -50,11 +51,11 @@ $products = json_decode(file_get_contents($url),true);
 
 				foreach ($products as $product) {
 						echo '<div class="am-g am-intro-bd">';
-							echo '<div class="am-intro-left am-u-sm-9">';
+							echo '<div class="am-intro-left am-u-sm-10">';
 							echo '<a href="http://bdbbuy.com/mobile/ui-product.phtml?productId='.$product['product_id'].'">';
 							#<img class="lazy" src="grey.gif" data-original="example.jpg" width="640" heigh="480">min-width: 72px; max-width: 100%; width: auto; height: auto;
-								echo '<div class="am-intro-left am-u-sm-3">';
-								echo '<div class="class_img_box"><img  class="lazy" src="./images/grey.gif" data-original="http://bdbbuy.com/media/catalog/product'.$product['image'].'" /></div>';
+								echo '<div class="am-intro-left am-u-sm-4">';
+								echo '<div class="class_img_box"><img  class="lazy" src="./images/grey.gif" data-original="'.smallImage($product['image']).'" /></div>';
 								echo '</div>';
 
 								echo '<div class="am-intro-right am-u-sm-8">';

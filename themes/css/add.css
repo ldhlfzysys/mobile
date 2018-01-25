@@ -3,7 +3,7 @@
 .fr img{ width: 30px;height: 30px;}
 .am-intro-left img{
 	max-height: 6rem; 
-	max-width: 6rem;
+	max-width: 5rem;
 	margin: 0 auto;
 	/*vertical-align: top;*/
 	border: 0;
@@ -21,7 +21,9 @@
 }
 
 .class_img_box{
+	margin: 0 auto;
 	height: 6rem;
+	width: 4rem;
 	display: flex;
 	justify-content:center;
 	align-items:center;

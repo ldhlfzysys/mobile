@@ -1,6 +1,7 @@
 <?php
 include_once('./user.php');
 include_once('./cart.php');
+include_once('./imagePathFix.php');
 $categoryArray=array();
 $categoryArray['热卖'] = '100';
 $categoryArray['新品'] = '106';
@@ -109,7 +110,7 @@ $cartId = cartid();
 		<div class="aui-scroll-box" data-ydui-scrolltab>
 			<div class="aui-scroll-nav">
 				<div class="tab_menu">
-				<ul>
+				<ul style="width:5.3rem">
 					<?php
 					$firstDone = FALSE;
 			        foreach ($categoryArray as $key => $value) {
@@ -138,10 +139,10 @@ $cartId = cartid();
 					$list = $newProductList[$value];
 					foreach ($list as $product) {
 						echo '<div class="am-g am-intro-bd">';
-							echo '<div class="am-intro-left am-u-sm-9">';
+							echo '<div class="am-intro-left am-u-sm-10">';
 								echo '<a href="http://bdbbuy.com/mobile/ui-product.phtml?productId='.$product['product_id'].'">';
 								#<img class="lazy" src="grey.gif" data-original="example.jpg" width="640" heigh="480">min-width: 72px; max-width: 100%; width: auto; height: auto;
-									echo '<div class="am-intro-left am-u-sm-3"><div class="class_img_box"><img  class="lazy" src="./images/grey.gif" data-original="http://bdbbuy.com/media/catalog/product'.$product['image'].'" /></div></div>';
+									echo '<div class="am-intro-left am-u-sm-4"><div class="class_img_box"><img  class="lazy" src="./images/grey.gif" data-original="'.smallImage($product['image']).'" /></div></div>';
 									echo '<div class="am-intro-right am-u-sm-8">';
 										echo '<h2>'.$product['name'].'</h2>';
 										echo '<p>'.$product['short_description'];
