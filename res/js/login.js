@@ -14,13 +14,13 @@ function login(){
         success:function(result){  
 
         	var res = eval("(" + result + ")");
+            // console.log(res)
             if (res['status'] == 'OK') {
             	var nickname = res['userData']['firstname']+' '+res['userData']['lastname'];
             	document.cookie="bdb-ui="+res['userData']['customer_id'];
             	document.cookie="bdb-nn="+nickname;
             	window.location.href='http://bdbbuy.com/mobile/ui-me.phtml';
-            }else
-            {
+            }else{
             	document.location.reload();
             }
         },

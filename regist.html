@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui"/>
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+	<meta name="format-detection" content="telephone=no, email=no"/>
+	<meta charset="UTF-8">
+	<title>用户注册</title>
+	<link rel="stylesheet" href="themes/css/core.css">
+	<link rel="stylesheet" href="themes/css/icon.css">
+	<link rel="stylesheet" href="themes/css/home.css">
+	<link rel="icon" type="image/x-icon" href="favicon.ico">
+	<link href="iTunesArtwork@2x.png" sizes="114x114" rel="apple-touch-icon-precomposed">
+	<style>
+		.m-cell {
+			background-color: #FFF;
+			position: relative;
+			z-index: 1;
+			margin-bottom: .35rem;
+			height: 3rem;
+			line-height: 3rem;
+		}
+	</style>
+
+</head>
+<script>
+
+</script>
+
+<body style="background:#eee">
+
+	<header class="aui-header-default aui-header-fixed aui-header-bg">
+		<a href="javascript:history.back(-1)" class="aui-header-item">
+			<i class="aui-icon aui-icon-back-white"></i>
+		</a>
+		<div class="aui-header-center aui-header-center-clear">
+			<div class="aui-header-center-logo">
+				<div class="aui-car-white-Typeface">注册新用户</div>
+			</div>
+		</div>
+		<a href="#" class="aui-header-item-icon"   style="min-width:0">
+			<!--<i class="aui-icon aui-icon-search"></i>-->
+		</a>
+	</header>
+
+
+	<section class="aui-myOrder-content">
+		<div class="aui-prompt"><i class="aui-icon aui-prompt-sm"></i>填写您的账户信息</div>
+		<div class="aui-Address-box shipping">
+			<p>
+				<span class="aui-Address-box-head">名子</span><input id="lastName" class="aui-Address-box-input" type="text" placeholder="名">
+			</p>
+			<p>
+				<span class="aui-Address-box-head">姓氏</span><input id="firstName" class="aui-Address-box-input" type="text" placeholder="姓">
+			</p>
+			<p>
+				<span class="aui-Address-box-head">邮箱</span><input id="email" class="aui-Address-box-input" type="text" placeholder="手机号码">
+			</p>
+			<p>
+				<span class="aui-Address-box-head">密码</span><input id="password1" class="aui-Address-box-input" type="text" placeholder="登录密码">
+			</p>
+			<p>
+				<span class="aui-Address-box-head">确认密码</span><input id="password2" class="aui-Address-box-input" type="text" placeholder="再次输入登录密码">
+			</p>
+			<!-- <br>
+			<p>
+				<textarea  id="shipping-street" class="aui-Address-box-text" placeholder="街道， 小区门牌等详细地址" rows="3"></textarea>
+			</p> -->
+
+		</div>
+		<div class="aui-out">
+			<a onclick="regist()" class="red-color" style="color:#fff">立即注册</a>
+		</div>
+	</section>
+
+	<script type="text/javascript" src="themes/js/jquery.min.js"></script>
+	<script type="text/javascript" src="themes/js/aui.js"></script>
+	<script type="text/javascript" src="res/js/check.js"></script>
+	<script type="text/javascript" src="res/js/regist.js"></script>
+
+</body>
+</html>
