@@ -226,7 +226,7 @@
 }
 
 .aui-scroll-item {
-	padding: 0 10px;
+	/*padding: 0 10px;*/
 	height: 3.5rem;
 	line-height: 3rem;
 	display: -webkit-box;
@@ -247,6 +247,7 @@
 
 .aui-scroll-item-text {
 	font-size: 0.8rem;
+	margin:0 auto;
 	color: #232326;
 	overflow-x: hidden;
 	text-overflow: ellipsis;
