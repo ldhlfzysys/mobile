@@ -29,7 +29,15 @@ function regist(){
         data:{"firstName":firstName,"lastName":lastName,"email":email,"password":password1},         
         success:function(result){  
         	var res = eval("(" + result + ")");
-            console.log(res)
+            // console.log(res)
+            if(res.status == 0){
+                var nickname = firstName+' '+lastName;
+                document.cookie="bdb-ui="+result;
+                document.cookie="bdb-nn="+nickname;
+                window.location.href='http://bdbbuy.com/mobile/ui-me.phtml';
+            }else{
+                alert(res.msg);
+            }
         },
         error:function(XMLHttpRequest, textStatus, errorThrown){
             alert("注册失败");

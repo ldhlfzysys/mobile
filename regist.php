@@ -1,7 +1,9 @@
 <?php
-
+require_once("appRes.php");
 
 function regist($firstname,$lastname,$email,$password){
+	$appRes = new appRes();
+
 	$client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
 	$session = $client->login('mobile', 'mobile');
  	$params = array(array('email' =>$email, 'firstname' => $firstname, 'lastname' => $lastname, 'password' => $password, 
@@ -9,11 +11,13 @@ function regist($firstname,$lastname,$email,$password){
  	
  	try {
  		$result = $client->call($session,'customer.create',$params);
+ 		$appRes->setData($result);
 	}
 	catch (Exception $e) { //while an error has occured
-	    echo "==> Error: ".$e->getMessage();
+	    $appRes->setStatusAndMsg(-1,$e->getMessage());
+	    // echo "==> Error: ".$e->getMessage();
 	}
-	echo $result;
+	return $appRes;
 }
 
 if (isset($_POST['firstName']) && isset($_POST['lastName']) && isset($_POST['email']) && isset($_POST['password']) ) {
@@ -21,7 +25,7 @@ if (isset($_POST['firstName']) && isset($_POST['lastName']) && isset($_POST['ema
 	$lastName = $_POST['lastName'];
 	$email = $_POST['email'];
 	$password = $_POST['password'];
-	$result = login("936566715@qq.com","team365");
-	echo $result;
+	$result = regist($firstName,$lastName,$email,$password);
+	echo json_encode($result);
 }
 ?>
