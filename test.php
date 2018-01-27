@@ -1,6 +1,5 @@
 <?php
 
-
 $client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
   
 $session = $client->login('mobile', 'mobile');
