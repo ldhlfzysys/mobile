@@ -1276,6 +1276,7 @@ li {
 .aui-car-box-list-text-price {
 	height: 24px;
 	line-height: 24px;
+	padding-top: 20px;
 	position: relative;
 }
 
@@ -1287,7 +1288,8 @@ li {
 .aui-car-box-list-text-arithmetic {
 	position: absolute;
 	right: 0px;
-	top: 0;
+	/*top: 0;*/
+	bottom: 18px;
 	width: 75px;
 	box-sizing: border-box;
 	white-space: nowrap;
