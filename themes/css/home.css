@@ -1224,7 +1224,7 @@ li {
 .aui-car-box-list-img {
 	position: absolute;
 	top: 15px;
-	left: 45px;
+	/*left: 45px;*/
 	width: 90px;
 	height: 90px;
 }
