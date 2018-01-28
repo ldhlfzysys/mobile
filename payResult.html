@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <?php
-$resultStatus = $_GET["resultStatus"];
+$oid = $_GET["oid"];
 // echo "status = " . $orderStatus ;
 ?>
 <head>
@@ -37,8 +37,8 @@ $resultStatus = $_GET["resultStatus"];
 	<div class="weui-msg" style="margin-top: 80px;">
 	  <div class="weui-msg__icon-area"><i class="weui-icon-success weui-icon_msg" style="color: #ed3e6e;"></i></div>
 	  <div class="weui-msg__text-area">
-	    <h2 class="weui-msg__title">下单成功</h2>
-	    <p class="weui-msg__desc">如有疑问，请联系客服:bdbbuy@gmail.com</p>
+	    <h2 class="weui-msg__title">下单成功(订单号:<?php echo $$oid; ?>)</h2>
+	    <p class="weui-msg__desc">如有疑问，请联系微信客服(搜索微信号:bdbbuy)</p>
 	  </div>
 	  <div class="weui-msg__opr-area">
 	    <p class="weui-btn-area">

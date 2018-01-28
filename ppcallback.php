@@ -35,7 +35,7 @@ if(isset($_GET['paymentId']) && isset($_GET['token']) && isset($_GET['PayerID'])
 
             if (strpos($result,"160") === 0) {
                 setcookie("bdb-ci", '');
-                echo '<script>url="http://bdbbuy.com/mobile/payResult.html";window.location.href=url;</script> ';
+                echo '<script>url="http://bdbbuy.com/mobile/payResult.html?oid='.$result.'";window.location.href=url;</script> ';
             }
         }
 
