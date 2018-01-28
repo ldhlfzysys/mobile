@@ -10,6 +10,7 @@
 	<link rel="stylesheet" href="themes/css/core.css">
 	<link rel="stylesheet" href="themes/css/icon.css">
 	<link rel="stylesheet" href="themes/css/home.css">
+	<link rel="stylesheet" href="themes/css/add.css">
 	<script type="text/javascript" src="themes/js/jquery.min.js"></script>
 	<link rel="icon" type="image/x-icon" href="favicon.ico">
 	<link href="iTunesArtwork@2x.png" sizes="114x114" rel="apple-touch-icon-precomposed">
@@ -211,7 +212,7 @@ foreach ($carItems as $item) {
 						foreach ($products as $product) {
 							echo '<a href="javascript:;" class="aui-list-product-fl-item">';
 							echo '<div class="aui-list-product-fl-img">';
-							echo '<img src="'.smallImage($product['image']).'" alt="">';
+							echo '<div class="class_img_box"><img src="'.smallImage($product['image']).'" alt=""></div>';
 							echo '</div>';
 							echo '<div class="aui-list-product-fl-text">';
 							echo '<h3 class="aui-list-product-fl-title">'.$product['name'].$product['short_description'].'</h3>';
