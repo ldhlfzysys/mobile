@@ -11,7 +11,8 @@ $session = $client->login('mobile', 'mobile');
 
 //keyword搜索
 $complexFilter = array(
-            'meta_keyword' => array('like' => $regx)
+            'meta_keyword' => array('like' => $regx),
+            'status' => 1
 );
 
 $args = array(
@@ -23,7 +24,8 @@ $result = $client->call($session,'catalog_product.list',$args);
 
 //名称搜索
 $complexFilter_name = array(
-        'name' => array('like' => $regx)
+        'name' => array('like' => $regx),
+        'status' => 1
 );
 $args_name = array(
 	'filters' => $complexFilter_name,

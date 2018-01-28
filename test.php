@@ -4,7 +4,19 @@ $client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');
   
 $session = $client->login('mobile', 'mobile');
 
-$shipping_list = $client->call($session,'cart_shipping.list','611');
+  
 
-var_dump($shipping_list);
+$complexFilter = array(
+            'status' => 1
+);
+
+$args = array(
+	'filters' => $complexFilter,
+	'storeView' => '16'
+);
+
+$result = $client->call($session,'catalog_product.list',$args);
+
+
+echo json_encode($result);
 ?>
