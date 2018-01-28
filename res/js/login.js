@@ -7,12 +7,13 @@ function login(){
         alert("请输入账户或密码");
         return;
     }
+    $.showLoading("正在登陆...");
 	$.ajax({  
         url:"http://bdbbuy.com/mobile/login.php",  
         type: "POST",
         data:{userid:userID,password:password},         
         success:function(result){  
-
+            $.hideLoading();
         	var res = eval("(" + result + ")");
             // console.log(res)
             if (res['status'] == 'OK') {
@@ -21,10 +22,13 @@ function login(){
             	document.cookie="bdb-nn="+nickname;
             	window.location.href='http://bdbbuy.com/mobile/ui-me.phtml';
             }else{
-            	document.location.reload();
+            	// document.location.reload();
+                $.toast("账户或者密码错误","text");
             }
         },
         error:function(XMLHttpRequest, textStatus, errorThrown){
+            $.hideLoading();
+            $.toast("登录失败","text");
         }
 
     });
