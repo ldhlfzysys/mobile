@@ -1,9 +1,23 @@
 
+//生成从minNum到maxNum的随机数
+function randomNum(minNum,maxNum){ 
+    switch(arguments.length){ 
+        case 1: 
+            return parseInt(Math.random()*minNum+1,10); 
+        break; 
+        case 2: 
+            return parseInt(Math.random()*(maxNum-minNum+1)+minNum,10); 
+        break; 
+            default: 
+                return 0; 
+            break; 
+    } 
+}
 
 // 账户注册
 function regist(){
-    var firstName = $('#firstName').val();
-	var lastName = $('#lastName').val();
+    var firstName = '用户';
+	var lastName = randomNum(9999,99999999);
     var email = $('#email').val();
     var password1 = $('#password1').val();
     var password2 = $('#password2').val();
@@ -22,12 +36,13 @@ function regist(){
         alert("邮箱格式错误");
         return;
     }
-
+    // $.showLoading("正在注册...");
 	$.ajax({  
         url:"http://bdbbuy.com/mobile/regist.php",           
         type: "POST",
         data:{"firstName":firstName,"lastName":lastName,"email":email,"password":password1},         
         success:function(result){  
+            // $.hideLoading();
         	var res = eval("(" + result + ")");
             // console.log(res)
             if(res.status == 0){
@@ -37,10 +52,13 @@ function regist(){
                 window.location.href='http://bdbbuy.com/mobile/ui-me.phtml';
             }else{
                 alert(res.msg);
+                $.toast(res.msg,"text");
             }
         },
         error:function(XMLHttpRequest, textStatus, errorThrown){
+            // $.hideLoading();
             alert("注册失败");
+            // $.toast("注册失败","text");
         }
     });
 }
