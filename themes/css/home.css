@@ -2414,7 +2414,7 @@ input.check:checked {
 }
 
 .aui-Address-box-input {
-	width: 80%;
+	width: 75%;
 	border: 0;
 	outline: 0;
 	-webkit-appearance: none;
@@ -2438,7 +2438,7 @@ input.check:checked {
 .aui-Address-box-head {
 	float: left;
 	display: block;
-	width: 20%;
+	width: 25%;
 	border: 0;
 	outline: 0;
 	-webkit-appearance: none;

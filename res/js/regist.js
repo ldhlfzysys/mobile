@@ -23,26 +23,29 @@ function regist(){
     var password2 = $('#password2').val();
 	
     if (isNull(firstName) || isNull(lastName) || isNull(password1) || isNull(password2)) {
-        alert("请将信息填写完整");
+        // alert("请将信息填写完整");
+        $.toast("请将信息填写完整","text");
         return;
     }
 
     if (password1 != password2) {
-        alert("两次密码输入不一致");
+        // alert("两次密码输入不一致");
+        $.toast("两次密码输入不一致","text");
         return;
     }
 
     if (!isEmail(email)) {
-        alert("邮箱格式错误");
+        // alert("邮箱格式错误");
+        $.toast("邮箱格式错误","text");
         return;
     }
-    // $.showLoading("正在注册...");
+    $.showLoading("正在注册...");
 	$.ajax({  
         url:"http://bdbbuy.com/mobile/regist.php",           
         type: "POST",
         data:{"firstName":firstName,"lastName":lastName,"email":email,"password":password1},         
         success:function(result){  
-            // $.hideLoading();
+            $.hideLoading();
         	var res = eval("(" + result + ")");
             // console.log(res)
             if(res.status == 0){
@@ -51,14 +54,14 @@ function regist(){
                 document.cookie="bdb-nn="+nickname;
                 window.location.href='http://bdbbuy.com/mobile/ui-me.phtml';
             }else{
-                alert(res.msg);
+                // alert(res.msg);
                 $.toast(res.msg,"text");
             }
         },
         error:function(XMLHttpRequest, textStatus, errorThrown){
-            // $.hideLoading();
-            alert("注册失败");
-            // $.toast("注册失败","text");
+            $.hideLoading();
+            // alert("注册失败");
+            $.toast("注册失败","text");
         }
     });
 }
