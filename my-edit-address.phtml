@@ -39,46 +39,7 @@ $userid = userid();
 	</style>
 
 </head>
-<script>
-function save(){
-	var shipping_lastname = $('#shipping-lastname').val();
-	var shipping_firstname = $('#shipping-firstname').val();
-	var shipping_phone = $('#shipping-phone').val();
-	var shipping_postcode = $('#shipping-postcode').val();
-	var shipping_area = $('#shipping-area').val();
-	var shipping_street = $('#shipping-street').val();
 
-	if (shipping_lastname == "" || shipping_firstname=="" || shipping_phone=="" || shipping_postcode=="" || shipping_area=="" || shipping_street=="") {
-		alert('收货地址每一项都是必填项');
-		return;
-	};
-
-	$.ajax({  
-
-        url:"http://bdbbuy.com/mobile/address.php",           
-
-        type: "POST",
-
-        data:{uid:<?php echo $userid; ?>,type:<?php echo $type; ?>,slastname:shipping_lastname,sfirstname:shipping_firstname,sphone:shipping_phone,spostcode:shipping_postcode,sarea:shipping_area,sstreet:shipping_street},         
-
-        success:function(result){  
-
-        	if (result == "") {
-        		window.location.href="http://bdbbuy.com/mobile/order-sure.phtml";
-        	}else{
-        		alert("添加失败");
-        	}
-        },
-
-        error:function(XMLHttpRequest, textStatus, errorThrown){
-
-            
-
-        }
-
-    });
-}
-</script>
 
 <body style="background:#eee">
 
@@ -205,6 +166,47 @@ function save(){
             });
         }();
 	</script>
+
+	<script>
+		function save(){
+			var shipping_lastname = $('#shipping-lastname').val();
+			var shipping_firstname = $('#shipping-firstname').val();
+			var shipping_phone = $('#shipping-phone').val();
+			var shipping_postcode = $('#shipping-postcode').val();
+			var shipping_area = $('#shipping-area').val();
+			var shipping_street = $('#shipping-street').val();
+
+			if (shipping_lastname == "" || shipping_firstname=="" || shipping_phone=="" || shipping_postcode=="" || shipping_area=="" || shipping_street=="") {
+				alert('收货地址每一项都是必填项');
+				return;
+			};
+
+			$.ajax({  
+
+		        url:"http://bdbbuy.com/mobile/address.php",           
+
+		        type: "POST",
+
+		        data:{uid:<?php echo $userid; ?>,type:<?php echo $type; ?>,slastname:shipping_lastname,sfirstname:shipping_firstname,sphone:shipping_phone,spostcode:shipping_postcode,sarea:shipping_area,sstreet:shipping_street},         
+
+		        success:function(result){  
+
+		        	if (result == "") {
+		        		window.location.href="http://bdbbuy.com/mobile/order-sure.phtml";
+		        	}else{
+		        		alert("添加失败");
+		        	}
+		        },
+
+		        error:function(XMLHttpRequest, textStatus, errorThrown){
+
+		            
+
+		        }
+
+		    });
+		}
+</script>
 
 </body>
 </html>

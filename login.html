@@ -7,7 +7,7 @@
 	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
 	<meta name="format-detection" content="telephone=no, email=no"/>
 	<meta charset="UTF-8">
-	<title>登录</title>
+	<title>登录/注册</title>
 	<link rel="stylesheet" href="themes/css/core.css">
 	<link rel="stylesheet" href="themes/css/icon.css">
 	<link rel="stylesheet" href="themes/css/home.css">
@@ -37,7 +37,7 @@
 		</a>
 		<div class="aui-header-center aui-header-center-clear">
 			<div class="aui-header-center-logo">
-				<div class="aui-car-white-Typeface">登录</div>
+				<div class="aui-car-white-Typeface">登录/注册</div>
 			</div>
 		</div>
 		<a href="#" class="aui-header-item-icon"   style="min-width:0">
@@ -45,31 +45,69 @@
 		</a>
 	</header>
 <div>
-	<div class="welcome"><img src="images/welcome.png"></div>
-	<div class="login-form" style="margin:0 auto;width:80%" >
-			<p>
-				<span class="aui-Address-box-head">帐号</span>
-				<input class="aui-Address-box-input" id="userid" type="text" placeholder="请输入您的帐号">
-			</p>
-			<p>
-				<span class="aui-Address-box-head">密码</span>
-				<input class="aui-Address-box-input" id="password" type="password" placeholder="请输入您的密码">
-			</p>
-		<div class="aui-out">
-			<a class="red-color" style="color:#fff;" onclick="login()">立即登录</a>
-		</div>
+	<!-- <div class="welcome"><img src="images/welcome.png"></div> -->
+
+	<!-- 容器 -->
+	<div class="weui-tab" style="margin-top: 55px;">
+	  <div class="weui-navbar">
+	    <a class="weui-navbar__item weui-bar__item--on" href="#tab1">
+	      登录
+	    </a>
+	    <a class="weui-navbar__item" href="#tab2">
+	      注册
+	    </a>
+	  </div>
+	  <div class="weui-tab__bd">
+	    <div id="tab1" class="weui-tab__bd-item weui-tab__bd-item--active">
+	      
+	    	<div class="login-form" style="margin:0 auto;width:80%" >
+				<p>
+					<span class="aui-Address-box-head">帐号</span>
+					<input class="aui-Address-box-input" id="userid" type="text" placeholder="请输入您的帐号">
+				</p>
+				<p>
+					<span class="aui-Address-box-head">密码</span>
+					<input class="aui-Address-box-input" id="password" type="password" placeholder="请输入您的密码">
+				</p>
+				<div class="aui-out">
+					<a class="red-color" style="color:#fff;" onclick="login()">立即登录</a>
+				</div>
+			</div>
+			<!-- <div>
+				<div style="float: left;width: 50%;display: none;">
+					<img src="res/icon/icon_password.png" style="width: 20px;display: block;float: left;margin-left: 20px;">
+					<a href="#" style="display: block;float: left;margin-left:5px;">忘记密码</a>
+				</div>
+				<div style="float: left;width: 50%;margin-left: 50%;">
+					<img src="res/icon/icon_regist.png" style="width: 20px;display: block;float:left;margin-left: 70px">
+					<a href="regist.html" style="display: block;float:left;margin-left: 5px">立即注册</a>
+				</div>
+			</div> -->
+	    </div>
+
+	    <div id="tab2" class="weui-tab__bd-item">
+	        <div class="login-form" style="margin:0 auto;width:80%" >
+				<p>
+					<span class="aui-Address-box-head">邮箱</span>
+					<input class="aui-Address-box-input" id="email" type="text" placeholder="请输入您的邮箱">
+				</p>
+				<p>
+					<span class="aui-Address-box-head">密码</span>
+					<input class="aui-Address-box-input" id="password1" type="password" placeholder="请输入您的密码">
+				</p>
+				<p>
+					<span class="aui-Address-box-head">确认密码</span>
+					<input class="aui-Address-box-input" id="password2" type="password" placeholder="请输入您的密码">
+				</p>
+				<div class="aui-out">
+					<a class="red-color" style="color:#fff;" onclick="regist()">立即注册</a>
+				</div>
+			</div>
+	    </div>
+	  </div>
 	</div>
-	<div>
-		<div style="float: left;width: 50%;display: none;">
-			<img src="res/icon/icon_password.png" style="width: 20px;display: block;float: left;margin-left: 20px;">
-			<a href="#" style="display: block;float: left;margin-left:5px;">忘记密码</a>
-		</div>
-		<div style="float: left;width: 50%;margin-left: 50%;">
-			<img src="res/icon/icon_regist.png" style="width: 20px;display: block;float:left;margin-left: 70px">
-			<a href="regist.html" style="display: block;float:left;margin-left: 5px">立即注册</a>
-		</div>
-	</div>
-</div>
+
+	
 <div class="weui-msg__extra-area">
 	<div class="weui-footer">
 	  <p class="weui-footer__links">
@@ -83,6 +121,7 @@
 <script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
 <script type="text/javascript" src="res/js/check.js"></script>
 <script type="text/javascript" src="res/js/login.js"></script>
+<script type="text/javascript" src="res/js/regist.js"></script>
 </body>
 </html>
 
