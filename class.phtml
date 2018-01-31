@@ -232,11 +232,33 @@ $cartId = cartid();
     	} 
     	return null;
 	}
+
+	window.onbeforeunload=function(){
+    	sessionStorage.setItem("bdbbuy-offsetTop",$(".aui-scroll-content").scrollTop());
+	}
+
+	window.onload = function(){
+		var index = sessionStorage.getItem("bdbbuy-class-index");
+		if (index == null) {index = 0};
+		var lis = $('.tab_menu')[0].children[0].children;
+		if (lis.length >= index) {
+			$(lis[index]).addClass("on").siblings().removeClass("on");
+			$(".tab_box > div").eq(index).show().siblings().hide();
+		};
+		 $('img').lazyload({
+			event: 'scrollstop'
+		 });
+		var _offset = sessionStorage.getItem("bdbbuy-offsetTop");
+		$(".aui-scroll-content").scrollTop(_offset);
+	};
+
 	$(function(){
 		$(".tab_menu ul li").click(function(){
 			 $(this).addClass("on").siblings().removeClass("on"); //切换选中的按钮高亮状态
 			 var index=$(this).index(); //获取被按下按钮的索引值，需要注意index是从0开始的
+			 sessionStorage.setItem("bdbbuy-class-index",index);
 			 $(".tab_box > div").eq(index).show().siblings().hide(); //在按钮选中时在下面显示相应的内容，同时隐藏不需要的框架内容
+			 $(".aui-scroll-content").scrollTop(0);
 			 $('img').lazyload({
 				event: 'scrollstop'
 			 });
