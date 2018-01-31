@@ -44,13 +44,14 @@ foreach ($categoryTree as $category1) {
 	{
 		$id = $category1['category_id'];
 		$categoryIDDic[$id] = $id;
+		foreach ($category1['children'] as $category2) {
+			$id1 = $category2['parent_id'];
+			$id2 = $category2['category_id'];
+			$categoryIDDic[$id2] = $id1;
+		}
 	}
 	
-	foreach ($category1['children'] as $category2) {
-		$id1 = $category2['parent_id'];
-		$id2 = $category2['category_id'];
-		$categoryIDDic[$id2] = $id1;
-	}
+
 }
 
 $productListUrl='http://bdbbuy.com/mobile/productList.php';
@@ -59,12 +60,18 @@ $productList = json_decode($html,true);
 $newProductList;
 foreach ($productList as $product) {
 	$category_ids = $product['category_ids'];
+	//防止重复添加
+	$norepeat = array();
 	foreach ($category_ids as $key => $category_id) {
 		$id1 = $categoryIDDic[$category_id];
 		if (!isset($newProductList[$id1])) {
 			$newProductList[$id1] = array();
 		}
-		array_push($newProductList[$id1], $product);
+		if (!in_array($id1, $norepeat)) {
+			array_push($norepeat,$id1);
+			array_push($newProductList[$id1], $product);	
+		}
+		
 	}
 }
 
