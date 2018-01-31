@@ -150,7 +150,7 @@ $cartId = cartid();
 								echo '<a href="http://bdbbuy.com/mobile/ui-product.phtml?productId='.$product['product_id'].'">';
 								#<img class="lazy" src="grey.gif" data-original="example.jpg" width="640" heigh="480">min-width: 72px; max-width: 100%; width: auto; height: auto;
 									echo '<div class="am-intro-left am-u-sm-4"><div class="class_img_box"><img  class="lazy" src="./images/grey.gif" data-original="'.smallImage($product['image']).'" /></div></div>';
-									echo '<div class="am-intro-right am-u-sm-8">';
+									echo '<div class="am-intro-right am-u-sm-8"><div style="padding-left:10px;">';
 										echo '<h2>'.$product['name'].'</h2>';
 										echo '<p>'.$product['short_description'];
 										if (count($product['tier_price']) > 0) {
@@ -163,7 +163,7 @@ $cartId = cartid();
 										echo '<div class="text">';
 											echo '<span class="fl">CA$&nbsp;&nbsp;'.round($product['price'], 2).'</span>';
 										echo '</div>';
-									echo '</div>';
+									echo '</div></div>';
 								echo '</a>';
 							echo '</div>';
 
