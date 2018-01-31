@@ -57,9 +57,9 @@ if (isset($_COOKIE['bdb-billing'])) {
 						<span class="aui-Address-box-head">手机号</span><input id="shipping-phone" class="aui-Address-box-input" type="text" placeholder="手机号码" value="<?php echo json_decode('"'.str_replace('%', '\\', $shipping['phone']).'"'); ?>">
 					</p>
 
-					<p>
-						<span class="aui-Address-box-head">邮箱</span><input id="shipping-email" class="aui-Address-box-input" type="text" placeholder="邮箱" value="<?php echo json_decode('"'.str_replace('%', '\\', $shipping['email']).'"'); ?>">
-					</p>
+<!-- 					<p>
+						<span class="aui-Address-box-head">邮箱</span><input id="shipping-email" class="aui-Address-box-input" type="text" placeholder="邮箱" value="<?php //echo json_decode('"'.str_replace('%', '\\', $shipping['email']).'"'); ?>">
+					</p> -->
 
 					<p>
 						<span class="aui-Address-box-head">邮编</span><input id="shipping-postcode" class="aui-Address-box-input" type="text" placeholder="邮编" value="<?php echo json_decode('"'.str_replace('%', '\\', $shipping['postcode']).'"'); ?>">
@@ -125,7 +125,7 @@ if (isset($_COOKIE['bdb-billing'])) {
 		var shipping_lastname = $('#shipping-lastname').val();
 		var shipping_firstname = $('#shipping-firstname').val();
 		var shipping_phone = $('#shipping-phone').val();
-		var shipping_email = $('#shipping-email').val();
+		var shipping_email = 'bdbbuy@gmail.com';
 		var shipping_postcode = $('#shipping-postcode').val();
 		var shipping_area = $('#shipping-area').val();
 		var shipping_street = $('#shipping-street').val();
