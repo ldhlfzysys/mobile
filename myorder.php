@@ -35,7 +35,7 @@ if (isset($_GET['userid'])) {
 }else
 {
 	echo '<script type="text/javascript">';
-	echo 'window.location.href="http://bdbbuy.com/mobile/login2.html";';
+	echo 'window.location.href="http://bdbbuy.com/mobile/login.html";';
 	echo '</script>';
 }
 
