@@ -157,6 +157,11 @@ $products = json_decode(file_get_contents($url),true);
 		$('img').lazyload({
 			event: 'scrollstop'
 		});
+		$(window).scroll(function() {
+			$('img').lazyload({
+				event: 'scrollstop'
+			});
+		});
 	});
 
 </script>
