@@ -6,6 +6,7 @@
 	max-width: 5rem;
 	margin: 0 auto;
 	/*vertical-align: top;*/
+	padding-right: 8px;
 	border: 0;
 }
 .aui-scroll-content .tab_box > div{

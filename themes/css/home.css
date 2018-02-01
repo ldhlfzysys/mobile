@@ -9,7 +9,8 @@
 /*class.phtml页*/
 
 .am-u-sm-8 h2 {
-	color: #333
+	color: #333;
+	width: 110%;
 }
 .am-u-sm-8 p {
 	color: #333	
