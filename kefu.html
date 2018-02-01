@@ -53,7 +53,8 @@
 	  <div class="weui-msg__opr-area">
 	    <p class="weui-btn-area">
 	      <a href="tel:6479395633" class="weui-btn weui-btn_primary" style="background-color: #ed3e6e">直接拨打</a>
-	      <a href="https://kefu.easemob.com/webim/im.html?configId=c5ebf0ef-7fae-41f2-838f-8a5f79a80179" target="_blank" class="weui-btn weui-btn_default">在线客服</a>
+	     <!--  <a href="https://kefu.easemob.com/webim/im.html?configId=c5ebf0ef-7fae-41f2-838f-8a5f79a80179" class="weui-btn weui-btn_default">在线客服</a> -->
+	      <a href='javascript:;' onclick='easemobim.bind({configId: "c5ebf0ef-7fae-41f2-838f-8a5f79a80179"})'  class="weui-btn weui-btn_default">在线客服</a>
 	    </p>
 	  </div>
 	  <div class="weui-msg__extra-area">
@@ -65,6 +66,20 @@
 	    </div>
 	  </div>
 	</div>
+
+	<script type="text/javascript">
+	window.easemobim = window.easemobim || {};
+	easemobim.config = {
+	    // configId: 'c5ebf0ef-7fae-41f2-838f-8a5f79a80179',
+	    // buttonText: '联系客服',
+	    // dialogWidth: '360px',
+	    // dialogHeight: '550px',
+	    // dialogPosition: { x: '10px', y: '10px' },
+	    hide: true,
+    	autoConnect: true,
+	};
+	</script>
+	<script src='https://kefu.easemob.com/webim/easemob.js'></script>
 
 	<script type="text/javascript" src="themes/js/jquery.min.js"></script>
 	<script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
