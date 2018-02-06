@@ -27,7 +27,7 @@ if (isset($_POST['cartid'])) {
     $shippingname = $lastname.$firstname;
     #user
     $payer = new \PayPal\Api\Payer();
-    $payer->setPaymentMethod('paypal');
+    $payer->setPaymentMethod('credit_card');
 
     $payerinfo = new \PayPal\Api\PayerInfo();
     $payerinfo->setEmail($mail);
@@ -48,23 +48,22 @@ if (isset($_POST['cartid'])) {
     // $billing_address->setPostalCode("T0E0A0");
     // $payerinfo->setBillingAddress($billing_address);
 
-     # 信用卡 xl
-    // $card = new \PayPal\Api\CreditCard();
-    // $card->setType("visa")
-    //     ->setNumber("4148529247832259")
-    //     ->setExpireMonth("11")
-    //     ->setExpireYear("2019")
-    //     ->setCvv2("012")
-    //     ->setFirstName("Joe")
-    //     ->setLastName("Shopper")
-    //     ->setBillingAddress($billing_address);// 设置账单地址
-    // $card->setPayerId();// 设置信用卡支付者
+    # 信用卡
+    $card = new \PayPal\Api\CreditCard();
+    $card->setType("visa")
+        ->setNumber("4148529247832259")
+        ->setExpireMonth("11")
+        ->setExpireYear("2019")
+        ->setCvv2("012")
+        ->setFirstName("Joe")
+        ->setLastName("Shopper")
+        ->setBillingAddress($billing_address);// 设置账单地址
+    $card->setPayerId();// 设置信用卡支付者
 
-    // $fundingInstrument = new \PayPal\Api\FundingInstrument();
-    // $fundingInstrument->setCreditCard($card);
+    $fundingInstrument = new \PayPal\Api\FundingInstrument();
+    $fundingInstrument->setCreditCard($card);
 
-    // $payer->setFundingInstruments(array($fundingInstrument));
-
+    $payer->setFundingInstruments(array($fundingInstrument));
 
     #收货地址
     $shipping_address = new \PayPal\Api\ShippingAddress();
@@ -76,7 +75,7 @@ if (isset($_POST['cartid'])) {
     $shipping_address->setPhone($shipping_info['telephone']);
     $shipping_address->setPostalCode($shipping_info['postcode']);
 
-    $payerinfo->setShippingAddress($shipping_address);
+    $payerinfo->setShippingAddress($shipping_address);// 设置收货地址
     // var_dump($shipping_address);
 
     #设置用户
