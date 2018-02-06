@@ -25,7 +25,7 @@ $(function(){
 
             $.ajax({  
 
-                url:"http://bdbbuy.com/mobile/cart.php?cartid="+cartid+"&remove="+json_str,           
+                url:"http://m.bdbbuy.com/cart.php?cartid="+cartid+"&remove="+json_str,           
 
                 type: "GET",         
 

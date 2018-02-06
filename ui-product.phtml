@@ -2,11 +2,11 @@
 <?php 
 include_once('./imagePathFix.php');
 $productId = $_GET["productId"];
-$url='http://bdbbuy.com/mobile/productInfo.php?ids='.$productId;
+$url='http://m.bdbbuy.com/productInfo.php?ids='.$productId;
 $products = json_decode(file_get_contents($url),true);
 if (count($products) > 0) {
 	$product = $products[0];
-	$img_url = 'http://bdbbuy.com/mobile/productImage.php?id='.$productId;
+	$img_url = 'http://m.bdbbuy.com/productImage.php?id='.$productId;
 	$imgs = json_decode(file_get_contents($img_url),true);
 	$price = number_format($product['price'],2);
 	$name = $product['name'];
@@ -157,7 +157,7 @@ $cartId = cartid();
 
         $.ajax({  
 
-            url:"http://bdbbuy.com/mobile/cart.php?addToCart="+cartId+"&productId="+productId,           
+            url:"http://m.bdbbuy.com/cart.php?addToCart="+cartId+"&productId="+productId,           
 
             type: "GET",         
 
@@ -187,7 +187,7 @@ $cartId = cartid();
 function buyNow(cartId,productId) {
         $.ajax({  
 
-            url:"http://bdbbuy.com/mobile/cart.php?addToCart="+cartId+"&productId="+productId,           
+            url:"http://m.bdbbuy.com/cart.php?addToCart="+cartId+"&productId="+productId,           
 
             type: "GET",         
 
@@ -196,7 +196,7 @@ function buyNow(cartId,productId) {
                 // $('#loading').hideLoading();
 
                 // document.location.reload(); 
-                window.location.href='http://bdbbuy.com/mobile/order-sure.phtml';
+                window.location.href='http://m.bdbbuy.com/order-sure.phtml';
 
             },
 

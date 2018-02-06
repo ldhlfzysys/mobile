@@ -2,7 +2,7 @@
 <html>
 <?php
 $orderid = $_GET['orderid'];
-$orderInfoUrl='http://bdbbuy.com/mobile/orderinfo.php?orderid='.$orderid;
+$orderInfoUrl='http://m.bdbbuy.com/orderinfo.php?orderid='.$orderid;
 $html = file_get_contents($orderInfoUrl);
 $orderInfo = json_decode($html,true);
 $shippingAddress = $orderInfo['shipping_address'];

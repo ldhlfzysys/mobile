@@ -183,7 +183,7 @@ $userid = userid();
 
 			$.ajax({  
 
-		        url:"http://bdbbuy.com/mobile/address.php",           
+		        url:"http://m.bdbbuy.com/address.php",           
 
 		        type: "POST",
 
@@ -192,7 +192,7 @@ $userid = userid();
 		        success:function(result){  
 
 		        	if (result == "") {
-		        		window.location.href="http://bdbbuy.com/mobile/order-sure.phtml";
+		        		window.location.href="http://m.bdbbuy.com/order-sure.phtml";
 		        	}else{
 		        		alert("添加失败");
 		        	}

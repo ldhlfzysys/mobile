@@ -3,7 +3,7 @@
 <?php
 include('./user.php');
 $userid = userid();
-$orderListUrl='http://bdbbuy.com/mobile/myorder.php?userid='.$userid;
+$orderListUrl='http://m.bdbbuy.com/myorder.php?userid='.$userid;
 $html = file_get_contents($orderListUrl);
 $orderList = json_decode($html,true);
 

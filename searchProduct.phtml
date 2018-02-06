@@ -20,7 +20,7 @@
 <?php 
 include_once('./imagePathFix.php');
 $keyword=$_GET['s'];
-$url='http://bdbbuy.com/mobile/searchProduct.php?s='.$keyword;
+$url='http://m.bdbbuy.com/searchProduct.php?s='.$keyword;
 $products = json_decode(file_get_contents($url),true);
 ?>
 
@@ -52,7 +52,7 @@ $products = json_decode(file_get_contents($url),true);
 				foreach ($products as $product) {
 						echo '<div class="am-g am-intro-bd">';
 							echo '<div class="am-intro-left am-u-sm-10">';
-							echo '<a href="http://bdbbuy.com/mobile/ui-product.phtml?productId='.$product['product_id'].'">';
+							echo '<a href="http://m.bdbbuy.com/ui-product.phtml?productId='.$product['product_id'].'">';
 							#<img class="lazy" src="grey.gif" data-original="example.jpg" width="640" heigh="480">min-width: 72px; max-width: 100%; width: auto; height: auto;
 								echo '<div class="am-intro-left am-u-sm-4">';
 								echo '<div class="class_img_box"><img  class="lazy" src="./images/grey.gif" data-original="'.smallImage($product['image']).'" /></div>';
@@ -125,7 +125,7 @@ $products = json_decode(file_get_contents($url),true);
 
         $.ajax({  
 
-            url:"http://bdbbuy.com/mobile/cart.php?addToCart="+cartId+"&productId="+productId,           
+            url:"http://m.bdbbuy.com/cart.php?addToCart="+cartId+"&productId="+productId,           
 
             type: "GET",         
 
