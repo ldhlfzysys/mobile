@@ -1,3 +1,4 @@
+
 <?php
 ini_set('display_errors',1); 
 if (isset($_POST['cartid'])) {
@@ -37,7 +38,7 @@ if (isset($_POST['cartid'])) {
     $payerinfo->setPhone($billing_info['telephone']);
 
     # 支付者ID
-    $payerinfo->setPayerId($mail)
+    // $payerinfo->setPayerId($mail)
 
     #账单地址
     $billing_address = new \PayPal\Api\Address();
@@ -141,6 +142,6 @@ if (isset($_POST['cartid'])) {
     }catch (\PayPal\Exception\PayPalConnectionException $ex) {
         // This will print the detailed information on the exception.
         //REALLY HELPFUL FOR DEBUGGING
-        echo $ex->getData() . ' code =' . $ex->getCode();
+        echo $ex->getData();
     }
 }
