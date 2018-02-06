@@ -8,6 +8,13 @@
 /*自定义新增*/
 /*class.phtml页*/
 
+.index_img_box{
+	width: 5rem;
+    height: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .am-u-sm-8 h2 {
 	color: #333;
 	width: 110%;
@@ -634,7 +641,8 @@ li {
 .aui-slide-box .aui-slide-item-list .aui-slide-item-item .v-img {
 	display: block;
 	/*width: 5rem;*/
-	height: 5rem;
+	max-height: 5rem;
+	max-width: 5rem;
 	margin: 0 auto;
 	background: url(../img/bg/log.jpg) no-repeat center center;
 	background-size: 62px;
@@ -656,7 +664,7 @@ li {
 }
 
 .aui-slide-box .aui-slide-item-list .aui-slide-item-item .aui-slide-item-title {
-	text-align: center;
+	text-align: left;
 	line-height: 1rem;
 	word-break: break-word;
 	height: 2rem;
@@ -757,16 +765,20 @@ li {
 }
 
 .aui-list-product-item-img {
-	height: auto;
+	height: 155px;
 	width: 80%;
 	margin: 0 auto;
 	overflow: hidden;
 	position: relative;
+	display: flex;
+	justify-content:center;
+	align-items:center;
 }
 
 .aui-list-product-item-img img {
-	width: 155px;
-	height: 155px;
+	max-width: 155px;
+	max-height: 155px;
+	margin: 0 auto;
 	display: block;
 	border: none;
 }
@@ -1284,7 +1296,7 @@ li {
 }
 
 .aui-car-box-list-text-pri {
-	color: #fc6248;
+	color: #ea3340;
 	font-size: 16px;
 }
 
@@ -1339,7 +1351,7 @@ li {
 }
 
 .aui-total-amount {
-	color: #fc6248;
+	color: #ea3340;
 	font-size: 16px;
 }
 
