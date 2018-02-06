@@ -1,4 +1,3 @@
-
 <?php
 ini_set('display_errors',1); 
 if (isset($_POST['cartid'])) {
@@ -37,35 +36,13 @@ if (isset($_POST['cartid'])) {
     $payerinfo->setCountryCode('CA');
     $payerinfo->setPhone($billing_info['telephone']);
 
-    # 支付者ID
-    // $payerinfo->setPayerId($mail)
-
     #账单地址
     $billing_address = new \PayPal\Api\Address();
     $billing_address->setLine1($billing_info['street']);//street
     $billing_address->setCity($billing_info['city']);
     $billing_address->setCountryCode('CA');
     $billing_address->setPostalCode($billing_info['postcode']);
-    // $billing_address->setPostalCode("T0E0A0");
-    // $payerinfo->setBillingAddress($billing_address);
-
-     # 信用卡 xl
-    // $card = new \PayPal\Api\CreditCard();
-    // $card->setType("visa")
-    //     ->setNumber("4148529247832259")
-    //     ->setExpireMonth("11")
-    //     ->setExpireYear("2019")
-    //     ->setCvv2("012")
-    //     ->setFirstName("Joe")
-    //     ->setLastName("Shopper")
-    //     ->setBillingAddress($billing_address);// 设置账单地址
-    // $card->setPayerId();// 设置信用卡支付者
-
-    // $fundingInstrument = new \PayPal\Api\FundingInstrument();
-    // $fundingInstrument->setCreditCard($card);
-
-    // $payer->setFundingInstruments(array($fundingInstrument));
-
+    $payerinfo->setBillingAddress($billing_address);
 
     #收货地址
     $shipping_address = new \PayPal\Api\ShippingAddress();
@@ -76,12 +53,11 @@ if (isset($_POST['cartid'])) {
     $shipping_address->setState('CA');
     $shipping_address->setPhone($shipping_info['telephone']);
     $shipping_address->setPostalCode($shipping_info['postcode']);
-
     $payerinfo->setShippingAddress($shipping_address);
     // var_dump($shipping_address);
 
     #设置用户
-    $payer->setPayerInfo($payerinfo);
+    // $payer->setPayerInfo($payerinfo);
 
     #添加商品
     $itemList = new \PayPal\Api\ItemList();
@@ -97,8 +73,7 @@ if (isset($_POST['cartid'])) {
         $item->setQuantity($product["qty"]);
         $itemList->addItem($item);
     }
-    // 设置收货地址
-    $itemList->setShippingAddress($shipping_address);
+    // $itemList->setShippingAddress($shipping_address);
 
 
     $detail = new \PayPal\Api\Details();
@@ -139,7 +114,8 @@ if (isset($_POST['cartid'])) {
         $payment->create($apiContext);
         // echo $payment;
         echo $payment->getApprovalLink();
-    }catch (\PayPal\Exception\PayPalConnectionException $ex) {
+    }
+    catch (\PayPal\Exception\PayPalConnectionException $ex) {
         // This will print the detailed information on the exception.
         //REALLY HELPFUL FOR DEBUGGING
         echo $ex->getData();
