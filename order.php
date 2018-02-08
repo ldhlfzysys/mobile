@@ -61,7 +61,7 @@ function set_cart_address($cartid,$billingAddress,$shippingAddress)
 	$session = $client->login('mobile', 'mobile');
 	$arrAddresses = array(
 		array(
-			"mode" => "shipping",
+			"mode" => "billing",
 			"firstname" => $billingAddress['firstname'],
 			"lastname" => $billingAddress['lastname'],
 			"company" => "testCompany",
@@ -72,11 +72,11 @@ function set_cart_address($cartid,$billingAddress,$shippingAddress)
 			"region_id" => "74",
 			"telephone" => $billingAddress['telephone'],
 			"fax" => "",
-			"is_default_shipping" => 1,
-			"is_default_billing" => 0
+			"is_default_shipping" => 0,
+			"is_default_billing" => 1
 		),
 		array(
-			"mode" => "billing",
+			"mode" => "shipping",
 			"firstname" => $shippingAddress['firstname'],
 			"lastname" => $shippingAddress['lastname'],
 			"company" => "testCompany",
@@ -87,8 +87,8 @@ function set_cart_address($cartid,$billingAddress,$shippingAddress)
 			"region_id" => "74",
 			"telephone" => $shippingAddress['telephone'],
 			"fax" => "",
-			"is_default_shipping" => 0,
-			"is_default_billing" => 1
+			"is_default_shipping" => 1,
+			"is_default_billing" => 0
 		)
 	);
 	$result = $client->call($session,'cart_customer.addresses',array($cartid,$arrAddresses));
