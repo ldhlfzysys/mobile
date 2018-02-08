@@ -137,7 +137,7 @@ if (isset($_POST['cartid'])) {
     catch (\PayPal\Exception\PayPalConnectionException $ex) {
         // This will print the detailed information on the exception.
         //REALLY HELPFUL FOR DEBUGGING
-        $payErrorUtl = "http://m.bdbbuy.com/payError.phtml?msg="
-        echo $payErrorUtl . $ex->getData() . ' code = ' . $ex->getCode();
+        $payErrorUrl = "http://m.bdbbuy.com/payError.phtml?msg=";
+        echo $payErrorUrl . $ex->getData() . ' code = ' . $ex->getCode();
     }
 }
