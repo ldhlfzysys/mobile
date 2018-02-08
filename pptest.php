@@ -15,7 +15,7 @@ if (isset($_POST['cartid'])) {
     $apiContext = new \PayPal\Rest\ApiContext(
         new \PayPal\Auth\OAuthTokenCredential(
             'AX5s9PVAnhgl6X24ygTorm4jRgsZeE19LkzUiNSCK8jPGGdkAVAG8EhT-Fetr8Thxk90FThHWCT2ejI5',     // ClientID
-            'EETRzMZQ2P9ynymG7C5zDbngjk4DD8tKSlPoaaufa_WkgVXdchuw6ySMC3nDtwlZWDiqqObEDeDtGndp'      // ClientSecret
+            'EM4od7UoQY02yTTobXDmnZEHuJnvCbwFwPBHkT53MT_nJgJ80AvXrZY5t2JH-dSfeyG6NK7jyUB7SByD'      // ClientSecret
         )
     );
     $apiContext->setConfig(
@@ -137,6 +137,7 @@ if (isset($_POST['cartid'])) {
     catch (\PayPal\Exception\PayPalConnectionException $ex) {
         // This will print the detailed information on the exception.
         //REALLY HELPFUL FOR DEBUGGING
-        echo $ex->getData() . 'code = ' . $ex->getCode();
+        $payErrorUtl = "http://m.bdbbuy.com/payError.phtml?msg="
+        echo $payErrorUtl . $ex->getData() . ' code = ' . $ex->getCode();
     }
 }
