@@ -2,10 +2,25 @@
 ini_set('display_errors',1); 
 if (isset($_POST['cartid'])) {
     require __DIR__  . '/PayPal-PHP-SDK/autoload.php';
+
+    // 测试环境
+    // $apiContext = new \PayPal\Rest\ApiContext(
+    //     new \PayPal\Auth\OAuthTokenCredential(
+    //         'Ab82B6sLde42x7Yq5HOoYeAQfyygb_ggOYwHMyPgaI1UbPd7g-ZxgXSOpPJCfoygdQ35gK9qhTPcNdlK',     // ClientID
+    //         'EIBKokMDElw5701dYk3uKRV2ujxHL_z2-KT3sYIcKJ4EhYhZJaEjPrQ_QTZfcBx65BFeIL4r41cQvVyT'      // ClientSecret
+    //     )
+    // );
+
+    // 正式环境
     $apiContext = new \PayPal\Rest\ApiContext(
         new \PayPal\Auth\OAuthTokenCredential(
-            'Ab82B6sLde42x7Yq5HOoYeAQfyygb_ggOYwHMyPgaI1UbPd7g-ZxgXSOpPJCfoygdQ35gK9qhTPcNdlK',     // ClientID
-            'EIBKokMDElw5701dYk3uKRV2ujxHL_z2-KT3sYIcKJ4EhYhZJaEjPrQ_QTZfcBx65BFeIL4r41cQvVyT'      // ClientSecret
+            'AX5s9PVAnhgl6X24ygTorm4jRgsZeE19LkzUiNSCK8jPGGdkAVAG8EhT-Fetr8Thxk90FThHWCT2ejI5',     // ClientID
+            'EETRzMZQ2P9ynymG7C5zDbngjk4DD8tKSlPoaaufa_WkgVXdchuw6ySMC3nDtwlZWDiqqObEDeDtGndp'      // ClientSecret
+        )
+    );
+    $apiContext->setConfig(
+        array(
+            'mode' => 'live',
         )
     );
 
@@ -29,20 +44,23 @@ if (isset($_POST['cartid'])) {
     $payer = new \PayPal\Api\Payer();
     $payer->setPaymentMethod('paypal');
 
-    $payerinfo = new \PayPal\Api\PayerInfo();
-    $payerinfo->setEmail($mail);
-    $payerinfo->setFirstName($firstname);
-    $payerinfo->setLastName($lastname);
-    $payerinfo->setCountryCode('CA');
-    $payerinfo->setPhone($billing_info['telephone']);
+    // $payerinfo = new \PayPal\Api\PayerInfo();
+    // $payerinfo->setEmail($mail);
+    // $payerinfo->setFirstName($firstname);
+    // $payerinfo->setLastName($lastname);
+    // $payerinfo->setCountryCode('CA');
+    // $payerinfo->setPhone($billing_info['telephone']);
+
+    # 支付者ID
+    // $payerinfo->setPayerId($mail);
 
     #账单地址
-    $billing_address = new \PayPal\Api\Address();
-    $billing_address->setLine1($billing_info['street']);//street
-    $billing_address->setCity($billing_info['city']);
-    $billing_address->setCountryCode('CA');
-    $billing_address->setPostalCode($billing_info['postcode']);
-    $payerinfo->setBillingAddress($billing_address);
+    // $billing_address = new \PayPal\Api\Address();
+    // $billing_address->setLine1($billing_info['street']);//street
+    // $billing_address->setCity($billing_info['city']);
+    // $billing_address->setCountryCode('CA');
+    // $billing_address->setPostalCode($billing_info['postcode']);
+    // $payerinfo->setBillingAddress($billing_address);
 
     #收货地址
     $shipping_address = new \PayPal\Api\ShippingAddress();
@@ -53,7 +71,8 @@ if (isset($_POST['cartid'])) {
     $shipping_address->setState('CA');
     $shipping_address->setPhone($shipping_info['telephone']);
     $shipping_address->setPostalCode($shipping_info['postcode']);
-    $payerinfo->setShippingAddress($shipping_address);
+
+    // $payerinfo->setShippingAddress($shipping_address);
     // var_dump($shipping_address);
 
     #设置用户
@@ -73,7 +92,7 @@ if (isset($_POST['cartid'])) {
         $item->setQuantity($product["qty"]);
         $itemList->addItem($item);
     }
-    // $itemList->setShippingAddress($shipping_address);
+    $itemList->setShippingAddress($shipping_address);
 
 
     $detail = new \PayPal\Api\Details();
@@ -118,6 +137,6 @@ if (isset($_POST['cartid'])) {
     catch (\PayPal\Exception\PayPalConnectionException $ex) {
         // This will print the detailed information on the exception.
         //REALLY HELPFUL FOR DEBUGGING
-        echo $ex->getData();
+        echo $ex->getData() . 'code = ' . $ex->getCode();
     }
 }
