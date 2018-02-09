@@ -141,6 +141,12 @@ if (isset($_COOKIE['bdb-billing'])) {
 			return;
 		};
 
+		var reg=/^[1-9]\d*$|^0$/;
+		if(reg.test(shipping_phone)==false){
+			alert('请输入正确的手机号(手机号只能是数字)');
+			return;
+		}
+
 		var billing_lastname = $('#billing-lastname').val();
 		var billing_firstname = $('#billing-firstname').val();
 		var billing_phone = $('#billing-phone').val();

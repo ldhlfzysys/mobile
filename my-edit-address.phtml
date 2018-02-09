@@ -186,6 +186,12 @@ $userid = userid();
 				return;
 			};
 
+			var reg=/^[1-9]\d*$|^0$/;
+			if(reg.test(shipping_phone)==false){
+				alert('请输入正确的手机号(手机号只能是数字)');
+				return;
+			}
+		
 			$.ajax({  
 
 		        url:"http://m.bdbbuy.com/address.php",           
