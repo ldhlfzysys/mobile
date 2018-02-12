@@ -1,56 +1,44 @@
 <?php
+ini_set('display_errors',1); 
+require __DIR__  . '/PayPal-PHP-SDK/autoload.php';
+use PayPal\Api\Payment;
+use PayPal\Api\PaymentExecution;
 
-// $client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
-  
-// $session = $client->login('mobile', 'mobile');
+if(isset($_GET['paymentId']) && isset($_GET['token']) && isset($_GET['PayerID']) )
+{
+	$paymentId = $_GET['paymentId'];
+	$payerId = $_GET['PayerID'];
 
-  
+    $apiContext = new \PayPal\Rest\ApiContext(
+        new \PayPal\Auth\OAuthTokenCredential(
+            'AX5s9PVAnhgl6X24ygTorm4jRgsZeE19LkzUiNSCK8jPGGdkAVAG8EhT-Fetr8Thxk90FThHWCT2ejI5',     // ClientID
+            'EM4od7UoQY02yTTobXDmnZEHuJnvCbwFwPBHkT53MT_nJgJ80AvXrZY5t2JH-dSfeyG6NK7jyUB7SByD'      // ClientSecret
+        )
+    );
+    $apiContext->setConfig(
+        array(
+            'mode' => 'live',
+        )
+    );
 
-// $complexFilter = array(
-//             'status' => 1
-// );
+    $payment = Payment::get($paymentId, $apiContext);
+    $execution = new PaymentExecution();
+    $execution->setPayerId($payerId);
 
-// $args = array(
-// 	'filters' => $complexFilter,
-// 	'storeView' => '16'
-// );
+    $transaction = $payment->getTransactions();
 
-// $result = $client->call($session,'catalog_product.list',$args);
+    $execution->addTransaction($transaction);
 
+    // var_dump($execution);
+    try {
+         $result = $payment->execute($execution, $apiContext);
+    } catch (Exception $ex) {
+    	var_dump($ex);
+           // ResultPrinter::printError("Get Payment", "Payment", null, null, $ex);
+        exit(1);
+    }
+    var_dump($result);
 
-// echo json_encode($result);
-
-function descTime($orderList){
-	$sort = array(
-	    'direction' => 'SORT_DESC', //排序顺序标志 SORT_DESC 降序；SORT_ASC 升序
-	    'field'     => 'time',       //排序字段
-	 );
-	  $arrSort = array();
-	 foreach($orderList AS $uniqid => $row){
-	     foreach($row AS $key=>$value){
-	         $arrSort[$key][$uniqid] = $value;
-	     }
-	 }
-	 if($sort['direction']){
-	     array_multisort($arrSort[$sort['field']], constant($sort['direction']), $orderList);
-	 }
-
-	return $orderList;
 }
 
-$orderList = array(
-	array(
-		"time" =>"2018-02-02 21:18:42",
-	),
-	array(
-		"time" =>"2018-02-01 21:18:42",
-	),
-	array(
-		"time" =>"2018-02-03 21:18:42",
-	),
-);
-
-
-
- var_dump($orderList)
 ?>

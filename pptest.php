@@ -111,7 +111,8 @@ if (isset($_POST['cartid'])) {
     $transaction = new \PayPal\Api\Transaction();
     $transaction->setAmount($amount);
     $transaction->setItemList($itemList);
-    $transaction->setInvoiceNumber($cartid);
+    $time_cartid=time()."-".$cartid;
+    $transaction->setInvoiceNumber($time_cartid);
     $transaction->setReferenceId($cartid);
 
     #回调地址
