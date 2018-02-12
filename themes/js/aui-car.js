@@ -13,7 +13,10 @@ $(function(){
         dict.qty = qty;
         datas.push(dict);
         var str = JSON.stringify(datas);
-        deleteProduct(cartid,str);
+        var result = deleteProduct(cartid,str);
+        if (!result) {
+          t.text(parseInt(t.text()) + 1);
+        };
     }
 		TotalPrice();
 	});
@@ -39,11 +42,13 @@ $(function(){
 
                 error:function(XMLHttpRequest, textStatus, errorThrown){
                     // $('#loading').hideLoading();
-
+                    document.location.reload();
                 }
 
             });
+            return true;
     }
+    return false;
   }
 
 
@@ -116,7 +121,17 @@ $(function(){
         if ($(this).is(":checked")) { //如果该商品被选中
             var num = parseInt($(this).parents(".aui-car-box-list-item").find(".num").text()); //得到商品的数量
             var price = parseFloat($(this).parents(".aui-car-box-list-item").find(".price").text()); //得到商品的单价
-            var total = price * num; //计算单个商品的总价
+            var discount_num = parseInt($(this).parents(".aui-car-box-list-item").find(".aui-car-box-list-item-discount-count").text()); //得到打折商品数量
+            var discount_price = parseFloat($(this).parents(".aui-car-box-list-item").find(".aui-car-box-list-item-discount-price").text()); //得到打折商品价格
+            var origin_price = parseFloat($(this).parents(".aui-car-box-list-item").find(".aui-car-box-list-item-origin-price").text()); //得到打折商品价格
+            var total = 0; //计算单个商品的总价
+            if (num >= discount_num) {
+              $(this).parents(".aui-car-box-list-item").find(".price").text(discount_price);
+              total = discount_price * num;
+            }else{
+              $(this).parents(".aui-car-box-list-item").find(".price").text(origin_price);
+              total = origin_price * num;
+            };
           oprice += total; //计算该店铺的总价
         }
         $(this).closest(".aui-car-box").find(".ShopTotal").text(oprice.toFixed(2)); //显示被选中商品的店铺总价

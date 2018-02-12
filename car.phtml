@@ -16,6 +16,16 @@ foreach ($carItems as $item) {
 	if (count($jsonResult) > 0) {
 		$product = $jsonResult[0];
 	}
+	if (count($product['tier_price'])>0) {
+		$key = array_keys($product['tier_price'])[0];
+		$test = $product['tier_price'];
+		$special_price = $test[$key];
+		$product['discount_price'] = round($special_price['price'],2);
+		$product['discount_count'] = round($special_price['price_qty'],0);
+	}else{
+		$product['discount_price'] = round($product['price'],2);
+		$product['discount_count'] = 999;
+	}
 	$product['qty'] = $item['qty'];
 	array_push($products, $product);
 }
@@ -156,6 +166,9 @@ foreach ($carItems as $item) {
 					?>
 					<li>
 						<div class="aui-car-box-list-item">
+							<div class="aui-car-box-list-item-discount-price" style="display:none"><?php echo $item['discount_price'] ?></div>
+							<div class="aui-car-box-list-item-discount-count" style="display:none"><?php echo $item['discount_count']?></div>
+							<div class="aui-car-box-list-item-origin-price" style="display:none"><?php echo $item['price']?></div>
 							<input style="display:none" type="checkbox" class="check goods-check goodsCheck" checked="checked">
 							<div class="aui-car-box-list-img">
 								<a href="ui-product.phtml?productId=<?php echo $item['product_id']; ?>">
