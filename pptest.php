@@ -118,7 +118,7 @@ if (isset($_POST['cartid'])) {
     #回调地址
     $redirectUrls = new \PayPal\Api\RedirectUrls();
     $redirectUrls->setReturnUrl("http://m.bdbbuy.com/ppcallback.php")
-        ->setCancelUrl("http://m.bdbbuy.com/ppcallback.php");
+        ->setCancelUrl("http://m.bdbbuy.com/payCancel.php");
 
     #支付对象
     $payment = new \PayPal\Api\Payment();
