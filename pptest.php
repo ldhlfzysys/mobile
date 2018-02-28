@@ -117,8 +117,8 @@ if (isset($_POST['cartid'])) {
 
     #回调地址
     $redirectUrls = new \PayPal\Api\RedirectUrls();
-    $redirectUrls->setReturnUrl("http://m.bdbbuy.com/ppcallback.php")
-        ->setCancelUrl("http://m.bdbbuy.com/payCancel.php");
+    $redirectUrls->setReturnUrl("https://m.bdbbuy.com/ppcallback.php")
+        ->setCancelUrl("https://m.bdbbuy.com/payCancel.php");
 
     #支付对象
     $payment = new \PayPal\Api\Payment();
@@ -138,7 +138,7 @@ if (isset($_POST['cartid'])) {
     catch (\PayPal\Exception\PayPalConnectionException $ex) {
         // This will print the detailed information on the exception.
         //REALLY HELPFUL FOR DEBUGGING
-        $payErrorUrl = "http://m.bdbbuy.com/payError.phtml?msg=";
+        $payErrorUrl = "https://m.bdbbuy.com/payError.phtml?msg=";
         echo $payErrorUrl . $ex->getData() . ' code = ' . $ex->getCode();
     }
 }

@@ -11,7 +11,7 @@ $carItems = $carinfo['items'];
 $products = array();
 foreach ($carItems as $item) {
 	$product_id = $item['product_id'];
-	$url='http://m.bdbbuy.com/productInfo.php?ids='.$product_id;
+	$url='https://m.bdbbuy.com/productInfo.php?ids='.$product_id;
 	$jsonResult = json_decode(file_get_contents($url),true);
 	if (count($jsonResult) > 0) {
 		$product = $jsonResult[0];
@@ -73,14 +73,14 @@ foreach ($carItems as $item) {
 
         $.ajax({  
 
-            url:"http://m.bdbbuy.com/cart.php?cartid="+cartid+"&updateCart="+str,           
+            url:"https://m.bdbbuy.com/cart.php?cartid="+cartid+"&updateCart="+str,           
 
             type: "GET",         
 
             success:function(result){  
 
             	if (result == "true") {
-            		window.location.href='http://m.bdbbuy.com/order-sure.phtml';
+            		window.location.href='https://m.bdbbuy.com/order-sure.phtml';
             	}else{
             		alert('网络错误，请重试');
             	};

@@ -50,19 +50,19 @@ if(isset($_GET['paymentId']) && isset($_GET['token']) && isset($_GET['PayerID'])
 
                     if (strpos($result,"160") === 0) {
                         setcookie("bdb-ci", '');
-                        echo '<script>url="http://m.bdbbuy.com/payResult.phtml?oid='.$result.'";window.location.href=url;</script> ';
+                        echo '<script>url="https://m.bdbbuy.com/payResult.phtml?oid='.$result.'";window.location.href=url;</script> ';
                     }
                 }
             }   
         } catch (Exception $ex) {
             // var_dump($ex);
-            $payErrorUrl = "http://m.bdbbuy.com/payError.phtml?msg=";
+            $payErrorUrl = "https://m.bdbbuy.com/payError.phtml?msg=";
             // $url = $payErrorUrl . $ex->getData() . ' code = ' . $ex->getCode();
             echo '<script>url="'.$payErrorUrl.'";window.location.href=url;</script> ';
         }
     } catch (Exception $ex) {
         // var_dump($ex);
-        $payErrorUrl = "http://m.bdbbuy.com/payError.phtml?msg=";
+        $payErrorUrl = "https://m.bdbbuy.com/payError.phtml?msg=";
         // $url = $payErrorUrl . $ex->getData() . ' code = ' . $ex->getCode();
         echo '<script>url="'.$payErrorUrl   .'";window.location.href=url;</script> ';
     }

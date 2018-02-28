@@ -41,7 +41,7 @@ function regist(){
     }
     $.showLoading("正在注册...");
 	$.ajax({  
-        url:"http://m.bdbbuy.com/regist.php",           
+        url:"https://m.bdbbuy.com/regist.php",           
         type: "POST",
         data:{"firstName":firstName,"lastName":lastName,"email":email,"password":password1},         
         success:function(result){  
@@ -52,7 +52,7 @@ function regist(){
                 var nickname = firstName+' '+lastName;
                 document.cookie="bdb-ui="+result;
                 document.cookie="bdb-nn="+nickname;
-                window.location.href='http://m.bdbbuy.com/ui-me.phtml';
+                window.location.href='https://m.bdbbuy.com/ui-me.phtml';
             }else{
                 // alert(res.msg);
                 $.toast(res.msg,"text");

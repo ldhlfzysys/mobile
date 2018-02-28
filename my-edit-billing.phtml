@@ -41,7 +41,7 @@ function save(){
 	var billing_street = $('#billing-street').val();
 	$.ajax({  
 
-        url:"http://m.bdbbuy.com/address.php",           
+        url:"https://m.bdbbuy.com/address.php",           
 
         type: "POST",
 
@@ -51,7 +51,7 @@ function save(){
 
         	var res = eval("(" + result + ")");
             if (res['status'] == 'OK') {
-            	window.location.href='http://m.bdbbuy.com/ui-me.phtml';
+            	window.location.href='https://m.bdbbuy.com/ui-me.phtml';
             	document.cookie="bdb-ui="+res['userData']['customer_id'];
             }else
             {

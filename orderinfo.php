@@ -28,7 +28,7 @@ if (isset($_GET['orderid'])) {
 }else
 {
 	// echo '<script type="text/javascript">';
-	// echo 'window.location.href="http://m.bdbbuy.com/login.html";';
+	// echo 'window.location.href="https://m.bdbbuy.com/login.html";';
 	// echo '</script>';
 }
 

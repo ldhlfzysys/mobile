@@ -108,7 +108,7 @@ if ($userId != null) {
 					
 					$.ajax({  
 
-				        url:"http://m.bdbbuy.com/address.php",           
+				        url:"https://m.bdbbuy.com/address.php",           
 
 				        type: "POST",
 
@@ -116,7 +116,7 @@ if ($userId != null) {
 
 				        success:function(result){  
 				        	if (result == "") {
-				        		window.location.href="http://m.bdbbuy.com/my-addres.phtml?type=<?php echo $type; ?>";
+				        		window.location.href="https://m.bdbbuy.com/my-addres.phtml?type=<?php echo $type; ?>";
 				        	}else{
 				        		alert("删除失败");
 				        	}
@@ -133,7 +133,7 @@ if ($userId != null) {
 		function selectAddress(address_id){
 			$.ajax({  
 
-		        url:"http://m.bdbbuy.com/address.php",           
+		        url:"https://m.bdbbuy.com/address.php",           
 
 		        type: "POST",
 
@@ -141,7 +141,7 @@ if ($userId != null) {
 
 		        success:function(result){  
 		        	if (result == "") {
-		        		window.location.href="http://m.bdbbuy.com/order-sure.phtml";
+		        		window.location.href="https://m.bdbbuy.com/order-sure.phtml";
 		        	}else{
 		        		alert("选择失败，请重试");
 		        	}
