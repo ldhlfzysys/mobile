@@ -6,6 +6,7 @@ $(function(){
     var productid = $(this).parent().find('.min_prodcut_id').text();
     var cartid = $(this).parent().find('.cart_id').text();
 		t.text(parseInt(t.text()) - 1);
+    updatecart2(cartid);
 		if (t.text() <= 0) {
         var datas = [];
         var dict = {};
@@ -18,7 +19,7 @@ $(function(){
           t.text(parseInt(t.text()) + 1);
         };
     }
-		TotalPrice();
+		// TotalPrice();
 	});
 
   function deleteProduct(cartid,json_str)
@@ -51,6 +52,54 @@ $(function(){
     return false;
   }
 
+ function updatecart2(cartid) { 
+
+    var datas = [];
+      $(".aui-car-box").each(function() { //循环每个店铺
+        $(this).find(".goodsCheck").each(function() { //循环店铺里面的商品
+            var num = parseInt($(this).parents(".aui-car-box-list-item").find(".num").text()); //得到商品的数量
+            var productid = parseFloat($(this).parents(".aui-car-box-list-item").find(".prodcut_id").text()); 
+            var dict = {};
+            dict.product_id = productid;
+            dict.qty = num;
+            datas.push(dict);
+        });
+      });
+      if (datas.length == 0) {
+        alert('购物车空空，去添加商品吧~');
+        return;
+      };
+      var str = JSON.stringify(datas);
+
+        $.ajax({  
+
+            url:"https://m.bdbbuy.com/cart.php?cartid="+cartid+"&updateCart="+str,           
+
+            type: "GET",         
+
+            success:function(result){  
+
+              if (result == "true") {
+                document.location.reload(); 
+              }else{
+                alert('网络错误，请重试');
+              };
+              
+                // $('#loading').hideLoading();
+                // document.location.reload(); 
+
+            },
+
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+                // $('#loading').hideLoading();
+                alert('网络错误，请重试');
+
+            }
+
+        });
+
+    }
+
 
 	// 数量加
 	$(".plus").click(function() {
@@ -59,7 +108,9 @@ $(function(){
 		if (t.text() <= 1) {
 			t.text(1);
 		}
-		TotalPrice();
+    var cartid = $(this).parent().find('.cart_id').text();
+    updatecart2(cartid);
+		// TotalPrice();
 	});
 	/******------------分割线-----------------******/
 	  // 点击商品按钮
