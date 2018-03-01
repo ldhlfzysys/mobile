@@ -40,7 +40,7 @@ $cartId = cartid();
 	<link rel="stylesheet" href="themes/css/loading.css">
 	<script src="themes/js/jquery.min.js"></script>
 	<script src="themes/js/loading.js"></script>
-	<script src="themes/js/sweetalert.js"></script>
+	<script src="themes/js/sweetalert2.js"></script>
 	<link rel="icon" type="image/x-icon" href="favicon.ico">
 	<link href="iTunesArtwork@2x.png" sizes="114x114" rel="apple-touch-icon-precomposed">
 	<style>
@@ -156,12 +156,10 @@ $cartId = cartid();
         // $('#loading').showLoading();
 
 		swal({
-		  title: "",
-		  text: "加入成功",
-		  icon: "success",
-		  button: false,
-		  timer: 1300,
-		});
+			  title: "",
+			  text: "正在添加",
+			  onOpen:()=>{swal.showLoading()}
+			});
 
         $.ajax({  
 
@@ -171,24 +169,22 @@ $cartId = cartid();
 
             success:function(result){  
             	if (result != "true") {
-            		swal({
-					  title: "",
-					  text: "加入失败",
-					  icon: "error",
-					  button: false,
-					  timer: 1300,
-					});
+					swal({
+					  // position: 'top-end',
+					  type: 'error',
+					  title: '加入失败',
+					  showConfirmButton: false,
+					  timer: 1500
+					})
+            	}else{
+					swal({
+					  // position: 'top-end',
+					  type: 'success',
+					  title: '加入成功',
+					  showConfirmButton: false,
+					  timer: 1500
+					})
             	};
-                // $('#loading').hideLoading();
-                // alert(result);
-				// swal({
-				//   title: "",
-				//   text: "加入成功",
-				//   icon: "success",
-				//   button: false,
-				//   timer: 1300,
-				// });
-                // document.location.reload(); 
 
             },
 
