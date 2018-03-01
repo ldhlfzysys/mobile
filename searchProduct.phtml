@@ -127,6 +127,14 @@ $products = json_decode(file_get_contents($url),true);
 
         // $('#loading').showLoading();
 
+		swal({
+		  title: "",
+		  text: "加入成功",
+		  icon: "success",
+		  button: false,
+		  timer: 1300,
+		});
+
         $.ajax({  
 
             url:"https://m.bdbbuy.com/cart.php?addToCart="+cartId+"&productId="+productId,           
@@ -134,22 +142,36 @@ $products = json_decode(file_get_contents($url),true);
             type: "GET",         
 
             success:function(result){  
-
+            	if (result != "true") {
+            		swal({
+					  title: "",
+					  text: "加入失败",
+					  icon: "error",
+					  button: false,
+					  timer: 1300,
+					});
+            	};
                 // $('#loading').hideLoading();
                 // alert(result);
-				swal({
-				  title: "",
-				  text: "加入成功",
-				  icon: "success",
-				  button: false,
-				  timer: 1300,
-				});
+				// swal({
+				//   title: "",
+				//   text: "加入成功",
+				//   icon: "success",
+				//   button: false,
+				//   timer: 1300,
+				// });
                 // document.location.reload(); 
 
             },
 
             error:function(XMLHttpRequest, textStatus, errorThrown){
-
+            		swal({
+					  title: "",
+					  text: "加入失败",
+					  icon: "error",
+					  button: false,
+					  timer: 1300,
+					});
                 // $('#loading').hideLoading();
 
             }
