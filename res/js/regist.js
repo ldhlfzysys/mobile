@@ -50,7 +50,7 @@ function regist(){
             // console.log(res)
             if(res.status == 0){
                 var nickname = firstName+' '+lastName;
-                document.cookie="bdb-ui="+result;
+                document.cookie="bdb-ui="+res.data;
                 document.cookie="bdb-nn="+nickname;
                 window.location.href='https://m.bdbbuy.com/ui-me.phtml';
             }else{
