@@ -31,7 +31,7 @@ function getOrderList($userid){
 	if ($redis_result) {
 		$result = $redis_result;
 	}else{
-		$client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
+		$client = new SoapClient('https://bdbbuy.com/index.php/api/soap/?wsdl');  
 		$session = $client->login('mobile', 'mobile');
 		$result = $client->call($session, 'order.list');
 	}

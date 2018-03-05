@@ -44,7 +44,7 @@ if(isset($_GET['paymentId']) && isset($_GET['token']) && isset($_GET['PayerID'])
                 $time_cartid = $paymentObject['transactions'][0]['invoice_number'];
                 $cartid = spliti('-', $time_cartid)[1];
                 if ($cartid != null) {
-                    $client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');    
+                    $client = new SoapClient('https://bdbbuy.com/index.php/api/soap/?wsdl');    
                     $session = $client->login('mobile', 'mobile');
                     $result = $client->call($session,'cart.order',array($cartid));
 

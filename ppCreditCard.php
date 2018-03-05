@@ -11,7 +11,7 @@ if (isset($_POST['cartid'])) {
 
     #取购物车内容
     $cartid = $_POST['cartid'];
-    $client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
+    $client = new SoapClient('https://bdbbuy.com/index.php/api/soap/?wsdl');  
     $session = $client->login('mobile', 'mobile');
     $args = array(
         'store' => '16'

@@ -1,5 +1,5 @@
 <?php
-$api_url_v1 = "http://bdbbuy.com/index.php/api/soap/?wsdl";
+$api_url_v1 = "https://bdbbuy.com/index.php/api/soap/?wsdl";
 $username = 'mobile';
 $password = 'mobile';
 

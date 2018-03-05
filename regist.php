@@ -4,7 +4,7 @@ require_once("appRes.php");
 function regist($firstname,$lastname,$email,$password){
 	$appRes = new appRes();
 
-	$client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
+	$client = new SoapClient('https://bdbbuy.com/index.php/api/soap/?wsdl');  
 	$session = $client->login('mobile', 'mobile');
  	$params = array(array('email' =>$email, 'firstname' => $firstname, 'lastname' => $lastname, 'password' => $password, 
  		'website_id' => 1, 'store_id' => 16, 'group_id' => 1));

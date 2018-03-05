@@ -2,7 +2,7 @@
 ini_set('display_errors',1);
 #传入商品id和数量，数量为整形，商品id为字符串
 function addToCart($cartid,$product_id,$qty){
-	$client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
+	$client = new SoapClient('https://bdbbuy.com/index.php/api/soap/?wsdl');  
 	$session = $client->login('mobile', 'mobile');
 	$arrProducts = array(
 		array(
@@ -15,21 +15,21 @@ function addToCart($cartid,$product_id,$qty){
 }
 
 function updateCart($products,$cartid){
-	$client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
+	$client = new SoapClient('https://bdbbuy.com/index.php/api/soap/?wsdl');  
 	$session = $client->login('mobile', 'mobile');
  	$result = $client->call($session, 'cart_product.update', array($cartid,$products,'16'));
  	echo json_encode($result);
 }
 
 function removeCart($products,$cartid){
-	$client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
+	$client = new SoapClient('https://bdbbuy.com/index.php/api/soap/?wsdl');  
 	$session = $client->login('mobile', 'mobile');
  	$result = $client->call($session, 'cart_product.remove', array($cartid,$products,'16'));
  	echo json_encode($result);
 }
 
 function cart($cartid){
-	$client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
+	$client = new SoapClient('https://bdbbuy.com/index.php/api/soap/?wsdl');  
 	$session = $client->login('mobile', 'mobile');
 	$args = array(
 	    'store' => '16'

@@ -13,7 +13,7 @@ function getOrderInfo($orderid){
 		$result = $redis_result;
 	}else
 	{
-		$client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
+		$client = new SoapClient('https://bdbbuy.com/index.php/api/soap/?wsdl');  
 		$session = $client->login('mobile', 'mobile');
 		$result = $client->call($session, 'sales_order.info',$orderid);
 	}

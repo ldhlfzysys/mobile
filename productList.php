@@ -9,7 +9,7 @@ $redis_result = $redis->get($redis_key);
 if ($redis_result) {
 	echo $redis_result;
 }else{
-	$client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
+	$client = new SoapClient('https://bdbbuy.com/index.php/api/soap/?wsdl');  
 	$session = $client->login('mobile', 'mobile');
 	$complexFilter = array(
             'status' => 1

@@ -5,7 +5,7 @@ $arr = mb_str_split($searchword);
 $arr_str = join("%",$arr);
 $regx = "%".$arr_str."%";
 
-$client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
+$client = new SoapClient('https://bdbbuy.com/index.php/api/soap/?wsdl');  
   
 $session = $client->login('mobile', 'mobile');
 

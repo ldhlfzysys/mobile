@@ -2,7 +2,7 @@
 
 function set_cart_user($cartid,$userinfo,$mode)
 {
-	$client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
+	$client = new SoapClient('https://bdbbuy.com/index.php/api/soap/?wsdl');  
 	$session = $client->login('mobile', 'mobile');
 	$customerAsGuest = array(
 		"firstname" => $userinfo['firstname'],
@@ -20,7 +20,7 @@ function set_cart_user($cartid,$userinfo,$mode)
 }
 
 function set_shipping($cartid){
-	$client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
+	$client = new SoapClient('https://bdbbuy.com/index.php/api/soap/?wsdl');  
 	$session = $client->login('mobile', 'mobile');
 	$shipping_list = $client->call($session,'cart_shipping.list',$cartid);
 	$cheap = null;
@@ -40,7 +40,7 @@ function set_shipping($cartid){
 
 function set_payment($cartid)
 {
-	$client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
+	$client = new SoapClient('https://bdbbuy.com/index.php/api/soap/?wsdl');  
 	$session = $client->login('mobile', 'mobile');
 	$paymentMethod = array(
 		"method" => "cashondelivery"
@@ -57,7 +57,7 @@ function set_payment($cartid)
 #用于没有地址的用户
 function set_cart_address($cartid,$billingAddress,$shippingAddress)
 {
-	$client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
+	$client = new SoapClient('https://bdbbuy.com/index.php/api/soap/?wsdl');  
 	$session = $client->login('mobile', 'mobile');
 	$arrAddresses = array(
 		array(

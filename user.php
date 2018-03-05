@@ -14,7 +14,7 @@ function cartid(){
 	if (isset($_COOKIE['bdb-ci'])) {
 		return $_COOKIE['bdb-ci'];
 	}else{
-		$client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
+		$client = new SoapClient('https://bdbbuy.com/index.php/api/soap/?wsdl');  
 		$session = $client->login('mobile', 'mobile');
 		$result = $client->call( $session, 'cart.create', '16');
 		$cartid = $result;
@@ -32,7 +32,7 @@ function userinfo(){
 	else
 	{
 		$userid = userid();
-		$client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
+		$client = new SoapClient('https://bdbbuy.com/index.php/api/soap/?wsdl');  
 		$session = $client->login('mobile', 'mobile');
 		// $result = $client->call($session, 'customer.list');
 		$result = $client->call($session, 'customer.info', $userid);

@@ -2,7 +2,7 @@
 ini_set('display_errors',1); 
 ini_set('display_startup_errors',1);
 function customer_address($userid){
-	$client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
+	$client = new SoapClient('https://bdbbuy.com/index.php/api/soap/?wsdl');  
 	$session = $client->login('mobile', 'mobile');
 	// $result = $client->call($session, 'customer.list');
 	$result = $client->call($session, 'customer_address.list', $userid);
@@ -11,7 +11,7 @@ function customer_address($userid){
 
 function customer_address_delete($addressid)
 {
-	$client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
+	$client = new SoapClient('https://bdbbuy.com/index.php/api/soap/?wsdl');  
 	$session = $client->login('mobile', 'mobile');
 	// $result = $client->call($session, 'customer.list');
 	$result = $client->call($session, 'customer_address.delete', $addressid);
@@ -20,7 +20,7 @@ function customer_address_delete($addressid)
 
 function customer_address_update($type,$addressid)
 {
-	$client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
+	$client = new SoapClient('https://bdbbuy.com/index.php/api/soap/?wsdl');  
 	$session = $client->login('mobile', 'mobile');
 	if ($type == 0) {//设置收货地址
 		$data = array('addressId' => $addressid, 'addressdata' => array('is_default_shipping' => true));
@@ -49,7 +49,7 @@ function customer_address_create($userid,$firstname,$lastname,$tele,$postcode,$a
 			'is_default_shipping' => $isDefaultShipping
 			)
 	);
-	$client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
+	$client = new SoapClient('https://bdbbuy.com/index.php/api/soap/?wsdl');  
 	$session = $client->login('mobile', 'mobile');
 	// $result = $client->call($session, 'customer.list');
 	$result = $client->call($session, 'customer_address.create', $address_data);

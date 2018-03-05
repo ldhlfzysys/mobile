@@ -1,7 +1,7 @@
 <?php
 
 function login($userid,$password){
-	$client = new SoapClient('http://bdbbuy.com/index.php/api/soap/?wsdl');  
+	$client = new SoapClient('https://bdbbuy.com/index.php/api/soap/?wsdl');  
 	$session = $client->login('mobile', 'mobile');
  	$params = array('email'=>$userid, 'password'=>$password);
  	
