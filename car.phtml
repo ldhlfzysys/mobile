@@ -5,7 +5,30 @@ ini_set('display_errors',1);
 include_once('./user.php');
 include_once('./cart.php');
 include_once('./imagePathFix.php');
-$cartid = cartid();
+
+// 许雷测试
+include_once('./test.php');
+$userid = userid();
+$cartid = null;
+if ($userid == null) {
+	// 用户未登录，使用本地原来购物车
+	$cartid = cartid();
+}else{
+	// 用户已登录，获取PC端购物车并检查是否可用
+	$cartid = getCartIdByUser($userid);
+	// PC购物车信息
+	$cartInfo = cart($cartid);
+	if($cartInfo['payment'] != null && $cartInfo['payment']['payment_id'] != null){
+		// PC端购车不可用，使用本地购物车
+		$cartid = cartid();
+	}
+}
+
+// 许雷测试
+
+// $cartid = cartid();
+
+
 $carinfo = cart($cartid);
 $carItems = $carinfo['items'];
 $products = array();

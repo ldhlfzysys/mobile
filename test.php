@@ -1,21 +1,37 @@
 <?php
+    include_once('./cart.php');
+    function getCartIdByUser($userId){
+        $client = new SoapClient('https://bdbbuy.com/index.php/api/soap/?wsdl');  
+        $session = $client->login('mobile', 'mobile');
 
-    $client = new SoapClient('https://bdbbuy.com/index.php/api/soap/?wsdl');  
-    $session = $client->login('mobile', 'mobile');
+        $params = array('customerid'=>$userId);
 
-    $params = array('customerid'=>'4');
+        $args = array('store' => '16');
 
-    $args = array('store' => '16');
+        try {
 
-    try {
-
-        //过的购物车id
-        $result = $client->call($session, 'cart.quotebyuserid', $params);
-        // $result = $client->call($session, 'cart.info','268', $args);
+            //过的购物车id
+            $result = $client->call($session, 'cart.quotebyuserid', $params);
+            return $result;
+            // $result = $client->call($session, 'cart.info','268', $args);
+        }
+        catch (Exception $e) { //while an error has occured
+            echo "==> Error: ".$e->getMessage();
+        }
+        // var_dump($result);
     }
-    catch (Exception $e) { //while an error has occured
-        echo "==> Error: ".$e->getMessage();
-    }
-    var_dump($result);
 
+    if (isset($_GET['userId'])) {
+        $userId = $_GET['userId'];
+        $cartId = getCartIdByUser($userId);
+
+        $result = cart($cartId);
+        if ($result['payment']['payment_id'] == null) {
+            # code...
+            echo 'payment_id == null';
+        }
+        
+        // echo json_encode($payment);
+        echo json_encode($result);
+    }
 ?>

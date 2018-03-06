@@ -10,9 +10,10 @@ function userid(){
 	return null;
 }
 
+// 获取购物车ID
 function cartid(){
 	if (isset($_COOKIE['bdb-ci'])) {
-		return $_COOKIE['bdb-ci'];
+		return $_COOKIE['bdb-ci'];// 购物车ID
 	}else{
 		$client = new SoapClient('https://bdbbuy.com/index.php/api/soap/?wsdl');  
 		$session = $client->login('mobile', 'mobile');
@@ -60,5 +61,6 @@ function username(){
 		return $userinfo['lastname'].$userinfo['middlename'].$userinfo['firstname'];
 	}
 }
+
 
 ?>

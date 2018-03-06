@@ -38,6 +38,7 @@ function cart($cartid){
 	return $result;
 }
 
+
 if (isset($_GET['addToCart']) && isset($_GET['productId'])) {
 	$cartId = $_GET['addToCart'];
 	$productId = $_GET['productId'];
