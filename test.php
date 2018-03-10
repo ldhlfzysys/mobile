@@ -3,11 +3,8 @@
     function getCartIdByUser($userId){
         $client = new SoapClient('https://bdbbuy.com/index.php/api/soap/?wsdl');  
         $session = $client->login('mobile', 'mobile');
-
         $params = array('customerid'=>$userId);
-
         $args = array('store' => '16');
-
         try {
 
             //过的购物车id
@@ -28,10 +25,13 @@
         $result = cart($cartId);
         if ($result['payment']['payment_id'] == null) {
             # code...
-            echo 'payment_id == null';
+            // echo 'payment_id == null';
         }
         
         // echo json_encode($payment);
-        echo json_encode($result);
+        // echo json_encode($result);
+        foreach ($result['items'] as $key => $value) {
+            echo json_encode($value) . '<br>';
+        }
     }
 ?>

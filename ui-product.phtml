@@ -153,7 +153,6 @@ $cartId = cartid();
 
  function addToCart(cartId,productId) { 
         // $('#loading').showLoading();
-
 		swal({
 			  title: "",
 			  text: "正在添加",
@@ -161,11 +160,8 @@ $cartId = cartid();
 			});
 
         $.ajax({  
-
             url:"https://m.bdbbuy.com/cart.php?addToCart="+cartId+"&productId="+productId,           
-
             type: "GET",         
-
             success:function(result){  
             	if (result != "true") {
 					swal({
@@ -186,7 +182,6 @@ $cartId = cartid();
             	};
 
             },
-
             error:function(XMLHttpRequest, textStatus, errorThrown){
             		swal({
 					  title: "",
@@ -196,20 +191,14 @@ $cartId = cartid();
 					  timer: 1300,
 					});
                 // $('#loading').hideLoading();
-
             }
-
         });
-
     }
 
 function buyNow(cartId,productId) {
         $.ajax({  
-
             url:"https://m.bdbbuy.com/cart.php?addToCart="+cartId+"&productId="+productId,           
-
             type: "GET",         
-
             success:function(result){  
 
                 // $('#loading').hideLoading();
@@ -218,12 +207,9 @@ function buyNow(cartId,productId) {
                 window.location.href='https://m.bdbbuy.com/order-sure.phtml';
 
             },
-
             error:function(XMLHttpRequest, textStatus, errorThrown){
                 // $('#loading').hideLoading();
-
             }
-
         });
 }
 

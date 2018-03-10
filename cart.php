@@ -46,6 +46,7 @@ if (isset($_GET['addToCart']) && isset($_GET['productId'])) {
 	echo $result;
 }
 
+// 更新购物车
 if (isset($_GET['updateCart']) && isset($_GET['cartid'])) {
 	$str = $_GET['updateCart'];
 	$array = json_decode($str,true);

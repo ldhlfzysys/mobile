@@ -122,8 +122,21 @@ if ($payment_complete == null) {
 $shipping_complete = set_shipping($cartid);
 
 #购物车信息
-
 $carinfo = cart($cartid);
+
+// 检查购物车是否还可用 许雷
+if($carinfo['payment'] != null && $carinfo['payment']['payment_id'] != null){
+	// PC端购车不可用，创建新购物车，使用新购物车内容进行结算
+	$newCartid = getLocalCart();// 创建新购物车
+	// 将原购物车商品和数量添加到新购物车
+	foreach ($carinfo['items'] as $key => $value) {
+		addToCart($newCartid,$value['product_id'],$value['qty']);
+	}
+	// 获取购物车内容
+	$carinfo = cart($newCartid);
+}
+// 检查购物车是否还可用 许雷
+
 $carItems = $carinfo['items'];
 $products = array();
 foreach ($carItems as $item) {

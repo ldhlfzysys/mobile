@@ -7,26 +7,25 @@ include_once('./cart.php');
 include_once('./imagePathFix.php');
 
 // 许雷测试
-include_once('./test.php');
-$userid = userid();
-$cartid = null;
-if ($userid == null) {
-	// 用户未登录，使用本地原来购物车
-	$cartid = cartid();
-}else{
-	// 用户已登录，获取PC端购物车并检查是否可用
-	$cartid = getCartIdByUser($userid);
-	// PC购物车信息
-	$cartInfo = cart($cartid);
-	if($cartInfo['payment'] != null && $cartInfo['payment']['payment_id'] != null){
-		// PC端购车不可用，使用本地购物车
-		$cartid = cartid();
-	}
-}
-
+// include_once('./test.php');
+// $userid = userid();
+// $cartid = null;
+// if ($userid == null) {
+// 	// 用户未登录，使用本地原来购物车
+// 	$cartid = cartid();
+// }else{
+// 	// 用户已登录，获取PC端购物车并检查是否可用
+// 	$cartid = getCartIdByUser($userid);
+// 	// PC购物车信息
+// 	$cartInfo = cart($cartid);
+// 	if($cartInfo['payment'] != null && $cartInfo['payment']['payment_id'] != null){
+// 		// PC端购车不可用，使用本地购物车
+// 		$cartid = cartid();
+// 	}
+// }
 // 许雷测试
 
-// $cartid = cartid();
+$cartid = cartid();
 
 
 $carinfo = cart($cartid);
@@ -93,34 +92,23 @@ foreach ($carItems as $item) {
 	    	return;
 	    };
 	    var str = JSON.stringify(datas);
-
         $.ajax({  
-
             url:"https://m.bdbbuy.com/cart.php?cartid="+cartid+"&updateCart="+str,           
-
             type: "GET",         
-
             success:function(result){  
-
             	if (result == "true") {
             		window.location.href='https://m.bdbbuy.com/order-sure.phtml';
             	}else{
             		alert('网络错误，请重试');
             	};
-            	
                 // $('#loading').hideLoading();
                 // document.location.reload(); 
-
             },
-
             error:function(XMLHttpRequest, textStatus, errorThrown){
                 // $('#loading').hideLoading();
                 alert('网络错误，请重试');
-
             }
-
         });
-
     }
 
 </script>
