@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <?php 
+ini_set('display_errors',1);
 include_once('./imagePathFix.php');
 $productId = $_GET["productId"];
 $url='https://m.bdbbuy.com/productInfo.php?ids='.$productId;
@@ -258,14 +259,15 @@ function buyNow(cartId,productId) {
 	</div>
 	<div class="aui-product-content">
 		<div class="aui-real-price clearfix">
-			<span>
-				<i>CA$</i><?php echo $price; ?>
-			</span>
+			
 			<?php 
-				if (!is_null($product['special_price']) {
+				if (!is_null($product['special_price'])) {
+					echo '<span><i>CA$</i>'.number_format($product['special_price'],2).'</span>';
 					echo '<del><span class="aui-font-num">';
-					echo 'CA$'.number_format($product['special_price'],2);
+					echo 'CA$'.$price;
 					echo '</span></del>';
+				}else{
+					echo '<span><i>CA$</i>'.$price.'</span>';
 				}
 			?>
 			<!--  -->
