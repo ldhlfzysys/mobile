@@ -45,7 +45,12 @@ foreach ($carItems as $item) {
 		$product['discount_price'] = round($special_price['price'],2);
 		$product['discount_count'] = round($special_price['price_qty'],0);
 	}else{
-		$product['discount_price'] = round($product['price'],2);
+		if (!is_null($product['special_price'])) {
+			$product['discount_price'] = round($product['special_price'],2);	
+		}else{
+			$product['discount_price'] = round($product['price'],2);	
+		}
+		
 		$product['discount_count'] = 999;
 	}
 	$product['qty'] = $item['qty'];

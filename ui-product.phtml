@@ -261,7 +261,14 @@ function buyNow(cartId,productId) {
 			<span>
 				<i>CA$</i><?php echo $price; ?>
 			</span>
-			<!-- <del><span class="aui-font-num">￥699</span></del> -->
+			<?php 
+				if (!is_null($product['special_price']) {
+					echo '<del><span class="aui-font-num">';
+					echo 'CA$'.number_format($product['special_price'],2);
+					echo '</span></del>';
+				}
+			?>
+			<!--  -->
 			<!-- <div class="aui-settle-choice">
 				<span>促销价</span>
 			</div> -->
