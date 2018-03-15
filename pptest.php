@@ -1,5 +1,6 @@
 <?php
 ini_set('display_errors',1); 
+include_once('./cart.php');
 if (isset($_POST['cartid'])) {
     require __DIR__  . '/PayPal-PHP-SDK/autoload.php';
 
@@ -117,8 +118,8 @@ if (isset($_POST['cartid'])) {
 
     #回调地址
     $redirectUrls = new \PayPal\Api\RedirectUrls();
-    $redirectUrls->setReturnUrl("https://m.bdbbuy.com/ppcallback.php")
-        ->setCancelUrl("https://m.bdbbuy.com/payCancel.php");
+    $redirectUrls->setReturnUrl($baseHost . "ppcallback.php")
+        ->setCancelUrl($baseHost . "payCancel.php");
 
     #支付对象
     $payment = new \PayPal\Api\Payment();
@@ -138,7 +139,7 @@ if (isset($_POST['cartid'])) {
     catch (\PayPal\Exception\PayPalConnectionException $ex) {
         // This will print the detailed information on the exception.
         //REALLY HELPFUL FOR DEBUGGING
-        $payErrorUrl = "https://m.bdbbuy.com/payError.phtml?msg=";
+        $payErrorUrl = $baseHost . "payError.phtml?msg=";
         echo $payErrorUrl . $ex->getData() . ' code = ' . $ex->getCode();
     }
 }

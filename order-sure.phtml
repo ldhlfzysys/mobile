@@ -17,6 +17,8 @@
 </head>
 <?php
 ini_set('display_errors',1); 
+
+include('./config.php');
 include('./user.php');
 include_once('./cart.php');
 include_once('./imagePathFix.php');
@@ -51,7 +53,7 @@ if ($isLogin) {
 	}
 	$userinfo['phone'] = $shippingAddress['telephone'];
 	if ($shippingAddress == null || $billingAddress == null) {
-		echo '<script>url="https://m.bdbbuy.com/my-edit-address.phtml?type=2";window.location.href=url;</script> ';
+		echo '<script>url="' . $baseHost .'my-edit-address.phtml?type=2";window.location.href=url;</script> ';
 	}
 }else{
 	#未登录&&没有缓存的配送信息
@@ -65,7 +67,7 @@ if ($isLogin) {
 		$billing = json_decode($_COOKIE['bdb-billing'],true);
 	}
 	if ($shipping == null || $billing == null) {
-		echo '<script>url="https://m.bdbbuy.com/order.phtml";window.location.href=url;</script> ';
+		echo '<script>url="' . $baseHost .'order.phtml";window.location.href=url;</script> ';
 	}else{
 		$userinfo = array(
 				'email' => json_decode('"'.str_replace('%', '\\', $shipping['email']).'"'),
@@ -116,7 +118,7 @@ $address_complete = set_cart_address($cartid,$billingAddress,$shippingAddress);
 #设置支付信息
 $payment_complete = set_payment($cartid);
 if ($payment_complete == null) {
-	echo '<script>alert("购物车商品卖光啦~请重新添加");url="https://m.bdbbuy.com/index.phtml";window.location.href=url;</script> ';
+	echo '<script>alert("购物车商品卖光啦~请重新添加");url="'. $baseHost .'index.phtml";window.location.href=url;</script> ';
 }
 #设置配送方式
 $shipping_complete = set_shipping($cartid);
@@ -141,7 +143,7 @@ $carItems = $carinfo['items'];
 $products = array();
 foreach ($carItems as $item) {
 	$product_id = $item['product_id'];
-	$url='https://m.bdbbuy.com/productInfo.php?ids='.$product_id;
+	$url= $baseHost . 'productInfo.php?ids='.$product_id;
 	$jsonResult = json_decode(file_get_contents($url),true);
 	if (count($jsonResult) > 0) {
 		$product = $jsonResult[0];
@@ -304,7 +306,7 @@ foreach ($carItems as $item) {
  function gopay(mCartId) { 
 		$.ajax({  
 
-            url:"https://m.bdbbuy.com/pptest.php",           
+            url:"<?php echo $baseHost; ?>pptest.php",           
 
             type: "POST",
 
@@ -316,8 +318,6 @@ foreach ($carItems as $item) {
             },
 
             error:function(XMLHttpRequest, textStatus, errorThrown){
-
-                
 
             }
 

@@ -4,6 +4,7 @@
 //0收货
 //1账单
 //2都是
+include('./config.php');
 include('./user.php');
 $type=$_GET['type'];
 $userid = userid();
@@ -194,7 +195,7 @@ $userid = userid();
 		
 			$.ajax({  
 
-		        url:"https://m.bdbbuy.com/address.php",           
+		        url:"<?php echo $baseHost; ?>address.php",           
 
 		        type: "POST",
 
@@ -203,7 +204,7 @@ $userid = userid();
 		        success:function(result){  
 
 		        	if (result == "") {
-		        		window.location.href="https://m.bdbbuy.com/order-sure.phtml";
+		        		window.location.href="<?php echo $baseHost; ?>order-sure.phtml";
 		        	}else{
 		        		alert("添加失败");
 		        	}

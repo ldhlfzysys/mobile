@@ -14,6 +14,9 @@
 	<link href="iTunesArtwork@2x.png" sizes="114x114" rel="apple-touch-icon-precomposed">
 
 </head>
+<?php
+	include('./config.php');
+?>
 <body style="background:#f0f0f0">
 
 	<header class="aui-header-default aui-header-fixed aui-header-bg">
@@ -72,7 +75,7 @@
 		}else
 		{
 			echo '<script type="text/javascript">';
-			echo 'window.location.href="https://m.bdbbuy.com/index.phtml";';
+			echo 'window.location.href="' . $baseHost . 'index.phtml";';
 			echo '</script>';
 		}
 		?>
@@ -105,7 +108,7 @@
 		}
 
 		function logout(){
-       		window.location.href='https://m.bdbbuy.com/index.phtml';
+       		window.location.href='<?php echo $baseHost; ?>index.phtml';
        		delCookie('bdb-ui');
        		delCookie('bdb-nn');
 		}

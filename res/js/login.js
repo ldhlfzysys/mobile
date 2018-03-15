@@ -9,7 +9,7 @@ function login(){
     }
     $.showLoading("正在登陆...");
 	$.ajax({  
-        url:"https://m.bdbbuy.com/login.php",  
+        url:baseHost + "login.php",  
         type: "POST",
         data:{userid:userID,password:password},         
         success:function(result){  
@@ -20,7 +20,7 @@ function login(){
             	var nickname = res['userData']['firstname']+' '+res['userData']['lastname'];
             	document.cookie="bdb-ui="+res['userData']['customer_id'];
             	document.cookie="bdb-nn="+nickname;
-            	window.location.href='https://m.bdbbuy.com/ui-me.phtml';
+            	window.location.href=baseHost + 'ui-me.phtml';
             }else{
             	// document.location.reload();
                 $.toast("账户或者密码错误","text");
@@ -30,6 +30,5 @@ function login(){
             $.hideLoading();
             $.toast("登录失败","text");
         }
-
     });
 }

@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 <?php
+include_once('./cart.php');
 $orderid = $_GET['orderid'];
-$orderInfoUrl='https://m.bdbbuy.com/orderinfo.php?orderid='.$orderid;
+$orderInfoUrl= $baseHost . 'orderinfo.php?orderid='.$orderid;
 $html = file_get_contents($orderInfoUrl);
 $orderInfo = json_decode($html,true);
 $shippingAddress = $orderInfo['shipping_address'];

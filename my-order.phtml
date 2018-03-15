@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
 <?php
+include('./config.php');
 include('./user.php');
 $userid = userid();
-$orderListUrl='https://m.bdbbuy.com/myorder.php?userid='.$userid;
+$orderListUrl= $baseHost . 'myorder.php?userid='.$userid;
 $html = file_get_contents($orderListUrl);
 $orderList = json_decode($html,true);
 

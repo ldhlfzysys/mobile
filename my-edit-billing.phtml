@@ -24,6 +24,9 @@
 	</style>
 
 </head>
+<?php
+include_once('./config.php');
+?>
 <script>
 function save(){
 	var shipping_lastname = $('#shipping-lastname').val();
@@ -41,7 +44,7 @@ function save(){
 	var billing_street = $('#billing-street').val();
 	$.ajax({  
 
-        url:"https://m.bdbbuy.com/address.php",           
+        url:"<?php echo $baseHost; ?>address.php",           
 
         type: "POST",
 
@@ -51,7 +54,7 @@ function save(){
 
         	var res = eval("(" + result + ")");
             if (res['status'] == 'OK') {
-            	window.location.href='https://m.bdbbuy.com/ui-me.phtml';
+            	window.location.href='<?php echo $baseHost; ?>ui-me.phtml';
             	document.cookie="bdb-ui="+res['userData']['customer_id'];
             }else
             {

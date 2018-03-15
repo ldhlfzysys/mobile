@@ -1,5 +1,7 @@
 <?php
 ini_set('display_errors',1); 
+include_once('./config.php');
+
 require __DIR__  . '/PayPal-PHP-SDK/autoload.php';
 use PayPal\Api\Amount;
 use PayPal\Api\Details;
@@ -49,20 +51,20 @@ if(isset($_GET['paymentId']) && isset($_GET['token']) && isset($_GET['PayerID'])
                     $result = $client->call($session,'cart.order',array($cartid));
 
                     if (strpos($result,"160") === 0) {
-                        setcookie("bdb-ci", '');
-                        echo '<script>url="https://m.bdbbuy.com/payResult.phtml?oid='.$result.'";window.location.href=url;</script> ';
+                        setcookie("bdb-ci", '');// 清空本地存储的购物车ID
+                        echo '<script>url="'. $baseHost .'payResult.phtml?oid='.$result.'";window.location.href=url;</script> ';
                     }
                 }
             }   
         } catch (Exception $ex) {
             // var_dump($ex);
-            $payErrorUrl = "https://m.bdbbuy.com/payError.phtml?msg=";
+            $payErrorUrl = $baseHost . "payError.phtml?msg=";
             // $url = $payErrorUrl . $ex->getData() . ' code = ' . $ex->getCode();
             echo '<script>url="'.$payErrorUrl.'";window.location.href=url;</script> ';
         }
     } catch (Exception $ex) {
         // var_dump($ex);
-        $payErrorUrl = "https://m.bdbbuy.com/payError.phtml?msg=";
+        $payErrorUrl = $baseHost . "payError.phtml?msg=";
         // $url = $payErrorUrl . $ex->getData() . ' code = ' . $ex->getCode();
         echo '<script>url="'.$payErrorUrl   .'";window.location.href=url;</script> ';
     }

@@ -1,5 +1,7 @@
 <?php
 ini_set('display_errors',1); 
+
+include_once('./config.php');
 if (isset($_POST['cartid'])) {
     require __DIR__  . '/PayPal-PHP-SDK/autoload.php';
     $apiContext = new \PayPal\Rest\ApiContext(
@@ -120,8 +122,8 @@ if (isset($_POST['cartid'])) {
 
     #回调地址
     $redirectUrls = new \PayPal\Api\RedirectUrls();
-    $redirectUrls->setReturnUrl("https://m.bdbbuy.com/ppcallback.php")
-        ->setCancelUrl("https://m.bdbbuy.com/ppcallback.php");
+    $redirectUrls->setReturnUrl($baseHost . "ppcallback.php")
+        ->setCancelUrl($baseHost . "ppcallback.php");
 
     #支付对象
     $payment = new \PayPal\Api\Payment();
