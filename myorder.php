@@ -2,6 +2,7 @@
 ini_set('display_errors',1); 
 ini_set('display_startup_errors',1);
 
+include_once('./config.php');
 // 按照订单创建时间，降序
 function descByTime($orderList){
 	$sort = array(
@@ -55,7 +56,7 @@ if (isset($_GET['userid'])) {
 }else
 {
 	echo '<script type="text/javascript">';
-	echo 'window.location.href="https://m.bdbbuy.com/login.html";';
+	echo 'window.location.href="' . $baseHost .'login.html";';
 	echo '</script>';
 }
 

@@ -29,7 +29,7 @@ $(function(){
 
             $.ajax({  
 
-                url:"https://m.bdbbuy.com/cart.php?cartid="+cartid+"&remove="+json_str,           
+                url: baseHost + "cart.php?cartid="+cartid+"&remove="+json_str,           
 
                 type: "GET",         
 
@@ -73,7 +73,7 @@ $(function(){
 
         $.ajax({  
 
-            url:"https://m.bdbbuy.com/cart.php?cartid="+cartid+"&updateCart="+str,           
+            url:baseHost + "cart.php?cartid="+cartid+"&updateCart="+str,           
 
             type: "GET",         
 

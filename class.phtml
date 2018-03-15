@@ -1,4 +1,5 @@
 <?php
+include_once('./config.php');
 include_once('./user.php');
 include_once('./cart.php');
 include_once('./imagePathFix.php');
@@ -29,7 +30,7 @@ $categoryArray['生活日用'] = '163';
 // $categoryArray['精选坚果蜜饯'] = '263';
 // $categoryArray['精选方便速食'] = '264';
 // $categoryArray['精选个人护理'] = '265';
-$categoryUrl='https://m.bdbbuy.com/categoryTree.php';
+$categoryUrl= $baseHost . 'categoryTree.php';
 $html = file_get_contents($categoryUrl);
 $categoryTree = json_decode($html,true);
 $categoryTree = $categoryTree['children'][0]['children'];
@@ -54,7 +55,7 @@ foreach ($categoryTree as $category1) {
 
 }
 
-$productListUrl='https://m.bdbbuy.com/productList.php';
+$productListUrl=$baseHost . 'productList.php';
 $html = file_get_contents($productListUrl);
 $productList = json_decode($html,true);
 $newProductList;
@@ -147,7 +148,7 @@ $cartId = cartid();
 					foreach ($list as $product) {
 						echo '<div class="am-g am-intro-bd">';
 							echo '<div class="am-intro-left am-u-sm-10">';
-								echo '<a href="https://m.bdbbuy.com/ui-product.phtml?productId='.$product['product_id'].'">';
+								echo '<a href="'.$baseHost.'ui-product.phtml?productId='.$product['product_id'].'">';
 								#<img class="lazy" src="grey.gif" data-original="example.jpg" width="640" heigh="480">min-width: 72px; max-width: 100%; width: auto; height: auto;
 									echo '<div class="am-intro-left am-u-sm-4"><div class="class_img_box"><img  class="lazy" src="./images/grey.gif" data-original="'.smallImage($product['image']).'" /></div></div>';
 									echo '<div class="am-intro-right am-u-sm-8"><div style="padding-left:10px;">';
@@ -289,7 +290,7 @@ $cartId = cartid();
 
         $.ajax({  
 
-            url:"https://m.bdbbuy.com/cart.php?addToCart="+cartId+"&productId="+productId,           
+            url:"<?php echo $baseHost ?>cart.php?addToCart="+cartId+"&productId="+productId,           
 
             type: "GET",         
 

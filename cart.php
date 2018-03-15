@@ -28,6 +28,24 @@ function removeCart($products,$cartid){
  	echo json_encode($result);
 }
 
+// 清空购物车商品
+function cleanCart($cartid){
+	$cartInfo = cart($cartid);
+
+	// 要从本地删除的商品
+	$arrProducts = array();
+	// 将本地购物车商品添加到PC购物车
+	foreach ($cartInfo['items'] as $key => $value) {
+		$product_id = $value['product_id'] . "";
+		// 从本地购物车移除，否则会导致多次添加
+		array_push($arrProducts,array("product_id" => $product_id,"qty" => "0"));
+	}
+	if(count($arrProducts) > 0){
+		removeCart($arrProducts,$localCartid);
+	}
+	
+}
+
 function cart($cartid){
 	$client = new SoapClient('https://bdbbuy.com/index.php/api/soap/?wsdl');  
 	$session = $client->login('mobile', 'mobile');
@@ -37,7 +55,6 @@ function cart($cartid){
 	$result = $client->call($session, 'cart.info',$cartid, $args);
 	return $result;
 }
-
 
 if (isset($_GET['addToCart']) && isset($_GET['productId'])) {
 	$cartId = $_GET['addToCart'];
