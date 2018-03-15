@@ -1,5 +1,6 @@
 <?php
 ini_set('display_errors',1); 
+include_once('./config.php');
 include_once('./cart.php');
 if (isset($_POST['cartid'])) {
     require __DIR__  . '/PayPal-PHP-SDK/autoload.php';
