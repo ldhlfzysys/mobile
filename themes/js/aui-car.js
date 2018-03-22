@@ -6,7 +6,6 @@ $(function(){
     var productid = $(this).parent().find('.min_prodcut_id').text();
     var cartid = $(this).parent().find('.cart_id').text();
 		t.text(parseInt(t.text()) - 1);
-    updatecart2(cartid);
 		if (t.text() <= 0) {
         var datas = [];
         var dict = {};
@@ -18,6 +17,8 @@ $(function(){
         if (!result) {
           t.text(parseInt(t.text()) + 1);
         };
+    }else{
+      updatecart2(cartid);
     }
 		// TotalPrice();
 	});
@@ -30,8 +31,8 @@ $(function(){
           success:function(result){  
               $.hideLoading();
               // alert(result);
-              // document.location.reload();
               $("#item_"+productid).remove(); 
+              document.location.reload();
           },
           error:function(XMLHttpRequest, textStatus, errorThrown){
               // $('#loading').hideLoading();
