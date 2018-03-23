@@ -90,7 +90,7 @@ $cartId = cartid();
 	<link rel="stylesheet" href="themes/css/icon.css">
 	<link rel="stylesheet" href="themes/css/home.css">
 	<link rel="stylesheet" href="themes/css/add.css">
-	<script src="themes/js/sweetalert.js"></script>
+	<script src="themes/js/sweetalert2.js"></script>
 	<link rel="stylesheet" href="themes/css/amazeui.min.css">
 	<link rel="icon" type="image/x-icon" href="favicon.ico">
 	<link href="iTunesArtwork@2x.png" sizes="114x114" rel="apple-touch-icon-precomposed">
@@ -223,6 +223,22 @@ $cartId = cartid();
 	<script src="themes/js/jquery.lazyload.js"></script>
 	<script src="themes/js/jquery.scrollstop.js"></script>
 </body>
+<style>
+.customSwalBtn{
+		background-color: rgba(214,130,47,1.00);
+    border-left-color: rgba(214,130,47,1.00);
+    border-right-color: rgba(214,130,47,1.00);
+    border: 0;
+    border-radius: 3px;
+    box-shadow: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: 500;
+    margin: 30px 5px 0px 5px;
+    padding: 10px 32px;
+	}
+</style>
 <script type="text/javascript">
 	function GetQueryString(name)
 	{
@@ -277,7 +293,16 @@ $cartId = cartid();
 			event: 'scrollstop'
 		});
 	});
-
+    $(document).on('click', '.SwalBtn1', function() {
+        //Some code 1
+        console.log('Button 1');
+        swal.clickConfirm();
+    });
+    $(document).on('click', '.SwalBtn2', function() {
+        //Some code 2 
+        console.log('Button 2');
+        swal.clickConfirm();
+    });
 	function addToCart(cartId,productId) { 
 
         // $('#loading').showLoading();
@@ -291,14 +316,17 @@ $cartId = cartid();
             success:function(result){  
 
                 // $('#loading').hideLoading();
-                alert(result);
-				swal({
-				  title: "",
-				  text: "加入成功",
-				  icon: "success",
-				  button: false,
-				  timer: 1300,
-				});
+                // alert(result);
+swal({
+  title: 'Multiple inputs',
+  html:
+'<button type="button" role="button" tabindex="0" class="SwalBtn1 customSwalBtn">' + 'Button1' + '</button>' +
+            '<button type="button" role="button" tabindex="0" class="SwalBtn2 customSwalBtn">' + 'Button2' + '</button>',
+  focusConfirm: false,
+  showCancelButton: false,
+  showConfirmButton: false
+
+});
                 // document.location.reload(); 
 
             },

@@ -1,4 +1,32 @@
 <?php 
+ini_set('display_errors',1); 
+function addconpon($cartid,$coupon){
+
+	$client = new SoapClient('https://bdbbuy.com/index.php/api/soap/?wsdl');  
+	$session = $client->login('mobile', 'mobile');
+	$result = $client->call($session, 'cart_coupon.add',array(intval($cartid),strval($coupon)));
+	return json_encode($result);
+}
+
+function removeconpon($cartid){
+	$client = new SoapClient('https://bdbbuy.com/index.php/api/soap/?wsdl');  
+	$session = $client->login('mobile', 'mobile');
+	$result = $client->call($session, 'cart_coupon.remove',$cartid);
+	return json_encode($result);
+}
+
+if (isset($_POST['cartid']) && isset($_POST['coupon'])) {
+	$cartId = $_POST['cartid'];
+	$coupon = $_POST['coupon'];
+	$result = addconpon($cartId,$coupon);
+	echo $result;
+}
+
+if (isset($_POST['cartid']) && isset($_POST['remove'])) {
+	$cartId = $_POST['cartid'];
+	$result = removeconpon($cartId);
+	echo $result;
+}
 
 function set_cart_user($cartid,$userinfo,$mode)
 {

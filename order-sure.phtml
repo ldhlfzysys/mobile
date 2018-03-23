@@ -12,6 +12,7 @@
 	<link rel="stylesheet" href="themes/css/home.css">
 	<link rel="stylesheet" href="themes/css/add.css">
 	<script type="text/javascript" src="themes/js/jquery.min.js"></script>
+	<script src="themes/js/sweetalert.js"></script>
 	<link rel="icon" type="image/x-icon" href="favicon.ico">
 	<link href="iTunesArtwork@2x.png" sizes="114x114" rel="apple-touch-icon-precomposed">
 </head>
@@ -277,17 +278,45 @@ foreach ($carItems as $item) {
 			<div class="aui-prompt"><i class="aui-icon aui-prompt-sm"></i>当天21点前下单，可享次日达~</div>
 
 			<div class="aui-dri"></div>
+			<?php
+				if (!$carinfo['coupon_code']) {
+					echo '<a href="javascript:void(0);" class="aui-address-cell aui-fl-arrow" onclick="showcoupon(\''.$cartid.'\')">';
+					echo '<div class="aui-address-cell-bd">添加优惠券</div>';
+					echo '<div class="aui-address-cell-ft">';
+					echo '<p class="aui-address-text">点击添加优惠券</p>';
+					echo '</div>';
+					echo '</a>';
+				}else{
+					echo '<a href="javascript:void(0);" class="aui-address-cell aui-fl-arrow" onclick="removecoupon(\''.$cartid.'\')">' ;
+					echo '<div class="aui-address-cell-bd">当前优惠券：'.$carinfo['coupon_code'].'</div>';
+					echo '<div class="aui-address-cell-ft">';
+					echo '<p class="aui-address-text">点击删除</p>';
+					echo '</div>';
+					echo '</a>';
+				}
 
+			?>
 			<div class="aui-dri"></div>
 			<div>
 				<a href="#" class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear">
 					<div class="aui-address-cell-bd">
 						<h3>商品金额</h3>
+						<?php 
+						if ($carinfo['coupon_code']) {
+							echo '<h3>用券后价格</h3>';
+						}
+						?>
 						<p>税</p>
 						<p>运费</p>
 					</div>
 					<div class="aui-address-cell-ft">
 						<span class="aui-red">CA$<?php echo number_format($carinfo['subtotal'],2) ?></span><br>
+						<?php 
+						if ($carinfo['coupon_code']) {
+							echo '<span class="aui-red">CA$'.number_format($carinfo['subtotal_with_discount'],2).'</span><br>';
+						}
+						?>
+						<br>
 						<span class="aui-red">+CA$<?php echo number_format($carinfo['shipping_address']['tax_amount'],2); ?></span><br>
 						<span class="aui-red">+CA$<?php echo number_format($carinfo['shipping_address']['shipping_amount'],2); ?></span>
 					</div>
@@ -302,6 +331,72 @@ foreach ($carItems as $item) {
 		</div>
 	</section>
 <script type="text/javascript">
+
+function showcoupon(mCartId){
+	swal("输入优惠券", {
+	  content: "input",
+	})
+	.then((value) => {
+	  addcoupon(mCartId,value)
+	});
+}
+
+function addcoupon(mCartId,coupon) {
+		$.ajax({  
+
+            url:"<?php echo $baseHost; ?>order.php",           
+
+            type: "POST",
+
+            data:{cartid:mCartId,coupon:coupon},         
+
+            success:function(result){  
+
+            	if (result != 'true') {
+					swal({
+					  // position: 'top-end',
+					  type: 'error',
+					  title: '优惠券不存在',
+					  showConfirmButton: false,
+					  timer: 1500
+					})
+            	}else{
+            		document.location.reload(); 	
+            	}
+            	
+            },
+
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+
+            }
+
+	    });
+}
+
+function removecoupon(mCartId) {
+	var r=confirm("删除优惠券？")
+    if (r==true) {
+		$.ajax({  
+
+            url:"<?php echo $baseHost; ?>order.php",           
+
+            type: "POST",
+
+            data:{cartid:mCartId,remove:1},         
+
+            success:function(result){  
+            	document.location.reload(); 
+            },
+
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+
+            }
+
+	    });
+    }
+
+
+}
 
  function gopay(mCartId) { 
 		$.ajax({  
