@@ -128,6 +128,7 @@ if (isset($_COOKIE['bdb-billing'])) {
 		var shipping_phone = $('#shipping-phone').val();
 		var shipping_email = 'bdbbuy@gmail.com';
 		var shipping_postcode = $('#shipping-postcode').val();
+		shipping_postcode = shipping_postcode.replace(/\s+/g,"");
 		var shipping_area = $('#shipping-area').val();
 		var shipping_street = $('#shipping-street').val();
 
