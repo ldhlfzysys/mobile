@@ -148,6 +148,35 @@ if (isset($_COOKIE['bdb-billing'])) {
 			return;
 		}
 
+		//检查邮编合法性
+		var zipcodevalid = false;
+		$.ajax({  
+
+	        url:"<?php echo $baseHost; ?>checkZipCode.php",           
+
+	        type: "POST",
+			
+			async: false,
+	        
+	        data:{zipcode:shipping_postcode},         
+
+	        success:function(result){  
+
+	        	if (result == 1) {
+	        		zipcodevalid = true;
+	        	}
+	        },
+
+	        error:function(XMLHttpRequest, textStatus, errorThrown){
+
+	        }
+
+	    });
+	    if (!zipcodevalid) {
+	    	alert("邮编不在配送范围内");
+	    	return;
+	    }
+
 		var billing_lastname = $('#billing-lastname').val();
 		var billing_firstname = $('#billing-firstname').val();
 		var billing_phone = $('#billing-phone').val();

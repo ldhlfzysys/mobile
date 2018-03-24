@@ -174,6 +174,7 @@ $userid = userid();
 			var shipping_firstname = $('#shipping-firstname').val();
 			var shipping_phone = $('#shipping-phone').val();
 			var shipping_postcode = $('#shipping-postcode').val();
+			shipping_postcode = shipping_postcode.replace(/\s+/g,"");
 			var shipping_area = $('#shipping-area').val();
 			var shipping_street = $('#shipping-street').val();
 
@@ -192,6 +193,35 @@ $userid = userid();
 				alert('请输入正确的手机号(手机号只能是数字)');
 				return;
 			}
+
+			//检查邮编合法性
+			var zipcodevalid = false;
+			$.ajax({  
+
+		        url:"<?php echo $baseHost; ?>checkZipCode.php",           
+
+		        type: "POST",
+				
+				async: false,
+		        
+		        data:{zipcode:shipping_postcode},         
+
+		        success:function(result){  
+
+		        	if (result == 1) {
+		        		zipcodevalid = true;
+		        	}
+		        },
+
+		        error:function(XMLHttpRequest, textStatus, errorThrown){
+
+		        }
+
+		    });
+		    if (!zipcodevalid) {
+		    	alert("邮编不在配送范围内");
+		    	return;
+		    }
 		
 			$.ajax({  
 
