@@ -50,12 +50,6 @@ foreach ($carItems as $item) {
 	<script src="themes/js/jquery.min.js"></script>
 	<script src="res/js/config.js"></script>
 	<script src="themes/js/aui-car.js"></script>
-
-	<!-- jquerWeui -->
-	<link href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css" rel="stylesheet">
-	<link href="https://cdn.bootcss.com/jquery-weui/1.2.0/css/jquery-weui.min.css" rel="stylesheet">
-	<script type="text/javascript" src="themes/js/jquery.min.js"></script>
-	<script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
 </head>
 
 <script type="text/javascript">
@@ -161,7 +155,7 @@ foreach ($carItems as $item) {
 					</li> -->
 					<?php foreach ($products as $item) {
 					?>
-					<li id = "item_<?php echo $item['product_id'];  ?>">
+					<li>
 						<div class="aui-car-box-list-item">
 							<div class="aui-car-box-list-item-discount-price" style="display:none"><?php echo $item['discount_price'] ?></div>
 							<div class="aui-car-box-list-item-discount-count" style="display:none"><?php echo $item['discount_count']?></div>
@@ -222,7 +216,7 @@ foreach ($carItems as $item) {
 
 				</ul>
 			</div>
-			<div class="aui-shopPrice" style="margin-top: 10px;">
+			<div class="aui-shopPrice">
 				本店总计:CA$
 				<span class="aui-total-amount ShopTotal">00.00</span>
 			</div>

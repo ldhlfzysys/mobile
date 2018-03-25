@@ -13,7 +13,7 @@ $(function(){
         dict.qty = qty;
         datas.push(dict);
         var str = JSON.stringify(datas);
-        var result = deleteProduct(cartid,str,productid);
+        var result = deleteProduct(cartid,str);
         if (!result) {
           t.text(parseInt(t.text()) + 1);
         };
@@ -23,42 +23,36 @@ $(function(){
 		// TotalPrice();
 	});
 
-  function deleteProduct(cartid,json_str,productid){
-    $.showLoading("正在删除...");
-     $.ajax({  
-          url: baseHost + "cart.php?cartid="+cartid+"&remove="+json_str,           
-          type: "GET",         
-          success:function(result){  
-              $.hideLoading();
-              // alert(result);
-              $("#item_"+productid).remove(); 
-              document.location.reload();
-          },
-          error:function(XMLHttpRequest, textStatus, errorThrown){
-              // $('#loading').hideLoading();
-              // document.location.reload();
-              $.toast("删除失败", "text");
-          }
-      });
-     return true;
-    // var r=confirm("删除该商品？");
-    // if (r==true) {
-    //         $.ajax({  
-    //             url: baseHost + "cart.php?cartid="+cartid+"&remove="+json_str,           
-    //             type: "GET",         
-    //             success:function(result){  
-    //                 // $('#loading').hideLoading();
-    //                 // alert(result);
-    //                 document.location.reload(); 
-    //             },
-    //             error:function(XMLHttpRequest, textStatus, errorThrown){
-    //                 // $('#loading').hideLoading();
-    //                 document.location.reload();
-    //             }
-    //         });
-    //         return true;
-    // }
-    // return false;
+
+  function deleteProduct(cartid,json_str)
+  {
+    var r=confirm("删除该商品？")
+    if (r==true) {
+
+            $.ajax({  
+
+                url: baseHost + "cart.php?cartid="+cartid+"&remove="+json_str,           
+
+                type: "GET",         
+
+                success:function(result){  
+
+                    // $('#loading').hideLoading();
+                    // alert(result);
+                    document.location.reload(); 
+
+                },
+
+                error:function(XMLHttpRequest, textStatus, errorThrown){
+                    // $('#loading').hideLoading();
+                    document.location.reload();
+                }
+
+            });
+            return true;
+    }
+    return false;
+
   }
 
  function updatecart2(cartid) { 
@@ -75,31 +69,38 @@ $(function(){
         });
       });
       if (datas.length == 0) {
-        // alert('购物车空空，去添加商品吧~');
-        $.toast("购物车空空，去添加商品吧~","text");
+        alert('购物车空空，去添加商品吧~');
         return;
       };
       var str = JSON.stringify(datas);
-      $.showLoading("正在操作...");
-      $.ajax({  
-          url:baseHost + "cart.php?cartid="+cartid+"&updateCart="+str,           
-          type: "GET",         
-          success:function(result){  
-            $.hideLoading();
-            if (result == "true") {
-              document.location.reload(); 
-            }else{
-              alert('网络错误，请重试');
-            };
-              // $('#loading').hideLoading();
-              // document.location.reload(); 
-          },
-          error:function(XMLHttpRequest, textStatus, errorThrown){
-              // $('#loading').hideLoading();
-              $.hideLoading();
-              alert('网络错误，请重试');
-          }
-      });
+
+        $.ajax({  
+
+            url:baseHost + "cart.php?cartid="+cartid+"&updateCart="+str,           
+
+            type: "GET",         
+
+            success:function(result){  
+
+              if (result == "true") {
+                document.location.reload(); 
+              }else{
+                alert('网络错误，请重试');
+              };
+              
+                // $('#loading').hideLoading();
+                // document.location.reload(); 
+
+            },
+
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+                // $('#loading').hideLoading();
+                alert('网络错误，请重试');
+
+            }
+
+        });
+
     }
 
 
