@@ -22,16 +22,21 @@
         $userId = $_GET['userId'];
         $cartId = getCartIdByUser($userId);
 
-        $result = cart($cartId);
-        if ($result['payment']['payment_id'] == null) {
-            # code...
-            // echo 'payment_id == null';
+        if ($cartId == 0) {
+            echo "cartid = 0";
+        }else{
+            $result = cart($cartId);
+            if ($result['payment']['payment_id'] == null) {
+                # code...
+                // echo 'payment_id == null';
+            }
+            
+            // echo json_encode($payment);
+            // echo json_encode($result);
+            foreach ($result['items'] as $key => $value) {
+                echo json_encode($value) . '<br>';
+            }
         }
-        
-        // echo json_encode($payment);
-        // echo json_encode($result);
-        foreach ($result['items'] as $key => $value) {
-            echo json_encode($value) . '<br>';
-        }
+       
     }
 ?>
