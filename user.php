@@ -30,7 +30,15 @@ function cartid(){
 			return getLocalCart();
 		}
 		// PC购物车信息
-		$cartInfo = cart($cartid);
+		$cartInfo = null;
+		try{
+			$cartInfo = cart($cartid);
+		}catch (Exception $e) {
+			return getLocalCart();
+		}
+		if ($cartInfo == null) {
+			return getLocalCart();
+		}
 		if($cartInfo['payment'] != null && $cartInfo['payment']['payment_id'] != null){
 			// PC端购车不可用，使用本地购物车
 			$cartid = getLocalCart();

@@ -52,8 +52,13 @@ function cart($cartid){
 	$args = array(
 	    'store' => '16'
 		);
-	$result = $client->call($session, 'cart.info',$cartid, $args);
-	return $result;
+	try{
+		$result = $client->call($session, 'cart.info',$cartid, $args);
+		return $result;
+	}catch (Exception $e){
+		return null;
+	}
+	
 }
 
 if (isset($_GET['addToCart']) && isset($_GET['productId'])) {
