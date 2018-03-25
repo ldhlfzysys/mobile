@@ -32,10 +32,10 @@
             }
             
             // echo json_encode($payment);
-            // echo json_encode($result);
-            foreach ($result['items'] as $key => $value) {
-                echo json_encode($value) . '<br>';
-            }
+            echo json_encode($result);
+            // foreach ($result['items'] as $key => $value) {
+            //     echo json_encode($value) . '<br>';
+            // }
         }
        
     }
