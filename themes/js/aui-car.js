@@ -1,59 +1,64 @@
 $(function(){
-	// 数量减
-	$(".minus").click(function() {
-		var t = $(this).parent().find('.num');
+  // 数量减
+  $(".minus").click(function() {
+    var t = $(this).parent().find('.num');
     var qty = parseInt(t.text());
     var productid = $(this).parent().find('.min_prodcut_id').text();
     var cartid = $(this).parent().find('.cart_id').text();
-		t.text(parseInt(t.text()) - 1);
-    updatecart2(cartid);
-		if (t.text() <= 0) {
+    t.text(parseInt(t.text()) - 1);
+    if (t.text() <= 0) {
         var datas = [];
         var dict = {};
         dict.product_id = productid;
         dict.qty = qty;
         datas.push(dict);
         var str = JSON.stringify(datas);
-        var result = deleteProduct(cartid,str);
+        var result = deleteProduct(cartid,str,productid);
         if (!result) {
           t.text(parseInt(t.text()) + 1);
         };
+    }else{
+      updatecart2(cartid);
     }
-		// TotalPrice();
-	});
+    // TotalPrice();
+  });
 
-
-
-  function deleteProduct(cartid,json_str)
-  {
-    var r=confirm("删除该商品？")
-    if (r==true) {
-
-            $.ajax({  
-
-                url: baseHost + "cart.php?cartid="+cartid+"&remove="+json_str,           
-
-                type: "GET",         
-
-                success:function(result){  
-
-                    // $('#loading').hideLoading();
-                    // alert(result);
-                    document.location.reload(); 
-
-                },
-
-                error:function(XMLHttpRequest, textStatus, errorThrown){
-                    // $('#loading').hideLoading();
-                    document.location.reload();
-                }
-
-            });
-            return true;
-    }
-    return false;
-
-
+  function deleteProduct(cartid,json_str,productid){
+    $.showLoading("正在删除...");
+     $.ajax({  
+          url: baseHost + "cart.php?cartid="+cartid+"&remove="+json_str,           
+          type: "GET",         
+          success:function(result){  
+              $.hideLoading();
+              // alert(result);
+              $("#item_"+productid).remove(); 
+              document.location.reload();
+          },
+          error:function(XMLHttpRequest, textStatus, errorThrown){
+              // $('#loading').hideLoading();
+              // document.location.reload();
+              $.toast("删除失败", "text");
+          }
+      });
+     return true;
+    // var r=confirm("删除该商品？");
+    // if (r==true) {
+    //         $.ajax({  
+    //             url: baseHost + "cart.php?cartid="+cartid+"&remove="+json_str,           
+    //             type: "GET",         
+    //             success:function(result){  
+    //                 // $('#loading').hideLoading();
+    //                 // alert(result);
+    //                 document.location.reload(); 
+    //             },
+    //             error:function(XMLHttpRequest, textStatus, errorThrown){
+    //                 // $('#loading').hideLoading();
+    //                 document.location.reload();
+    //             }
+    //         });
+    //         return true;
+    // }
+    // return false;
   }
 
  function updatecart2(cartid) { 
@@ -70,54 +75,47 @@ $(function(){
         });
       });
       if (datas.length == 0) {
-        alert('购物车空空，去添加商品吧~');
+        // alert('购物车空空，去添加商品吧~');
+        $.toast("购物车空空，去添加商品吧~","text");
         return;
       };
       var str = JSON.stringify(datas);
-
-        $.ajax({  
-
-            url:baseHost + "cart.php?cartid="+cartid+"&updateCart="+str,           
-
-            type: "GET",         
-
-            success:function(result){  
-
-              if (result == "true") {
-                document.location.reload(); 
-              }else{
-                alert('网络错误，请重试');
-              };
-              
-                // $('#loading').hideLoading();
-                // document.location.reload(); 
-
-            },
-
-            error:function(XMLHttpRequest, textStatus, errorThrown){
-                // $('#loading').hideLoading();
-                alert('网络错误，请重试');
-
-            }
-
-        });
-
+      $.showLoading("正在操作...");
+      $.ajax({  
+          url:baseHost + "cart.php?cartid="+cartid+"&updateCart="+str,           
+          type: "GET",         
+          success:function(result){  
+            $.hideLoading();
+            if (result == "true") {
+              document.location.reload(); 
+            }else{
+              alert('网络错误，请重试');
+            };
+              // $('#loading').hideLoading();
+              // document.location.reload(); 
+          },
+          error:function(XMLHttpRequest, textStatus, errorThrown){
+              // $('#loading').hideLoading();
+              $.hideLoading();
+              alert('网络错误，请重试');
+          }
+      });
     }
 
 
-	// 数量加
-	$(".plus").click(function() {
-		var t = $(this).parent().find('.num');
-		t.text(parseInt(t.text()) + 1);
-		if (t.text() <= 1) {
-			t.text(1);
-		}
+  // 数量加
+  $(".plus").click(function() {
+    var t = $(this).parent().find('.num');
+    t.text(parseInt(t.text()) + 1);
+    if (t.text() <= 1) {
+      t.text(1);
+    }
     var cartid = $(this).parent().find('.cart_id').text();
     updatecart2(cartid);
-		// TotalPrice();
-	});
-	/******------------分割线-----------------******/
-	  // 点击商品按钮
+    // TotalPrice();
+  });
+  /******------------分割线-----------------******/
+    // 点击商品按钮
   $(".goodsCheck").click(function() {
     var goods = $(this).closest(".aui-car-box").find(".goodsCheck"); //获取本店铺的所有商品
     var goodsC = $(this).closest(".aui-car-box").find(".goodsCheck:checked"); //获取本店铺所有被选中的商品
@@ -167,7 +165,7 @@ $(function(){
     }
     $(".shopCheck").change(); //执行店铺全选的操作
   });
-	//计算
+  //计算
   function TotalPrice() {
     var allprice = 0; //总价
     $(".aui-car-box").each(function() { //循环每个店铺
