@@ -13,6 +13,10 @@
 	<link rel="icon" type="image/x-icon" href="favicon.ico">
 	<link href="iTunesArtwork@2x.png" sizes="114x114" rel="apple-touch-icon-precomposed">
 
+	<!-- jquerWeui -->
+	<link href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css" rel="stylesheet">
+	<link href="res/css/jq-1-2-0-weui.css" rel="stylesheet">
+	
 </head>
 <?php
 	include('./config.php');
@@ -48,6 +52,18 @@
 				<div class="aui-address-cell-bd">我的收货地址</div>
 				<div class="aui-address-cell-ft"></div>
 			</a>
+
+			<a href="#" onclick="alertSet()" class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear">
+				<div class="aui-address-cell-bd">重置密码</div>
+				<div class="aui-address-cell-ft"></div>
+			</a>
+
+			<!-- <a href="getPassword.phtml?tip=重置密码" class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear">
+				<div class="aui-address-cell-bd">重置密码</div>
+				<div class="aui-address-cell-ft"></div>
+			</a> -->
+
+			
 			<!-- <a href="#" class="aui-address-cell aui-fl-arrow aui-fl-arrow-clear" data-ydui-actionsheet="{target:'#actionSheet',closeElement:'#cancel'}">
 				<div class="aui-address-cell-bd">消息推送设置</div>
 				<div class="aui-address-cell-ft"></div>
@@ -82,36 +98,13 @@
 	</section>
 
 
+	<script type="text/javascript" src="res/js/config.js"></script>
 	<script type="text/javascript" src="themes/js/jquery.min.js"></script>
 	<script type="text/javascript" src="themes/js/aui.js"></script>
-	<script type="text/javascript">
-		//读取cookies 
-		function getCookie(name) 
-		{ 
-			var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+	<script type="text/javascript" src="res/js/my-set.js"></script>
 
-			if(arr=document.cookie.match(reg))
-
-			    return unescape(arr[2]); 
-			else 
-			    return null; 
-		} 
-
-		//删除cookies 
-		function delCookie(name) 
-		{ 
-			var exp = new Date(); 
-			exp.setTime(exp.getTime() - 1); 
-			var cval=getCookie(name); 
-			if(cval!=null) 
-			    document.cookie= name + "="+cval+";expires="+exp.toGMTString(); 
-		}
-
-		function logout(){
-       		window.location.href='<?php echo $baseHost; ?>index.phtml';
-       		delCookie('bdb-ui');
-       		delCookie('bdb-nn');
-		}
-		</script>
+	<!-- jqweui -->
+	<script type="text/javascript" src="themes/js/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
 </body>
 </html>

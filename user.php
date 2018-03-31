@@ -2,6 +2,7 @@
 header("Content-type:text/html;charset=utf-8"); 
 
 include_once('./cart.php');
+include_once('./config.php');
 #使用方式：
 
 function userid(){
@@ -85,9 +86,7 @@ function userinfo(){
 		return json_decode($_COOKIE['bdb-uf'],true);
 	}else if (userid() == null) {
 		return null;
-	}
-	else
-	{
+	}else{
 		$userid = userid();
 		$client = new SoapClient('https://bdbbuy.com/index.php/api/soap/?wsdl');  
 		$session = $client->login('mobile', 'mobile');
@@ -116,6 +115,115 @@ function username(){
 	}else{
 		return $userinfo['lastname'].$userinfo['middlename'].$userinfo['firstname'];
 	}
+}
+
+// 更新密码
+function updatePassword($password,$userid){
+	try{
+		$client = new SoapClient('https://bdbbuy.com/index.php/api/soap/?wsdl');  
+		$session = $client->login('mobile', 'mobile');
+		$args = array(
+			'customerId' => $userid, 
+			'customerData' => array(
+				'password' => $password
+			)
+		);
+		$result = $client->call($session, 'customer.update', $args);
+		$client->endSession($session);
+		$res = array(
+			'status' =>0,
+			'msg'=>"操作成功",
+			'userid'=>$userid,
+			'args' => $args
+		);
+		
+	}catch(Exception $e){
+		$res['status'] = -1;
+		$res['msg'] = '操作失败';
+		 // $e->getMessage();
+	}
+	return $res;
+}
+
+// 通过邮件查询用户信息
+function getUserByEmail($email){
+    $client = new SoapClient('https://bdbbuy.com/index.php/api/soap/?wsdl');  
+    $session = $client->login('mobile', 'mobile');
+    $filters = array(
+        array(
+            "email" => $email
+        )
+    );
+    $result = null;
+    try {
+        $result = $client->call($session, 'customer.list',$filters);
+    }catch (Exception $e) { //while an error has occured
+        $result = "==> Error: ".$e->getMessage();
+    }
+    return $result;
+}
+
+// 通过邮件查询用户
+if (isset($_GET['queryUser']) && isset($_GET['email'])) {
+	$email = $_GET['email'];
+	$res = getUserByEmail($email);
+	echo json_encode($res);
+}
+
+
+// 用户重置密码
+if (isset($_POST['resetPassword']) && isset($_POST['password'])) {
+	$password = $_POST['password'];
+	$userid = userid();
+	$result = null;
+	if ($userid == null) {
+		$result = array(
+			'status' =>-2,
+			'msg'=>"用户登录失效",
+		);
+	}else{
+		$result = updatePassword($password,$userid);
+	}
+	echo json_encode($result);
+}
+
+// 用户找回密码 重置
+if (isset($_POST['getPassword']) && isset($_POST['password']) && isset($_POST['userid']) && isset($_POST['tocken'])) {
+	$password = $_POST['password'];
+	$userid = $_POST['userid'];
+	$tocken = $_POST['tocken'];
+
+	$res = array(
+		"status" => 0,
+		"msg" => "操作成功"
+	);
+
+	if(!isset($password)){
+		$res['status'] = -1;
+		$res['msg'] = "请输入设置的密码";
+		echo json_encode($res);
+		return;
+	}
+
+	if ( !isset($tocken) || !isset($userid) ) {
+		$res['status'] = -1;
+		$res['msg'] = "无效的连接，请重新发送邮件";
+	}else{
+		// 验证tocken 和 用户
+		$redis = new Redis();
+        $redis->connect($redisHost, $redisPort);
+        $localTocken = $redis->get($userid . '_tocken');
+        if ($localTocken != $tocken) {
+        	$res['status'] = -1;
+			$res['msg'] = "tocken失效,请重新发送邮件";
+        }else{
+        	// 更新用户密码
+        	$res = updatePassword($password,$userid);
+        }
+	}
+
+	echo json_encode($res);
+	return;
 }
 
 
