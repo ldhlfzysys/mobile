@@ -12,7 +12,7 @@
 	<link rel="stylesheet" href="themes/css/home.css">
 	<link rel="stylesheet" href="themes/css/add.css">
 	<script type="text/javascript" src="themes/js/jquery.min.js"></script>
-	<script src="themes/js/sweetalert.js"></script>
+	<script src="themes/js/sweetalert2.js"></script>
 	<link rel="icon" type="image/x-icon" href="favicon.ico">
 	<link href="iTunesArtwork@2x.png" sizes="114x114" rel="apple-touch-icon-precomposed">
 </head>
@@ -337,8 +337,26 @@ function showcoupon(mCartId){
 	  content: "input",
 	})
 	.then((value) => {
-	  addcoupon(mCartId,value)
+	  
 	});
+	swal({
+	title: '输入优惠劵',
+	input: 'text',
+	showCancelButton: true,
+	inputValidator: function(value) {
+	return new Promise(function(resolve, reject) {
+	  if (value) {
+		resolve();
+	  } else {
+		reject('优惠劵不能为空');
+	  }
+	});
+	}
+	}).then(function(result) {
+		if (result) {
+			addcoupon(mCartId,result)
+		}
+	})
 }
 
 function addcoupon(mCartId,coupon) {
