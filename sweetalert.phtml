@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui"/>
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+	<meta name="format-detection" content="telephone=no, email=no"/>
+	<meta charset="UTF-8">
+	<title>购物车</title>
+	<link rel="stylesheet" href="themes/css/core.css">
+	<link rel="stylesheet" href="themes/css/icon.css">
+	<link rel="stylesheet" href="themes/css/home.css">
+	<link rel="stylesheet" href="themes/css/add.css">
+	<link rel="icon" type="image/x-icon" href="favicon.ico">
+	<link href="iTunesArtwork@2x.png" sizes="114x114" rel="apple-touch-icon-precomposed">
+	<script src="themes/js/jquery.min.js"></script>
+	<script src="themes/js/aui-car.js"></script>
+</head>
+
+<script type="text/javascript">
+
+ function updatecart(cartid) { 
+
+ 		var datas = [];
+	    $(".aui-car-box").each(function() { //循环每个店铺
+	      $(this).find(".goodsCheck").each(function() { //循环店铺里面的商品
+            var num = parseInt($(this).parents(".aui-car-box-list-item").find(".num").text()); //得到商品的数量
+            var productid = parseFloat($(this).parents(".aui-car-box-list-item").find(".prodcut_id").text()); 
+            var dict = {};
+            dict.product_id = productid;
+            dict.qty = num;
+            datas.push(dict);
+	      });
+	    });
+	    if (datas.length == 0) {
+	    	alert('购物车空空，去添加商品吧~');
+	    	return;
+	    };
+	    var str = JSON.stringify(datas);
+        $.ajax({  
+            url:"https://m.bdbbuy.com/cart.php?cartid="+cartid+"&updateCart="+str,           
+            type: "GET",         
+            success:function(result){  
+            	if (result == "true") {
+            		window.location.href='https://m.bdbbuy.com/order-sure.phtml';
+            	}else{
+            		alert('网络错误，请重试');
+            	};
+                // $('#loading').hideLoading();
+                // document.location.reload(); 
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+                // $('#loading').hideLoading();
+                alert('网络错误，请重试');
+            }
+        });
+    }
+
+</script>
+<body>
+</body>
+</html>
