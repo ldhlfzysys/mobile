@@ -6,8 +6,8 @@ function login($userid,$password){
  	$params = array('email'=>$userid, 'password'=>$password);
  	
  	try {
-
     	$result = $client->call($session, 'customer.mlogin', $params);
+    	$client->endSession($session);
 	}
 	catch (Exception $e) { //while an error has occured
 	    echo "==> Error: ".$e->getMessage();
