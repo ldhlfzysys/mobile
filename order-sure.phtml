@@ -334,23 +334,14 @@ foreach ($carItems as $item) {
 
 function showcoupon(mCartId){
 	swal({
-	title: '输入优惠劵',
 	input: 'text',
-	showCancelButton: true,
-	inputValidator: function(value) {
-	return new Promise(function(resolve, reject) {
-	  if (value) {
-		resolve();
-	  } else {
-		reject('优惠劵不能为空');
-	  }
-	});
-	}
+	showCancelButton: true
 	}).then(function(result) {
-		if (result) {
-			addcoupon(mCartId,result)
-		}
+	if (result) {
+	addcoupon(mCartId,result)
+	}
 	})
+
 }
 
 function addcoupon(mCartId,coupon) {
