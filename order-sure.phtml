@@ -342,6 +342,12 @@ function showcoupon(mCartId){
 }
 
 function addcoupon(mCartId,coupon) {
+		swal({
+			  title: "",
+			  text: "正在添加",
+			  onOpen:()=>{swal.showLoading()}
+			});
+
 		$.ajax({  
 
             url:"<?php echo $baseHost; ?>order.php",           
@@ -376,6 +382,11 @@ function addcoupon(mCartId,coupon) {
 function removecoupon(mCartId) {
 	var r=confirm("删除优惠券？")
     if (r==true) {
+		swal({
+			  title: "",
+			  text: "正在移除",
+			  onOpen:()=>{swal.showLoading()}
+			});
 		$.ajax({  
 
             url:"<?php echo $baseHost; ?>order.php",           
