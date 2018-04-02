@@ -337,8 +337,8 @@ function showcoupon(mCartId){
 	input: 'text',
 	showCancelButton: true
 	}).then(function(result) {
-	if (result) {
-	addcoupon(mCartId,result)
+	if (result.hasOwnProperty("value")) {
+		addcoupon(mCartId,result)
 	}
 	})
 
