@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <?php
+include_once('./config.php');
 include_once('./cart.php');
 $orderid = $_GET['orderid'];
 $orderInfoUrl= $baseHost . 'orderinfo.php?orderid='.$orderid;
@@ -9,7 +10,7 @@ $orderInfo = json_decode($html,true);
 $shippingAddress = $orderInfo['shipping_address'];
 $billingAddress = $orderInfo['billing_address'];
 $items = $orderInfo['items'];
-$currency_code = $order['order_currency_code'];
+$currency_code = $orderInfo['order_currency_code'];
 ?>
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui"/>

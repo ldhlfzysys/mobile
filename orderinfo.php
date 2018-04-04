@@ -25,8 +25,7 @@ if (isset($_GET['orderid'])) {
 	$result = getOrderInfo($_GET['orderid']);
 	$json_result = json_encode($result);
 	echo $json_result;
-}else
-{
+}else{
 	// echo '<script type="text/javascript">';
 	// echo 'window.location.href="https://m.bdbbuy.com/login.html";';
 	// echo '</script>';

@@ -41,7 +41,7 @@ function cleanCart($cartid){
 		array_push($arrProducts,array("product_id" => $product_id,"qty" => "0"));
 	}
 	if(count($arrProducts) > 0){
-		removeCart($arrProducts,$localCartid);
+		removeCart($arrProducts,$cartid);
 	}
 	
 }
