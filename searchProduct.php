@@ -33,7 +33,14 @@ $args_name = array(
 );
 $result_name = $client->call($session,'catalog_product.list',$args_name);
 
-echo json_encode(array_merge($result,$result_name));
+$result_merge = array_merge($result,$result_name);
+
+$result_unequal = array();
+foreach ($result_merge as $item) {
+	$result_unequal += [$item['product_id'] => $item ];
+}
+
+echo json_encode(array_values($result_unequal));
 
 function mb_str_split($str){  
     return preg_split('/(?<!^)(?!$)/u', $str );  
