@@ -26,7 +26,8 @@ include_once('./cart.php');
 $cartId = cartid();
 
 $keyword=$_GET['s'];
-$url=$baseHost . 'searchProduct.php?s='.$keyword;
+$keywordtrim = str_replace(' ', '', $keyword);
+$url=$baseHost . 'searchProduct.php?s='.$keywordtrim;
 $products = json_decode(file_get_contents($url),true);
 ?>
 
