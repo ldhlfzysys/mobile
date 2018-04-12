@@ -59,46 +59,7 @@ foreach ($carItems as $item) {
 	<script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
 </head>
 
-<script type="text/javascript">
 
- function updatecart(cartid) { 
-
- 		var datas = [];
-	    $(".aui-car-box").each(function() { //循环每个店铺
-	      $(this).find(".goodsCheck").each(function() { //循环店铺里面的商品
-            var num = parseInt($(this).parents(".aui-car-box-list-item").find(".num").text()); //得到商品的数量
-            var productid = parseFloat($(this).parents(".aui-car-box-list-item").find(".prodcut_id").text()); 
-            var dict = {};
-            dict.product_id = productid;
-            dict.qty = num;
-            datas.push(dict);
-	      });
-	    });
-	    if (datas.length == 0) {
-	    	alert('购物车空空，去添加商品吧~');
-	    	return;
-	    };
-	    var str = JSON.stringify(datas);
-        $.ajax({  
-            url: "<?php echo $baseHost ?>cart.php?cartid="+cartid+"&updateCart="+str,           
-            type: "GET",         
-            success:function(result){  
-            	if (result == "true") {
-            		window.location.href=  '<?php echo $baseHost ?>order-sure.phtml';
-            	}else{
-            		alert('网络错误，请重试');
-            	};
-                // $('#loading').hideLoading();
-                // document.location.reload(); 
-            },
-            error:function(XMLHttpRequest, textStatus, errorThrown){
-                // $('#loading').hideLoading();
-                alert('网络错误，请重试');
-            }
-        });
-    }
-
-</script>
 <body>
 
 	<header class="aui-header-default aui-header-fixed aui-header-bg">
@@ -237,6 +198,45 @@ foreach ($carItems as $item) {
 		<?php echo '<a href="javascript:void(0);" class="settlement" onclick="updatecart(\''.$cartid.'\')">结算</a>'; ?>
 	</div>
 
+<script type="text/javascript">
 
+ function updatecart(cartid) { 
+
+ 		var datas = [];
+	    $(".aui-car-box").each(function() { //循环每个店铺
+	      $(this).find(".goodsCheck").each(function() { //循环店铺里面的商品
+            var num = parseInt($(this).parents(".aui-car-box-list-item").find(".num").text()); //得到商品的数量
+            var productid = parseFloat($(this).parents(".aui-car-box-list-item").find(".prodcut_id").text()); 
+            var dict = {};
+            dict.product_id = productid;
+            dict.qty = num;
+            datas.push(dict);
+	      });
+	    });
+	    if (datas.length == 0) {
+	    	alert('购物车空空，去添加商品吧~');
+	    	return;
+	    };
+	    var str = JSON.stringify(datas);
+        $.ajax({  
+            url: "<?php echo $baseHost ?>cart.php?cartid="+cartid+"&updateCart="+str,           
+            type: "GET",         
+            success:function(result){  
+            	if (result == "true") {
+            		window.location.href=  '<?php echo $baseHost ?>order-sure.phtml';
+            	}else{
+            		alert('网络错误，请重试');
+            	};
+                // $('#loading').hideLoading();
+                // document.location.reload(); 
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+                // $('#loading').hideLoading();
+                alert('网络错误，请重试');
+            }
+        });
+    }
+
+</script>
 </body>
 </html>
