@@ -16,23 +16,31 @@
 	<link href="iTunesArtwork@2x.png" sizes="114x114" rel="apple-touch-icon-precomposed">
 </head>
 <?php 
-include_once('./config.php');
-include_once('./imagePathFix.php');
+include_once('../config.php');
+require_once('../model/ProductModel.php');
+
+$productModel = new ProductModel();
+
 #水果
-$url1= $baseHost . 'productInfo.php?ids=5912-5983-5915-6039-6042-5920';
-$sgsx = json_decode(file_get_contents($url1),true);
+// $url1= $baseHost . 'productInfo.php?ids=5912-5983-5915-6039-6042-5920';
+// $sgsx = json_decode(file_get_contents($url1),true);
+$sgsx = $productModel->getProductInfoByIds('5912-5983-5915-6039-6042-5920');
 #休闲零食
-$url2= $baseHost .'productInfo.php?ids=5884-5797-5495-6065-5744-5790';
-$xxls = json_decode(file_get_contents($url2),true);
+// $url2= $baseHost .'productInfo.php?ids=5884-5797-5495-6065-5744-5790';
+// $xxls = json_decode(file_get_contents($url2),true);
+$xxls = $productModel->getProductInfoByIds('5884-5797-5495-6065-5744-5790');
 #坚果蜜饯
-$url3= $baseHost .'productInfo.php?ids=5051-5882-5880-5490-5485-5881';
-$jgmj = json_decode(file_get_contents($url3),true);
+// $url3= $baseHost .'productInfo.php?ids=5051-5882-5880-5490-5485-5881';
+// $jgmj = json_decode(file_get_contents($url3),true);
+$jgmj = $productModel->getProductInfoByIds('5051-5882-5880-5490-5485-5881');
 #个人护理
-$url4= $baseHost .'productInfo.php?ids=5707-5430-5951-5348-5341';
-$grhl = json_decode(file_get_contents($url4),true);
+// $url4= $baseHost .'productInfo.php?ids=5707-5430-5951-5348-5341';
+// $grhl = json_decode(file_get_contents($url4),true);
+$grhl = $productModel->getProductInfoByIds('5707-5430-5951-5348-5341');
 #推荐商品
-$url5= $baseHost .'productInfo.php?ids=5686-5689-5692-5790-5826-5838-5856-5880-5884-5886-5892';
-$tjsp = json_decode(file_get_contents($url5),true);
+// $url5= $baseHost .'productInfo.php?ids=5686-5689-5692-5790-5826-5838-5856-5880-5884-5886-5892';
+// $tjsp = json_decode(file_get_contents($url5),true);
+$tjsp = $productModel->getProductInfoByIds('5686-5689-5692-5790-5826-5838-5856-5880-5884-5886-5892');
 
 ?>
 <body>

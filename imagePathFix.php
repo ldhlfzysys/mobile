@@ -12,5 +12,4 @@ function originImage($originPath){
 	return 'https://bdbbuy-mobile.oss-cn-hongkong.aliyuncs.com/'.$imageNameFix;
 }
 
-
 ?>
