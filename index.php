@@ -15,7 +15,7 @@
 	//获取要运行的action  
 	require($c_path);  
 	//加载controller文件  
-	$controller=new $c_name;
+	$controller=new $c_name();
 	//实例化controller文件  
 	$controller->$method($param);  
 	//运行该实例下的action  

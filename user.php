@@ -3,6 +3,7 @@ header("Content-type:text/html;charset=utf-8");
 
 include_once('./cart.php');
 include_once('./config.php');
+include_once('./test.php');
 #使用方式：
 
 function userid(){
@@ -12,7 +13,7 @@ function userid(){
 	return null;
 }
 
-include_once('./test.php');
+
 // 获取购物车ID 许雷
 function cartid(){
 	// $cartid =getLocalCart();

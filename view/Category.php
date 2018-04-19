@@ -1,8 +1,12 @@
 <?php
+
 include_once('./config.php');
-include_once('./user.php');
-include_once('./cart.php');
 include_once('./imagePathFix.php');
+require_once('model/CategoryModel.php');
+require_once('model/ProductModel.php');
+require_once('model/UserModel.php');
+
+
 $categoryArray=array();
 $categoryArray['热卖'] = '100';
 $categoryArray['新品'] = '106';
@@ -30,9 +34,15 @@ $categoryArray['生活日用'] = '163';
 // $categoryArray['精选坚果蜜饯'] = '263';
 // $categoryArray['精选方便速食'] = '264';
 // $categoryArray['精选个人护理'] = '265';
-$categoryUrl= $baseHost . 'categoryTree.php';
-$html = file_get_contents($categoryUrl);
-$categoryTree = json_decode($html,true);
+
+// $categoryUrl= $baseHost . 'categoryTree.php';
+// $html = file_get_contents($categoryUrl);
+// $categoryTree = json_decode($html,true);
+
+$categoryModel = new CategoryModel();
+$categoryTree = $categoryModel->categoryTree();
+
+
 $categoryTree = $categoryTree['children'][0]['children'];
 $categoryIDDic;
 foreach ($categoryTree as $category1) {
@@ -53,9 +63,13 @@ foreach ($categoryTree as $category1) {
 	}
 }
 
-$productListUrl=$baseHost . 'productList.php';
-$html = file_get_contents($productListUrl);
-$productList = json_decode($html,true);
+// $productListUrl=$baseHost . 'productList.php';
+// $html = file_get_contents($productListUrl);
+// $productList = json_decode($html,true);
+
+$productModel = new ProductModel();
+$productList = $productModel->productList();
+
 $newProductList;
 foreach ($productList as $product) {
 	$category_ids = $product['category_ids'];
@@ -74,7 +88,10 @@ foreach ($productList as $product) {
 	}
 }
 
-$cartId = cartid();
+// $cartId = cartid();
+$userModel = new UserModel();
+$cartId = $userModel->getCartId();
+
 ?>
 <html lang="en">
 <head>
@@ -94,7 +111,7 @@ $cartId = cartid();
 	<link href="iTunesArtwork@2x.png" sizes="114x114" rel="apple-touch-icon-precomposed">
 </head>
 <body>
-
+	长度：<?php echo $length; ?>
 	<header class="aui-header-default aui-header-fixed aui-header-bg">
 		<a href="#" class="aui-header-item" style="display:none">
 			<i class="aui-icon aui-icon-code"></i>
@@ -209,7 +226,7 @@ $cartId = cartid();
 			<span class="aui-footer-item-icon aui-icon aui-footer-icon-class"></span>
 			<span class="aui-footer-item-text">分类</span>
 		</a>
-<!-- 		<a href="find.html" class="aui-footer-item">
+		<!-- <a href="find.html" class="aui-footer-item">
 			<span class="aui-footer-item-icon aui-icon aui-footer-icon-find"></span>
 			<span class="aui-footer-item-text">发现</span>
 		</a> -->

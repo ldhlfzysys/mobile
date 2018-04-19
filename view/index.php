@@ -225,9 +225,10 @@ $tjsp = $productModel->getProductInfoByIds('5686-5689-5692-5790-5826-5838-5856-5
 			<span class="aui-footer-item-icon aui-icon aui-footer-icon-home"></span>
 			<span class="aui-footer-item-text">首页</span>
 		</a>
-		<a href="class.phtml" class="aui-footer-item">
+		<a href="index.php?c=Category&a=toCategoryView" class="aui-footer-item">
 			<span class="aui-footer-item-icon aui-icon aui-footer-icon-class"></span>
 			<span class="aui-footer-item-text">分类</span>
+		</a>
 <!-- 		</a>
 	 		<a href="find.html" class="aui-footer-item">
 			<span class="aui-footer-item-icon aui-icon aui-footer-icon-find"></span>
@@ -238,12 +239,14 @@ $tjsp = $productModel->getProductInfoByIds('5686-5689-5692-5790-5826-5838-5856-5
 			<span class="aui-footer-item-text">购物车</span>
 		</a>
 		<?php
-		include_once('./user.php');
-		if (islogin()) {
-			echo '<a href="ui-me.phtml" class="aui-footer-item">';
-		}else
-		{
+		include_once('../model/UserModel.php');
+		$userModel = new UserModel();
+		$userid = $userModel->userid();
+		if (is_null($userid)) {
 			echo '<a href="login.html" class="aui-footer-item">';
+			
+		}else{
+			echo '<a href="ui-me.phtml" class="aui-footer-item">';
 		}
 		?>
 			<span class="aui-footer-item-icon aui-icon aui-footer-icon-me"></span>
