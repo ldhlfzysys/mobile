@@ -29,6 +29,12 @@ foreach ($carItems as $item) {
 		$product['discount_price'] = round($product['price'],2);
 		$product['discount_count'] = 999;
 	}
+
+	// xl add
+	$product['discount_price'] = $item['price'];
+	$product['price'] = $item['price'];
+	// xl add
+	
 	$product['qty'] = $item['qty'];
 	array_push($products, $product);
 }
