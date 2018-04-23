@@ -172,11 +172,16 @@ $(function(){
       var oprice = 0; //店铺总价
       $(this).find(".goodsCheck").each(function() { //循环店铺里面的商品
         if ($(this).is(":checked")) { //如果该商品被选中
-            var num = parseInt($(this).parents(".aui-car-box-list-item").find(".num").text()); //得到商品的数量
-            var price = parseFloat($(this).parents(".aui-car-box-list-item").find(".price").text()); //得到商品的单价
-            var discount_num = parseInt($(this).parents(".aui-car-box-list-item").find(".aui-car-box-list-item-discount-count").text()); //得到打折商品数量
-            var discount_price = parseFloat($(this).parents(".aui-car-box-list-item").find(".aui-car-box-list-item-discount-price").text()); //得到打折商品价格
-            var origin_price = parseFloat($(this).parents(".aui-car-box-list-item").find(".aui-car-box-list-item-origin-price").text()); //得到打折商品价格
+            //得到商品的数量
+            var num = parseInt($(this).parents(".aui-car-box-list-item").find(".num").text()); 
+            //得到商品的单价
+            var price = parseFloat($(this).parents(".aui-car-box-list-item").find(".price").text()); 
+            //得到打折商品数量
+            var discount_num = parseInt($(this).parents(".aui-car-box-list-item").find(".aui-car-box-list-item-discount-count").text()); 
+            //得到打折商品价格
+            var discount_price = parseFloat($(this).parents(".aui-car-box-list-item").find(".aui-car-box-list-item-discount-price").text()); 
+            // 原始价格
+            var origin_price = parseFloat($(this).parents(".aui-car-box-list-item").find(".aui-car-box-list-item-origin-price").text()); 
             var total = 0; //计算单个商品的总价
             if (num >= discount_num) {
               $(this).parents(".aui-car-box-list-item").find(".price").text(discount_price);
