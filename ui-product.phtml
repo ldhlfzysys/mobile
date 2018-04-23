@@ -19,6 +19,14 @@ if (count($products) > 0) {
 		$test = $product['tier_price'];
 		$special_price = $test[$key];
 	}
+
+	// xl add
+	// if (count($product['group_price'])>0) {
+	// 	$key = array_keys($product['group_price'])[0];
+	// 	$test = $product['group_price'];
+	// 	$price = $test[$key]['website_price'];
+	// }
+	// xl add
 }
 
 include_once('./user.php');

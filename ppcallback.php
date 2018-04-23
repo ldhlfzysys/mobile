@@ -59,14 +59,14 @@ if(isset($_GET['paymentId']) && isset($_GET['token']) && isset($_GET['PayerID'])
         } catch (Exception $ex) {
             // var_dump($ex);
             $payErrorUrl = $baseHost . "payError.phtml?msg=";
-            // $url = $payErrorUrl . $ex->getData() . ' code = ' . $ex->getCode();
-            echo '<script>url="'.$payErrorUrl.'";window.location.href=url;</script> ';
+            $url = $payErrorUrl . $ex->getData() . ' code = ' . $ex->getCode();
+            echo '<script>var url="'.$payErrorUrl.'";window.location.href=url;</script> ';
         }
     } catch (Exception $ex) {
         // var_dump($ex);
         $payErrorUrl = $baseHost . "payError.phtml?msg=";
-        // $url = $payErrorUrl . $ex->getData() . ' code = ' . $ex->getCode();
-        echo '<script>url="'.$payErrorUrl   .'";window.location.href=url;</script> ';
+        $url = $payErrorUrl . $ex->getData() . ' code = ' . $ex->getCode();
+        echo '<script>var url="'.$payErrorUrl   .'";window.location.href=url;</script> ';
     }
 }
 
