@@ -23,12 +23,39 @@ include_once('./config.php');
 include_once('./imagePathFix.php');
 include_once('./user.php');
 include_once('./cart.php');
+
 $cartId = cartid();
 
 $keyword=$_GET['s'];
 $keywordtrim = str_replace(' ', '', $keyword);
 $url=$baseHost . 'searchProduct.php?s='.$keywordtrim;
 $products = json_decode(file_get_contents($url),true);
+
+// xl add
+$userinfo = userinfo();
+$items = array();
+foreach ($products as $p) {
+	// 是否存在group_price
+	$p['g_price'] = 0;
+
+	$product_id = $p['product_id'];
+	$url= $baseHost . 'productInfo.php?ids=' . $product_id;
+	$jsonResult = json_decode(file_get_contents($url),true);
+	if (count($jsonResult) > 0) {
+		$product = $jsonResult[0];
+		if (count($product['group_price'])>0) {
+			foreach ($product['group_price'] as $key => $value) {  
+			    if (!is_null($value['price'])) {
+					$p['g_price'] = (float)$value['price'];
+					break;
+				}
+			} 
+		}
+	}
+	array_push($items, $p);
+}
+// xl add
+
 ?>
 
 
@@ -52,11 +79,17 @@ $products = json_decode(file_get_contents($url),true);
 		</a>
 	</header>
 	<div style="display:block;height:2.8rem"></div>
+
+
 	<!-- <div class="aui-scroll-content"> -->
 
 				<?php
+				// include_once('./user.php');
+				// $userinfo = userinfo();
 
-				foreach ($products as $product) {
+				// echo 'hehe' . json_encode($userinfo);
+
+				foreach ($items as $product) {
 						echo '<div class="am-g am-intro-bd">';
 							echo '<div class="am-intro-left am-u-sm-10">';
 							echo '<a href="'. $baseHost .'ui-product.phtml?productId='.$product['product_id'].'">';
@@ -76,14 +109,20 @@ $products = json_decode(file_get_contents($url),true);
 										}
 									echo '</p>';
 									echo '<div class="text">';
-
-										if (!is_null($product['special_price'])) {
-											echo '<span class="fl">CA$&nbsp;&nbsp;'.round($product['special_price'], 2).'</span>';	
-											echo '<span class="aui-list-product-item-del-price">';
-											echo 'CA$'.number_format($product['price'],2);
-											echo '</span>	';
+										// 批发价格
+										if ( $userinfo != null && $userinfo['group_id'] == '2' && $product['g_price'] > 0 ) {
+											echo '<span class="fl">CA$&nbsp;&nbsp;'.round($product['g_price'], 2).'</span>';	
 										}else{
-											echo '<span class="fl">CA$&nbsp;&nbsp;'.round($product['price'], 2).'</span>';	
+											// 特价显示
+											if (!is_null($product['special_price'])) {
+												echo '<span class="fl">CA$&nbsp;&nbsp;'.round($product['special_price'], 2).'</span>';	
+												echo '<span class="aui-list-product-item-del-price">';
+												echo 'CA$'.number_format($product['price'],2);
+												echo '</span>	';
+											}else{
+												// 正常价格
+												echo '<span class="fl">CA$&nbsp;&nbsp;'.round($product['price'], 2).'</span>';	
+											}
 										}
 
 										// if (!is_null($product['special_price'])) {

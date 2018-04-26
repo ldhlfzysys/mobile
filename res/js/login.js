@@ -20,6 +20,7 @@ function login(){
             	var nickname = res['userData']['firstname']+' '+res['userData']['lastname'];
             	document.cookie="bdb-ui="+res['userData']['customer_id'];
             	document.cookie="bdb-nn="+nickname;
+                document.cookie="bdb-uf="+ JSON.stringify(res['userData']);
             	window.location.href=baseHost + 'ui-me.phtml';
             }else{
             	// document.location.reload();

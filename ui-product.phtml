@@ -3,6 +3,10 @@
 ini_set('display_errors',1);
 include_once('./config.php');
 include_once('./imagePathFix.php');
+include_once('./user.php');
+
+$userinfo = userinfo();
+
 $productId = $_GET["productId"];
 $url= $baseHost . 'productInfo.php?ids='.$productId;
 $products = json_decode(file_get_contents($url),true);
@@ -21,11 +25,16 @@ if (count($products) > 0) {
 	}
 
 	// xl add
-	// if (count($product['group_price'])>0) {
-	// 	$key = array_keys($product['group_price'])[0];
-	// 	$test = $product['group_price'];
-	// 	$price = $test[$key]['website_price'];
-	// }
+	// 是否存在group_price
+	$product['g_price'] = 0;
+	if (count($product['group_price'])>0) {
+		foreach ($product['group_price'] as $key => $value) {  
+		    if (!is_null($value['price'])) {
+				$product['g_price'] = (float)$value['price'];
+				break;
+			}
+		} 
+	}
 	// xl add
 }
 
@@ -47,9 +56,7 @@ $cartId = cartid();
 	<link rel="stylesheet" href="themes/css/icon.css">
 	<link rel="stylesheet" href="themes/css/home.css">
 	<link rel="stylesheet" href="themes/css/loading.css">
-	<script src="themes/js/jquery.min.js"></script>
-	<script src="themes/js/loading.js"></script>
-	<script src="themes/js/sweetalert2.js"></script>
+	
 	<link rel="icon" type="image/x-icon" href="favicon.ico">
 	<link href="iTunesArtwork@2x.png" sizes="114x114" rel="apple-touch-icon-precomposed">
 	<style>
@@ -159,72 +166,8 @@ $cartId = cartid();
 
 	</style>
 </head>
-<script type="text/javascript">
-
- function addToCart(cartId,productId) { 
-        // $('#loading').showLoading();
-		swal({
-			  title: "",
-			  text: "正在添加",
-			  onOpen:()=>{swal.showLoading()}
-			});
-
-        $.ajax({  
-            url:"<?php echo $baseHost; ?>cart.php?addToCart="+cartId+"&productId="+productId,           
-            type: "GET",         
-            success:function(result){  
-            	if (result != "true") {
-					swal({
-					  // position: 'top-end',
-					  type: 'error',
-					  title: '加入失败',
-					  showConfirmButton: false,
-					  timer: 1500
-					})
-            	}else{
-					swal({
-					  // position: 'top-end',
-					  type: 'success',
-					  title: '加入成功',
-					  showConfirmButton: false,
-					  timer: 1500
-					})
-            	};
-
-            },
-            error:function(XMLHttpRequest, textStatus, errorThrown){
-            		swal({
-					  title: "",
-					  text: "加入失败",
-					  icon: "error",
-					  button: false,
-					  timer: 1300,
-					});
-                // $('#loading').hideLoading();
-            }
-        });
-    }
-
-function buyNow(cartId,productId) {
-        $.ajax({  
-            url:"<?php echo $baseHost; ?>cart.php?addToCart="+cartId+"&productId="+productId,           
-            type: "GET",         
-            success:function(result){  
-
-                // $('#loading').hideLoading();
-
-                // document.location.reload(); 
-                window.location.href='<?php echo $baseHost; ?>order-sure.phtml';
-
-            },
-            error:function(XMLHttpRequest, textStatus, errorThrown){
-                // $('#loading').hideLoading();
-            }
-        });
-}
 
 
-</script>
 <body id="loading">
 
 	<header class="aui-header-default aui-header-fixed aui-header-bg">
@@ -270,14 +213,21 @@ function buyNow(cartId,productId) {
 		<div class="aui-real-price clearfix">
 			
 			<?php 
-				if (!is_null($product['special_price'])) {
-					echo '<span><i>CA$</i>'.number_format($product['special_price'],2).'</span>';
-					echo '<del><span class="aui-font-num">';
-					echo 'CA$'.$price;
-					echo '</span></del>';
+				// 批发价
+				if ( !is_null($userinfo['group_id']) && $userinfo['group_id'] == '2' && $product['g_price'] > 0) {
+					echo '<span><i>CA$</i>'.$product['g_price'].'</span>';
 				}else{
-					echo '<span><i>CA$</i>'.$price.'</span>';
+					// 特价
+					if (!is_null($product['special_price'])) {
+						echo '<span><i>CA$</i>'.number_format($product['special_price'],2).'</span>';
+						echo '<del><span class="aui-font-num">';
+						echo 'CA$'.$price;
+						echo '</span></del>';
+					}else{
+						echo '<span><i>CA$</i>'.$price.'</span>';
+					}
 				}
+				
 			?>
 			<!--  -->
 			<!-- <div class="aui-settle-choice">
@@ -473,9 +423,75 @@ function buyNow(cartId,productId) {
 	</footer>
 
 	<script src="themes/js/jquery.min.js"></script>
+	<script src="themes/js/loading.js"></script>
+	<script src="themes/js/sweetalert2.js"></script>
 	<script src="themes/js/aui.js"></script>
 	<script src="themes/js/aui-down.js"></script>
+
 	<script type="text/javascript">
+		function addToCart(cartId,productId) { 
+	        // $('#loading').showLoading();
+			swal({
+				  title: "",
+				  text: "正在添加",
+				  onOpen:()=>{swal.showLoading()}
+				});
+
+	        $.ajax({  
+	            url:"<?php echo $baseHost; ?>cart.php?addToCart="+cartId+"&productId="+productId,           
+	            type: "GET",         
+	            success:function(result){  
+	            	if (result != "true") {
+						swal({
+						  // position: 'top-end',
+						  type: 'error',
+						  title: '加入失败',
+						  showConfirmButton: false,
+						  timer: 1500
+						})
+	            	}else{
+						swal({
+						  // position: 'top-end',
+						  animation:false,
+						  type: 'success',
+						  title: '加入成功',
+						  showConfirmButton: false,
+						  timer: 700
+						})
+	            	};
+
+	            },
+	            error:function(XMLHttpRequest, textStatus, errorThrown){
+	            		swal({
+						  title: "",
+						  text: "加入失败",
+						  icon: "error",
+						  button: false,
+						  timer: 1300,
+						});
+	                // $('#loading').hideLoading();
+	            }
+	        });
+	    }
+
+		function buyNow(cartId,productId) {
+	        $.ajax({  
+	            url:"<?php echo $baseHost; ?>cart.php?addToCart="+cartId+"&productId="+productId,           
+	            type: "GET",         
+	            success:function(result){  
+
+	                // $('#loading').hideLoading();
+
+	                // document.location.reload(); 
+	                window.location.href='<?php echo $baseHost; ?>order-sure.phtml';
+
+	            },
+	            error:function(XMLHttpRequest, textStatus, errorThrown){
+	                // $('#loading').hideLoading();
+	            }
+	        });
+		}
+
 		$("#scrollSearchPro").show();
         // $(function () {
         //     //绑定滚动条事件
@@ -503,9 +519,7 @@ function buyNow(cartId,productId) {
         //         }
         //     });
         // })
-	</script>
 
-	<script>
         /**
          * Javascript API调用ActionSheet
          */
@@ -522,7 +536,6 @@ function buyNow(cartId,productId) {
 
         }(jQuery);
 	</script>
-
 
 </body>
 </html>

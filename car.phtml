@@ -7,6 +7,8 @@ include_once('./user.php');
 include_once('./cart.php');
 include_once('./imagePathFix.php');
 
+$userinfo = userinfo();
+
 $cartid = cartid();
 
 $carinfo = cart($cartid);
@@ -31,9 +33,18 @@ foreach ($carItems as $item) {
 	}
 
 	// xl add
-	// $product['discount_price'] = $item['price'];
-	// $product['price'] = $item['price'];
+	// 是否存在group_price
+	$product['g_price'] = 0;
+	if (count($product['group_price'])>0) {
+		foreach ($product['group_price'] as $key => $value) {  
+		    if (!is_null($value['price'])) {
+				$product['g_price'] = (float)$value['price'];
+				break;
+			}
+		} 
+	}
 	// xl add
+
 	
 	$product['qty'] = $item['qty'];
 	array_push($products, $product);
@@ -65,46 +76,7 @@ foreach ($carItems as $item) {
 	<script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
 </head>
 
-<script type="text/javascript">
 
- function updatecart(cartid) { 
-
- 		var datas = [];
-	    $(".aui-car-box").each(function() { //循环每个店铺
-	      $(this).find(".goodsCheck").each(function() { //循环店铺里面的商品
-            var num = parseInt($(this).parents(".aui-car-box-list-item").find(".num").text()); //得到商品的数量
-            var productid = parseFloat($(this).parents(".aui-car-box-list-item").find(".prodcut_id").text()); 
-            var dict = {};
-            dict.product_id = productid;
-            dict.qty = num;
-            datas.push(dict);
-	      });
-	    });
-	    if (datas.length == 0) {
-	    	alert('购物车空空，去添加商品吧~');
-	    	return;
-	    };
-	    var str = JSON.stringify(datas);
-        $.ajax({  
-            url: "<?php echo $baseHost ?>cart.php?cartid="+cartid+"&updateCart="+str,           
-            type: "GET",         
-            success:function(result){  
-            	if (result == "true") {
-            		window.location.href=  '<?php echo $baseHost ?>order-sure.phtml';
-            	}else{
-            		alert('网络错误，请重试');
-            	};
-                // $('#loading').hideLoading();
-                // document.location.reload(); 
-            },
-            error:function(XMLHttpRequest, textStatus, errorThrown){
-                // $('#loading').hideLoading();
-                alert('网络错误，请重试');
-            }
-        });
-    }
-
-</script>
 <body>
 
 	<header class="aui-header-default aui-header-fixed aui-header-bg">
@@ -123,6 +95,14 @@ foreach ($carItems as $item) {
 	</header>
 	<section class="aui-car-content">
 		<div class="aui-car-box">
+			<div class="aui-car-box-user-group-id" style="display:none">
+				<?php 
+					if (!is_null($userinfo)) {
+						echo $userinfo['group_id']; 
+					}
+				?>
+			</div>
+
 <!-- 			<div class="aui-car-box-name">
 				<input type="checkbox" class="check goods-check shopCheck">
 				<h3>
@@ -170,10 +150,12 @@ foreach ($carItems as $item) {
 					?>
 					<li>
 						<div class="aui-car-box-list-item">
+							<div class="aui-car-box-list-item-g-price" style="display:none"><?php echo $item['g_price'] ?></div>
 							<div class="aui-car-box-list-item-discount-price" style="display:none"><?php echo $item['discount_price'] ?></div>
 							<div class="aui-car-box-list-item-discount-count" style="display:none"><?php echo $item['discount_count']?></div>
 							<div class="aui-car-box-list-item-origin-price" style="display:none">
 							<?php
+								// 有特价显示特价
 								if (!is_null($item['special_price'])) {
 									$special_price = round($item['special_price'],2);
 									echo $special_price;	
@@ -202,13 +184,13 @@ foreach ($carItems as $item) {
 									<div class="aui-car-box-list-text-pri">
 										CA$<b class="price">&nbsp;&nbsp;
 										<?php 
+											// 最终用户可见价格
 											if (!is_null($item['special_price'])) {
 												$special_price = round($item['special_price'],2);
 												echo $special_price;	
 											}else{
 												echo number_format($item['price'],2);	
 											}
-											
 										?></b>
 									</div>
 									<div class="aui-car-box-list-text-arithmetic">
@@ -243,6 +225,45 @@ foreach ($carItems as $item) {
 		<?php echo '<a href="javascript:void(0);" class="settlement" onclick="updatecart(\''.$cartid.'\')">结算</a>'; ?>
 	</div>
 
+<script type="text/javascript">
 
+ function updatecart(cartid) { 
+
+ 		var datas = [];
+	    $(".aui-car-box").each(function() { //循环每个店铺
+	      $(this).find(".goodsCheck").each(function() { //循环店铺里面的商品
+            var num = parseInt($(this).parents(".aui-car-box-list-item").find(".num").text()); //得到商品的数量
+            var productid = parseFloat($(this).parents(".aui-car-box-list-item").find(".prodcut_id").text()); 
+            var dict = {};
+            dict.product_id = productid;
+            dict.qty = num;
+            datas.push(dict);
+	      });
+	    });
+	    if (datas.length == 0) {
+	    	alert('购物车空空，去添加商品吧~');
+	    	return;
+	    };
+	    var str = JSON.stringify(datas);
+        $.ajax({  
+            url: "<?php echo $baseHost ?>cart.php?cartid="+cartid+"&updateCart="+str,           
+            type: "GET",         
+            success:function(result){  
+            	if (result == "true") {
+            		window.location.href=  '<?php echo $baseHost ?>order-sure.phtml';
+            	}else{
+            		alert('网络错误，请重试');
+            	};
+                // $('#loading').hideLoading();
+                // document.location.reload(); 
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+                // $('#loading').hideLoading();
+                alert('网络错误，请重试');
+            }
+        });
+    }
+
+</script>
 </body>
 </html>
