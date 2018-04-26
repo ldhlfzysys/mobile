@@ -167,11 +167,17 @@ $(function(){
   });
   //计算
   function TotalPrice() {
+    // 用户分组
+    var userGroupId = $(".aui-car-box-user-group-id").text();
+    userGroupId = userGroupId.replace(/\s+/g,"");
     var allprice = 0; //总价
     $(".aui-car-box").each(function() { //循环每个店铺
       var oprice = 0; //店铺总价
       $(this).find(".goodsCheck").each(function() { //循环店铺里面的商品
         if ($(this).is(":checked")) { //如果该商品被选中
+            
+            //得到商品的单价
+            var g_price = parseFloat($(this).parents(".aui-car-box-list-item").find(".aui-car-box-list-item-g-price").text()); 
             //得到商品的数量
             var num = parseInt($(this).parents(".aui-car-box-list-item").find(".num").text()); 
             //得到商品的单价
@@ -183,13 +189,22 @@ $(function(){
             // 原始价格
             var origin_price = parseFloat($(this).parents(".aui-car-box-list-item").find(".aui-car-box-list-item-origin-price").text()); 
             var total = 0; //计算单个商品的总价
-            if (num >= discount_num) {
-              $(this).parents(".aui-car-box-list-item").find(".price").text(discount_price);
-              total = discount_price * num;
+
+            // 判断是否可以批发价格购买
+            if (g_price > 0 && userGroupId == '2') {
+                  $(this).parents(".aui-car-box-list-item").find(".price").text(g_price);
+                  total = g_price * num;
             }else{
-              $(this).parents(".aui-car-box-list-item").find(".price").text(origin_price);
-              total = origin_price * num;
-            };
+                // 判断数量是否可以使用折扣价
+                if (num >= discount_num) {
+                    $(this).parents(".aui-car-box-list-item").find(".price").text(discount_price);
+                    total = discount_price * num;
+                }else{
+                    $(this).parents(".aui-car-box-list-item").find(".price").text(origin_price);
+                    total = origin_price * num;
+                }
+            }
+            
           oprice += total; //计算该店铺的总价
         }
         $(this).closest(".aui-car-box").find(".ShopTotal").text(oprice.toFixed(2)); //显示被选中商品的店铺总价

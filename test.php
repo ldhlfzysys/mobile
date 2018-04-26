@@ -18,6 +18,35 @@
         // var_dump($result);
     }
 
+
+    function productListTest(){
+        $client = new SoapClient('https://bdbbuy.com/index.php/api/soap/?wsdl');  
+        $session = $client->login('mobile', 'mobile');
+        $complexFilter = array(
+                'status' => 1
+        );
+        $args = array(
+            'filters' => $complexFilter,
+            'storeView' => '16'
+        );
+        $result = $client->call($session, 'catalog_product.list',$args);
+        $client->endSession($session);
+        return $result;
+    }
+
+
+    function pInfo($id){
+        $client = new SoapClient('https://bdbbuy.com/index.php/api/soap/?wsdl');  
+        $session = $client->login('mobile', 'mobile');
+       $args = array(
+            'productId' => $id,
+            'storeView' => 'china'
+        );
+        $res = $client->call($session, 'catalog_product.info', $args);
+        $client->endSession($session);
+        return $res;
+    }
+
     if (isset($_GET['userId'])) {
         $userId = $_GET['userId'];
         $cartId = getCartIdByUser($userId);
@@ -30,13 +59,26 @@
                 # code...
                 // echo 'payment_id == null';
             }
-            
             // echo json_encode($payment);
             echo json_encode($result);
             // foreach ($result['items'] as $key => $value) {
             //     echo json_encode($value) . '<br>';
             // }
         }
-       
     }
+
+    if (isset($_GET['pList'])) {
+        $res = productListTest();
+        echo json_encode($res);
+    }
+
+    if (isset($_GET['pid'])) {
+        $id = $_GET['pid'];
+        $res = pInfo($id);
+        echo json_encode($res);
+    }
+
+
+
+
 ?>

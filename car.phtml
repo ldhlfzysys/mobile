@@ -7,6 +7,8 @@ include_once('./user.php');
 include_once('./cart.php');
 include_once('./imagePathFix.php');
 
+$userinfo = userinfo();
+
 $cartid = cartid();
 
 $carinfo = cart($cartid);
@@ -31,32 +33,16 @@ foreach ($carItems as $item) {
 	}
 
 	// xl add
-	// $product['discount_price'] = $item['price'];
-	// $product['price'] = $item['price'];
-
-	// 寻找最低价 $item['price'] 都是0
-	$lowPrice = $product['discount_price'];
-
-	if (!is_null($product['special_price'])) {
-		$spPrice = (float)$product['special_price'];
-		if ($spPrice < $lowPrice) {
-			$lowPrice = $spPrice;
-		}
-	}
-	
-
+	// 是否存在group_price
+	$product['g_price'] = 0;
 	if (count($product['group_price'])>0) {
-		foreach ($data as $key => $value) {  
+		foreach ($product['group_price'] as $key => $value) {  
 		    if (!is_null($value['price'])) {
-				$p = (float)$value['price'];
-				if ($p < $lowPrice) {
-					$lowPrice = $p;
-				}
+				$product['g_price'] = (float)$value['price'];
+				break;
 			}
 		} 
 	}
-
-	$product['lowPrice'] = $lowPrice;
 	// xl add
 
 	
@@ -109,6 +95,14 @@ foreach ($carItems as $item) {
 	</header>
 	<section class="aui-car-content">
 		<div class="aui-car-box">
+			<div class="aui-car-box-user-group-id" style="display:none">
+				<?php 
+					if (!is_null($userinfo)) {
+						echo $userinfo['group_id']; 
+					}
+				?>
+			</div>
+
 <!-- 			<div class="aui-car-box-name">
 				<input type="checkbox" class="check goods-check shopCheck">
 				<h3>
@@ -156,7 +150,7 @@ foreach ($carItems as $item) {
 					?>
 					<li>
 						<div class="aui-car-box-list-item">
-							<p>lowPrice = <?php echo $item['lowPrice']; ?></p>
+							<div class="aui-car-box-list-item-g-price" style="display:none"><?php echo $item['g_price'] ?></div>
 							<div class="aui-car-box-list-item-discount-price" style="display:none"><?php echo $item['discount_price'] ?></div>
 							<div class="aui-car-box-list-item-discount-count" style="display:none"><?php echo $item['discount_count']?></div>
 							<div class="aui-car-box-list-item-origin-price" style="display:none">

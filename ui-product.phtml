@@ -3,6 +3,10 @@
 ini_set('display_errors',1);
 include_once('./config.php');
 include_once('./imagePathFix.php');
+include_once('./user.php');
+
+$userinfo = userinfo();
+
 $productId = $_GET["productId"];
 $url= $baseHost . 'productInfo.php?ids='.$productId;
 $products = json_decode(file_get_contents($url),true);
@@ -21,11 +25,16 @@ if (count($products) > 0) {
 	}
 
 	// xl add
-	// if (count($product['group_price'])>0) {
-	// 	$key = array_keys($product['group_price'])[0];
-	// 	$test = $product['group_price'];
-	// 	$price = $test[$key]['website_price'];
-	// }
+	// 是否存在group_price
+	$product['g_price'] = 0;
+	if (count($product['group_price'])>0) {
+		foreach ($product['group_price'] as $key => $value) {  
+		    if (!is_null($value['price'])) {
+				$product['g_price'] = (float)$value['price'];
+				break;
+			}
+		} 
+	}
 	// xl add
 }
 
@@ -204,14 +213,21 @@ $cartId = cartid();
 		<div class="aui-real-price clearfix">
 			
 			<?php 
-				if (!is_null($product['special_price'])) {
-					echo '<span><i>CA$</i>'.number_format($product['special_price'],2).'</span>';
-					echo '<del><span class="aui-font-num">';
-					echo 'CA$'.$price;
-					echo '</span></del>';
+				// 批发价
+				if ( !is_null($userinfo['group_id']) && $userinfo['group_id'] == '2' && $product['g_price'] > 0) {
+					echo '<span><i>CA$</i>'.$product['g_price'].'</span>';
 				}else{
-					echo '<span><i>CA$</i>'.$price.'</span>';
+					// 特价
+					if (!is_null($product['special_price'])) {
+						echo '<span><i>CA$</i>'.number_format($product['special_price'],2).'</span>';
+						echo '<del><span class="aui-font-num">';
+						echo 'CA$'.$price;
+						echo '</span></del>';
+					}else{
+						echo '<span><i>CA$</i>'.$price.'</span>';
+					}
 				}
+				
 			?>
 			<!--  -->
 			<!-- <div class="aui-settle-choice">
