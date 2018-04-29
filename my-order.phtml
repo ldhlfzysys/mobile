@@ -1,16 +1,5 @@
 <!DOCTYPE html>
 <html>
-<?php
-include('./config.php');
-include('./user.php');
-$userid = userid();
-$orderListUrl= $baseHost . 'myorder.php?userid='.$userid;
-$html = file_get_contents($orderListUrl);
-$orderList = json_decode($html,true);
-
-$orderStatus = $_GET["status"];
-// echo "status = " . $orderStatus ;
-?>
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui"/>
 	<meta name="apple-mobile-web-app-capable" content="yes"/>
@@ -25,6 +14,24 @@ $orderStatus = $_GET["status"];
 	<link href="iTunesArtwork@2x.png" sizes="114x114" rel="apple-touch-icon-precomposed">
 
 </head>
+<?php
+include('./config.php');
+include('./user.php');
+$userid = userid();
+
+if ($userid == null) {
+	echo '<script type="text/javascript">';
+	echo 'window.location.href="' . $baseHost .'login.html";';
+	echo '</script>';
+}
+
+$orderListUrl= $baseHost . 'myorder.php?userid='.$userid;
+$html = file_get_contents($orderListUrl);
+$orderList = json_decode($html,true);
+
+$orderStatus = $_GET["status"];
+// echo "status = " . $orderStatus ;
+?>
 <body>
 	<input type="hidden" id = "orderStatus" value="<?php echo $orderStatus ?>">
 	<header class="aui-header-default aui-header-fixed aui-header-bg">
