@@ -76,7 +76,7 @@ function getLocalCart(){
 		$session = $client->login('mobile', 'mobile');
 		$result = $client->call( $session, 'cart.create', '16');
 		$cartid = $result;
-		setcookie('bdb-ci',$cartid);
+		setcookie('bdb-ci',$cartid,time()+3600*24*365,'/','.bdbbuy.com');
 		return $cartid;
 	}
 }
@@ -107,7 +107,7 @@ function userinfo(){
 	// $result = $client->call($session, 'customer.list');
 	$result = $client->call($session, 'customer.info', $userid);
 	$userinfo = $result;
-	setcookie('bdb-uf',json_encode($userinfo));
+	setcookie('bdb-uf',json_encode($userinfo),time()+3600*24*365,'/','.bdbbuy.com');
 	return $userinfo;
 }
 
