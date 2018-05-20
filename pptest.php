@@ -101,6 +101,7 @@ if (isset($_POST['cartid'])) {
     $detail->setSubtotal($cartInfo['subtotal']);
     $detail->setTax($shipping_info['tax_amount']);
     $detail->setShipping($shipping_info['shipping_amount']);
+    $detail->setShippingDiscount($shipping_info['discount_amount']);
 
 
     $amount = new \PayPal\Api\Amount();
