@@ -19,6 +19,8 @@ if ($redis_result) {
 	    'storeView' => '16'
 	);
 	$result = $client->call($session, 'catalog_product.list',$args);
+	#反转数组，新商品排前面
+	$result = array_reverse($result);
 	$client->endSession($session);
 	$json_result = json_encode($result);
 	$redis->set($redis_key,$json_result);
