@@ -196,7 +196,7 @@ foreach ($carItems as $item) {
 									<div class="aui-car-box-list-text-arithmetic">
 										<a href="javascript:;" class="minus">-</a>
 										<span class="num"><?php echo $item['qty']; ?></span>
-										<div style="display:none" class="cart_id"><?php echo $cartid;  ?></div>
+										
 										<div style="display:none" class="min_prodcut_id"><?php echo $item['product_id'];  ?></div>
 										<a href="javascript:;" class="plus">+</a>
 									</div>
@@ -221,6 +221,7 @@ foreach ($carItems as $item) {
 		<!-- <div class="all-checkbox"><input type="checkbox" class="check goods-check" id="AllCheck">全选</div> -->
 		<div class="shop-total">
 			<strong>合计：<i class="total" id="AllTotal">00.00</i></strong>
+			<div style="display:none" class="cart_id"><?php echo $this->cartid;  ?></div>
 		</div>
 		<?php echo '<a href="javascript:void(0);" class="settlement" onclick="updatecart(\''.$cartid.'\')">结算</a>'; ?>
 	</div>

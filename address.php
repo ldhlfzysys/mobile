@@ -1,6 +1,8 @@
 <?php
 ini_set('display_errors',1); 
 ini_set('display_startup_errors',1);
+
+
 function customer_address($userid){
 	$client = new SoapClient('https://bdbbuy.com/index.php/api/soap/?wsdl');  
 	$session = $client->login('mobile', 'mobile');

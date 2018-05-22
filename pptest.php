@@ -34,6 +34,8 @@ if (isset($_POST['cartid'])) {
         'store' => '16'
     );
     $cartInfo = $client->call($session, 'cart.info',$cartid, $args);
+
+    
     $billing_info = $cartInfo['billing_address'];
     $shipping_info = $cartInfo['shipping_address'];
 
