@@ -7,7 +7,7 @@
 
     function senEmail($email,$link,$username){
          //需要设置对应的region名称，如华东1（杭州）设为cn-hangzhou，新加坡Region设为ap-southeast-1，澳洲Region设为ap-southeast-2。
-        $iClientProfile = DefaultProfile::getProfile("ap-southeast-1", "LTAIY7n7cywkJOV4", "VsrK5ML3EQ4tkeRY1UC029JhvlJb6H");        
+        $iClientProfile = DefaultProfile::getProfile("ap-southeast-1", "", "");        
         //新加坡或澳洲region需要设置服务器地址，华东1（杭州）不需要设置。
         $iClientProfile::addEndpoint("ap-southeast-1","ap-southeast-1","Dm","dm.ap-southeast-1.aliyuncs.com");
         //$iClientProfile::addEndpoint("ap-southeast-2","ap-southeast-2","Dm","dm.ap-southeast-2.aliyuncs.com");

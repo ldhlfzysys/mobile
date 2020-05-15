@@ -196,8 +196,8 @@ function logVarDump($expression){
 // $contents 日志内容，array类型
 function addLog($contents){
     $endpoint = 'https://cn-hongkong.log.aliyuncs.com';
-    $accessKeyId = 'LTAIY7n7cywkJOV4';
-    $accessKey = 'VsrK5ML3EQ4tkeRY1UC029JhvlJb6H';
+    $accessKeyId = '';
+    $accessKey = '';
     $project = 'bdbbuy-mobile';
     $logstore = 'mobile-log';
     $token = "";
@@ -231,30 +231,3 @@ function addLog($contents){
     }
 }
 
-/*
- * please refer to aliyun sdk document for detail:
- * http://help.aliyun-inc.com/internaldoc/detail/29074.html?spm=0.0.0.0.tqUNn5
- */
-// $endpoint = 'https://cn-hongkong.log.aliyuncs.com';
-// $accessKeyId = 'LTAIY7n7cywkJOV4';
-// $accessKey = 'VsrK5ML3EQ4tkeRY1UC029JhvlJb6H';
-// $project = 'bdbbuy-mobile';
-// $logstore = 'mobile-log';
-// $token = "";
-
-// $client = new Aliyun_Log_Client($endpoint, $accessKeyId, $accessKey,$token);
-
-// putLogs($client, $project, $logstore);
-
-
-// listShard($client,$project,$logstore);
-// mergeShard($client,$project,$logstore,2);
-// deleteShard($client,$project,$logstore,2);
-// splitShard($client,$project,$logstore,2,"80000000000000000000000000000001");
-
-// listShard($client,$project,$logstore);
-// batchGetLogs($client,$project,$logstore);
-// listLogstores($client, $project);
-// listTopics($client, $project, $logstore);
-// getHistograms($client, $project, $logstore);
-// getLogs($client, $project, $logstore);
